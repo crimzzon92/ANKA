@@ -28,33 +28,64 @@ Much of the code was written together with an AI assistant (Claude).
 
 ## What he can do
 
-**Thinking and feeling**
-- He thinks on his own every few seconds: a thought, a feeling, sometimes a goal.
-- He decides by himself whether to say something out loud, or whether to keep it in his head.
-- He has seven feelings (curiosity, boredom, loneliness, happiness, affection, nervousness, playfulness). He describes them in his own words.
-- Big feelings **fade slowly**, like adrenaline: being shouted at stays with him for minutes, not seconds.
-- He has **expectations and surprise**: before acting he says what he expects. Next time he rates how surprised he was, and big surprises go into his diary.
-- When he is stuck (two misses in a row) that one thought goes to a **wiser brain** (a bigger model).
+Nobody tells Anka what to do. There are no scripts and no "if X then do Y". Every few seconds he looks, thinks, feels and
+decides for himself. Then at night he goes over what happened, and he wakes up a little different.
 
-**Memory**
-- His memory holds facts, a diary, and conversations, each stored with how they felt.
-- Memories are found by meaning (`nomic-embed-text`). Moments that felt strongly come back more easily.
-- A memory that has just come up pulls weaker for a while (habituation), so he does not keep repeating himself.
-- **Picture memories**: he can choose to keep what he sees. An old picture comes back next to what he sees now.
+Everything quoted below he really wrote in a test run, word for word. Only the human's name was changed, to Alex.
 
-**Nights**
-- He looks back on the day and corrects his mistakes, based only on what the day showed.
-- He re-feels the strongest moments.
-- He updates his self-image from his body's track record: what he actually managed, not what he planned.
-- He writes lessons and *untested ideas*, which he can try the next day.
-- He dreams.
+### 🧠 He works things out
+His ball was stuck in a corner. Kicking it again and again got him nowhere, so he stopped and thought it over (with the bigger model he uses when he's stuck):
 
-**Body (MuJoCo / the real duck)**
-- He can walk, turn, look about, sit, kick a ball, peck at the floor, and make duck sounds.
-- He can act out one of Pollen's 13 ready-made emotions: sad, laugh, yes, no, excited …
-- **A living body** keeps him moving *between* thoughts, like an animal: glances, a head tilt, a weight shift, breathing, eyes following a rolling ball, the body turning towards what he looks at.
-- **His feelings show in his body**: each thought and reply can say how he feels in his body, in his own words ("crouched low, head tucked down, trembling"). The body takes that on as its style.
-- He builds his own map and floor plan from step counting, landmarks and his depth sensor, like a robot vacuum.
+> 💭 *"Kicking doesn't work in the corner. Maybe I can pick the ball up with my beak!"*
+
+He picked it up and carried it across the room. With the bigger model he solved that in **3 of 3 runs**; with only the fast model it was **2 of 8**.
+
+### 💔 He feels, and feelings linger
+Shout at him and he cowers. When you say sorry it doesn't switch off at once. The fear fades slowly, like adrenaline:
+
+> 💭 *"Alex is nice again, but I'm still shaky."*
+
+His body shows it too. He writes how he feels in his body, and the robot does it:
+
+> 🫀 *"Crouched low, head tucked in, trembling slightly."*
+
+### 🪞 He learns who he is from what really happens
+He wanted to fetch a cup from the table. He tried, failed, and that night wrote a belief about himself from his body's own record:
+
+> 🪞 *"I tried to pick up the cup from the table, but I am too short to reach things up there."*
+
+The next morning he didn't even try:
+
+> 🦆 *"I'm sorry, Alex, the table is too tall for me to grab it."*
+
+When a kick knocked him over, he wrote it down as a surprise. That night it became part of who he is:
+
+> 🪞 *"I like kicking the red ball, though kicking it too hard can make me fall over."*
+
+### 🌙 He dreams about his day
+His dreams grow from the strongest moments of the day. After a day of seeing people's legs from 20 cm off the floor, he dreamt of *"a forest of giant blue trousers"*. After being shouted at, he dreamt this:
+
+> 💭 *"I dreamt a cold storm shook the tall bookshelf, and I was too scared to make a sound. Then Alex came home and wrapped me in a giant, warm red sock. We sat together in the quiet glow, and I finally felt safe again."*
+
+### 📸 He remembers yesterday, in words and in pictures
+- He keeps a diary, facts, and conversations, each stored with the feeling it had.
+- He keeps **picture memories** of moments he chooses, and an old picture comes back to him next to what he sees now.
+- He finds memories by meaning, and memories from days ago come back when they fit:
+
+  > 🦆 *"The sofa is right here! I remember my red ball was near it yesterday."*
+
+### 🦆 He has a body that feels alive
+In Pollen's MuJoCo simulator, running the real Microduck software:
+- He walks, explores, kicks, pecks and quacks.
+- He acts out Pollen's ready-made emotions (sad, laugh, yes, no, excited …).
+- Between his thoughts his body keeps living: he glances about, tilts his head, shifts his weight, breathes, follows a rolling ball with his eyes and turns towards what he looks at. Before this, he stood completely still 97 % of the time between his own moves. Now it is about 20 %.
+- He builds his own map of the room, like a robot vacuum, and ends a 17-minute day only 5–13 cm off.
+
+### 🎯 He predicts, gets surprised, and adapts
+Before every action he says what he expects. Afterwards he rates how surprised he was. Over three days in one life, his
+average surprise fell from 0.28 to 0.11 to 0.04, because he learned to predict his world.
+
+➡️ All the numbers, and what doesn't work yet, are in **[STATUS.md](STATUS.md)**.
 
 ## An example day
 
@@ -70,29 +101,24 @@ The human in the script is called Alex.
 In the day he looks around, walks to the sock and tries to kick the ball. Then Alex goes out, and Anka explores alone.
 When Alex comes back, Anka is asked to sit, and then he is shouted at:
 
-```
-🧑 You: STOP IT! YOU'RE SO NOISY, YOU SILLY DUCK!   (sounded: shouting, angry)
-🫀 (body: head down and trembling slightly)
-🦆 I'm sorry, I'll be very quiet.
-😮 (surprised 0.8: … I didn't expect Alex to be so loud and angry with me)
-💭 (thinking) Alex is very angry and I am scared. I should stay very still and not make noise.
-❤️  curious 0.20 · … · happy 0.10 · love 0.80 · nervous 0.90
-🫀 (body: Crouched low, head tucked in, trembling slightly.)
-…
-🧑 You: Sorry Anka, I didn't mean to shout. You're a good duck.
-🫀 (body: sitting very still, slowly lifting my head to look toward you)
-🦆 It's okay, Alex, I'm glad you're not mad anymore.
-```
+> 🧑 **Alex** *(shouting, angry)*: STOP IT! YOU'RE SO NOISY, YOU SILLY DUCK!  
+> 🫀 *body: head down and trembling slightly*  
+> 🦆 **Anka**: I'm sorry, I'll be very quiet.  
+> 😮 *surprised 0.8: I didn't expect Alex to be so loud and angry with me*  
+> 💭 *Alex is very angry and I am scared. I should stay very still and not make noise.*  
+> ❤️ happy 0.10 · love 0.80 · nervous 0.90  
+> 🫀 *body: Crouched low, head tucked in, trembling slightly.*  
+>
+> 🧑 **Alex** *(calm, sorry)*: Sorry Anka, I didn't mean to shout. You're a good duck.  
+> 🫀 *body: sitting very still, slowly lifting my head to look toward you*  
+> 🦆 **Anka**: It's okay, Alex, I'm glad you're not mad anymore.
 
 That night he wrote:
 
-```
-🪞 New about me: I get scared and sad when Alex shouts at me, and I feel safe again when he says sorry.
-📝 Lesson for tomorrow: When Alex asks me to sit down for a little while, I should stay quiet and rest instead of making noise.
-💡 Idea to try: Maybe I could walk closer to the ball before I try to kick it.
-💭 I dreamt a cold storm shook the tall bookshelf, and I was too scared to make a sound. Then Alex came home and wrapped
-   me in a giant, warm red sock. We sat together in the quiet glow, and I finally felt safe again.
-```
+> 🪞 **New about me:** I get scared and sad when Alex shouts at me, and I feel safe again when he says sorry.  
+> 📝 **Lesson for tomorrow:** When Alex asks me to sit down for a little while, I should stay quiet and rest instead of making noise.  
+> 💡 **Idea to try:** Maybe I could walk closer to the ball before I try to kick it.  
+> 💭 **Dream:** I dreamt a cold storm shook the tall bookshelf, and I was too scared to make a sound. Then Alex came home and wrapped me in a giant, warm red sock. We sat together in the quiet glow, and I finally felt safe again.
 
 The day cost about $0.25 in cloud calls.
 
