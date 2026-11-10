@@ -6,6 +6,11 @@ Anka is a hobby project: a mind for **Microduck**, Pollen Robotics' 25 cm walkin
 arrives, Anka lives in two simulators. One is a simple 2D room. The other is Pollen's own **MuJoCo** simulator, which runs
 the real duck software.
 
+![The Microduck robot in Pollen's MuJoCo simulator, from the front, at an angle and from the side](docs/images/microduck_sim.png)
+*The body Anka lives in: the Microduck in the MuJoCo simulator. The camera is the yellow ring in his head. Rendered
+from [Pollen Robotics' 3D models](https://github.com/pollen-robotics/microduck_rl) (CC BY-NC-SA 4.0, see
+[Credits](#credits)).*
+
 The idea behind him: **the language model makes the decisions.** It decides what Anka thinks, feels, says and does.
 The Python code gives him *facts*: what his camera sees, what his body did, what he remembers, how much time has passed.
 It does not give him behaviour rules. His personality is meant to grow from what happens to him, and his nights are spent
@@ -194,6 +199,8 @@ Apache License 2.0 – see [LICENSE](LICENSE), the same license as Pollen's Micr
 The 3D body builds on Pollen Robotics' open-source [Microduck](https://github.com/pollen-robotics/microduck) software and
 its emotion set (Apache-2.0), and on the robot's 3D models from
 [microduck_rl](https://github.com/pollen-robotics/microduck_rl). Those models are licensed CC BY-NC-SA 4.0 and are **not**
-included here: `ankasim/make_scene.py` reads them from your own copy of `microduck_rl`. The voice is [Kokoro](https://github.com/thewh1teagle/kokoro-onnx).
+included here: `ankasim/make_scene.py` reads them from your own copy of `microduck_rl`. The picture of the duck at the
+top (`docs/images/microduck_sim.png`) is rendered from those models, unmodified, so that one image is under
+[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/), © Pollen Robotics, not Apache-2.0. The voice is [Kokoro](https://github.com/thewh1teagle/kokoro-onnx).
 The face sensor and recogniser come from [OpenCV Zoo](https://github.com/opencv/opencv_zoo). Depth from the camera uses
 Depth Anything V2.

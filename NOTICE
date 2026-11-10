@@ -9,3 +9,9 @@ Licensed under the Apache License, Version 2.0 (see LICENSE).
 Anka talks to, but does not include, Pollen Robotics' Microduck software
 (https://github.com/pollen-robotics/microduck, Apache-2.0). Pollen's robot 3D
 models (microduck_rl, CC BY-NC-SA 4.0) are not included in this repository.
+
+Exception: docs/images/microduck_sim.png is a rendering of Pollen Robotics'
+unmodified Microduck 3D models (https://github.com/pollen-robotics/microduck_rl).
+That image is licensed under CC BY-NC-SA 4.0
+(https://creativecommons.org/licenses/by-nc-sa/4.0/), copyright Pollen Robotics,
+and not under the Apache License.
