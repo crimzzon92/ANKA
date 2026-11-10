@@ -142,6 +142,46 @@ and different words. A control group got day 2 with a fresh memory.
   experienced Anka tried 5 more times, to please him.
 - **Lesson:** the test needs a harder task. Common sense alone already solves this one.
 
+### ❌ Ball transfer test: the control group was *faster*
+A harder version. Day 1: "kick the ball over to me", with the ball stuck in a corner, so kicking fails and carrying it
+in his beak works. Day 2: the ball is against another wall. Three lives with day 1 behind them against three fresh
+lives (control).
+
+- ❌ **The control won, with no overlap.** The ball reached the human after **13 / 13 / 13 s** in the control group and
+  **17 / 81 / 133 s** with experience.
+- Why: the day-2 words were "could you *get* the ball over to me?", which makes carrying the common-sense choice. The
+  control never kicked at all. And in a fresh life he walked over to the "new" ball out of curiosity before anyone spoke,
+  so he was already standing next to it.
+- Why experience was slower: it depended entirely on **what the night wrote**.
+  - One life never tried carrying on day 1. Its lesson was "stop kicking and ask the human for help", and on day 2 he
+    asked for help (133 s).
+  - One life learned something irrelevant, about side steps (81 s).
+  - ✅ One life tried carrying at the end of day 1. Its lesson was *"When the wall blocks me from kicking the ball, I
+    should pick the ball up with my beak instead"*. On day 2: no stuck kicks, and the ball was delivered in 17 s. That is
+    real transfer: the right lesson used in a new place.
+- **Lessons:** (1) he only learns from what he actually **tried**, like an animal. (2) When the night writes the right
+  lesson, he uses it. (3) The test let common sense win again.
+
+### 🤔 Ideas to try: thinking up something new at night
+So that he can learn from more than what he happened to try, each night may now write an untested **idea** ("Maybe I
+could…"), kept apart from lessons. We removed a hint from the night's instructions that listed "carry" among his
+skills, so the ideas have to be his own. The test was the same as above, but day 2 used the same verb ("kick it to
+me"), so the naive choice fails for everyone.
+
+| Day 2 | With ideas | Experience, no ideas | Control (fresh life) |
+|---|---|---|---|
+| Kicks into the wall | 0, 1, 8 | 13, 17, 3 | 7, 2, 10 |
+| Ball delivered | 1 of 3 (18 s) | 1 of 3 (250 s) | 2 of 3 (187, 219 s) |
+
+- 🤔 There is overlap everywhere with 3 runs, so this is a hint, not proof. **It is not a demonstrated improvement in
+  performance.**
+- ✅ The chain *idea → memory → trying it* worked **every time a night wrote an idea** (2 of 3 nights). One night
+  invented "carry it away from the wall" (delivered in 18 s). Another invented its own sensible idea, "ask the human to
+  move the ball out of the corner", which the script didn't respond to.
+- ❌ One day-1 **succeeded** by carrying, but the night wrote no lesson about it, so day 2 went back to kicking. **A
+  success that isn't written down is lost.**
+- ❌ The ideal case never happened in these runs: never carrying on day 1, inventing carrying at night, then doing it.
+
 ---
 
 ## 3. The 2D body: seeing and mapping

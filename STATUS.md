@@ -43,7 +43,7 @@ This page is the current state. The history, including the experiments that fail
 |---|---|
 | **Night review** | Mistakes are judged only from what the day showed. Wrongly deleted memories went from 3 to 0 over three nights. A promise or a plan is never treated as a mistake. |
 | **Self-image from his body's track record** | His beliefs about himself now match what his body really did. He stopped believing "I can climb the bookshelf" after a day of failing to. |
-| **Lessons and ideas** | Untested ideas ("Maybe I could carry the ball…") are kept apart from lessons. When a night wrote the right idea, the next day he used it in a new place: the ball was delivered in 18 s. That has happened in 1 of 3 runs so far. |
+| **Lessons and ideas** | Untested ideas ("Maybe I could carry the ball…") are kept apart from lessons. Every time a night wrote an idea, he tried it the next day (2 of 2). When it was the right idea, the ball was delivered in 18 s. **But this is not yet a proven gain in performance:** in the ball transfer test the group *without* experience was faster (13 s against 17–133 s), and with ideas the results overlap with the control. He only learns from what he actually tried, and a success the night doesn't write down is lost. Details in the [journal](docs/JOURNAL.md#-ball-transfer-test-the-control-group-was-faster). |
 | **Dreams** | Written by the night model from the day's strongest moments and the pictures he kept. |
 
 ### Body: 2D simulator
