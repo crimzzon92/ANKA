@@ -31,7 +31,12 @@ looking back on the day.
   <img src="examples/mujoco-day/camera/026_ball2.2_pitch-6.png" width="32%" alt="Anka's camera: the corner of the room and the sofa, with the ball marked 2.18 m away">
 </p>
 
-*What Anka sees: his own camera, about 20 cm above the floor. The green boxes are drawn by his colour finder, with how far away each thing is: the ball across the room (1.62 m), the sock right under his beak (0.10 m), and the ball again by the sofa (2.18 m).*
+*What Anka sees: his own camera in the simulator, about 20 cm above the floor. The green boxes show what he recognised and how far away it is: the ball across the room (1.62 m), the sock right under his beak (0.10 m), and the ball again by the sofa (2.18 m). The picture itself goes to the language model too, so he describes the room in his own words.*
+
+**How he recognises things, now and later:**
+- **In the simulator (now):** a simple **colour finder**. It looks for the ball's orange and the sock's red in the picture, and works out the distance from where the thing touches the floor. It is an honest stand-in: it only works in this room, with these colours. Furniture and people come from a pretend detector that uses the simulator's own knowledge, with realistic errors added.
+- **On the real duck (later):** a learned object detector, **YOLO** (`yolo11n`, plus `yoloe` for things like "sock" and "guitar"), with the distance taken from the duck's **8×8 depth sensor**. We tried YOLO in the simulator first and it recognised nothing, because the simulator's objects are simple shapes and YOLO is trained on photos. Whether it works on the real camera is one of the first things to test ([STATUS](STATUS.md#-next)).
+- **Either way**, only facts reach the brain ("the ball, about 1.6 m ahead, a little to the left"). What it means, and what to do about it, is up to him.
 
 - 📖 **[docs/GUIDE.md](docs/GUIDE.md)** – how to install and run him, and how everything works inside
 - 📊 **[STATUS.md](STATUS.md)** – what is done and working, how well (with numbers), what should be fixed, and what's next
