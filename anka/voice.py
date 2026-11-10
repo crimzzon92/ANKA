@@ -4,6 +4,7 @@ import queue
 import re
 import shutil
 import subprocess
+import sys
 import tempfile
 import threading
 import time
@@ -13,6 +14,7 @@ import numpy as np
 
 from settings import (SIM_SOUND, CLONE_VOICE, DUCK_BUZZ, DUCK_NOSE, DUCK_VOICE, FOLDER, KOKORO_MODEL, KOKORO_SPEED, KOKORO_VOICE, KOKORO_VOICES, MAC_VOICE, MOOD_VOICE, NAME, SIM, VOICE_ENGINE, VOICE_PITCH)
 from anka.shared import S, voice_waiting
+from anka.sound import play_file
 
 
 
@@ -178,8 +180,8 @@ def load_voice():
 
 
 def play(sound, sr, talk, sentence=""):
-    """Plays sound with the Mac's own 'afplay' instead of PortAudio. afplay copes with switching
-    headphones/speakers and different sound quality without 'Audio Hardware Error'."""
+    """Plays sound with the computer's own player (afplay on a Mac, see anka/sound.py) instead of
+    PortAudio. afplay copes with switching headphones/speakers without 'Audio Hardware Error'."""
     path = os.path.join(tempfile.gettempdir(), f"pip_voice_{os.getpid()}.wav")
     data = (np.clip(np.asarray(sound, dtype="float32"), -1, 1) * 32767).astype("<i2")
     with wave.open(path, "wb") as w:
@@ -189,7 +191,7 @@ def play(sound, sr, talk, sentence=""):
         w.writeframes(data.tobytes())
     for attempt in range(2):
         track_mouth(data.astype("float32") / 32767, sr, sentence=sentence)
-        talk.player = spawn(["afplay", path], stderr=subprocess.PIPE)
+        talk.player = play_file(path, start=spawn, stderr=subprocess.PIPE)
         while talk.player.poll() is None and not talk.stopped.is_set():
             time.sleep(0.03)
         if talk.player.poll() is None:
@@ -206,7 +208,11 @@ def play(sound, sr, talk, sentence=""):
 
 
 def mac_say(text, talk):
-    """Says the text with the Mac's own voice (stops if Anka is interrupted)."""
+    """Says the text with the Mac's own voice (stops if Anka is interrupted). Only on a Mac:
+    elsewhere the text is just printed."""
+    if sys.platform != "darwin" or not shutil.which("say"):
+        print(f"🔊 (no voice on this computer – Kokoro didn't start): {text}")
+        return
     mac = spawn(["say", "-v", MAC_VOICE, text])
     while mac.poll() is None and not talk.stopped.is_set():
         time.sleep(0.05)

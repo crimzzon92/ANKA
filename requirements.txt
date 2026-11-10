@@ -1,9 +1,9 @@
-# Anka – Python packages (Python 3.11+, macOS / Apple Silicon tested). Install:  pip install -r requirements.txt
+# Anka – Python packages (Python 3.11+; tested on macOS / Apple Silicon only, Linux and Windows untested). Install:  pip install -r requirements.txt
 numpy
 opencv-python          # camera, face sensor, room window
 onnxruntime            # Kokoro voice, depth AI, face recogniser
 kokoro-onnx            # the voice
-sounddevice            # microphone
+sounddevice            # microphone (and the speaker on Windows)
 faster-whisper         # reserve ears (only when the cloud brain is away)
 matplotlib             # test plots (tools/)
 # optional:

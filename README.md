@@ -223,7 +223,7 @@ bigger model goes over the day and writes lessons, ideas and beliefs about himse
 
 ## Quick start
 
-Developed on macOS (Apple Silicon). The `.command` files are double-click launchers for macOS.
+**Tested on macOS (Apple Silicon) only.** Linux and Windows should work for most parts, including his voice, but are untested; the 3D simulator needs macOS or Linux. Details: [which computers](docs/GUIDE.md#which-computers). The `.command` files are double-click launchers for macOS.
 
 ```bash
 # 1. Python packages, in the environment the launchers use

@@ -1350,7 +1350,8 @@ class SimBody:
         return "stood up", True
 
     def _play_wav(self, path):
-        """Plays a sound file on the Mac (robotd's aplay can't) - not on top of his voice, and not when muted."""
+        """Plays a sound file where robotd can't (it uses aplay, which only Linux has) - not on top of his voice, and
+        not when muted."""
         try:
             from anka import voice
             from anka.shared import S as _S
@@ -1362,9 +1363,11 @@ class SimBody:
                 self._sleep(0.2)
         except Exception:
             pass
-        if sys.platform == "darwin" and os.path.isfile(path):
+        # On Linux Pollen's robotd plays the sound itself (with aplay); everywhere else we play it here.
+        if not sys.platform.startswith("linux") and os.path.isfile(path):
             import subprocess
-            subprocess.Popen(["afplay", path], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            from anka.sound import play_file
+            play_file(path, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             return True
         return False
 
@@ -1412,8 +1415,8 @@ class SimBody:
                 "can't grab anything in this body), then you stood up again"), True
 
     def _sound(self, a):
-        """One of the duck's own sounds (2026-11-10). The robot plays them itself (robot.sound); in the simulator on the
-        Mac robotd can't (it plays with aplay - Linux), so the Mac plays the same voice-bank file. Never on top of his
+        """One of the duck's own sounds (2026-11-10). The robot plays them itself (robot.sound); in the simulator robotd
+        plays them with aplay, which only Linux has, so on other computers we play the same voice-bank file here. Never on top of his
         voice: if he is talking, the sound waits until he is done."""
         tag = next((SOUND_ALIASES.get(w, w) for w in re.findall(r"[a-z]+", a) if SOUND_ALIASES.get(w, w) in SOUNDS), "chirp")
         try:
@@ -1423,10 +1426,6 @@ class SimBody:
                 self._sleep(0.2)
         except Exception:
             pass
-        try:
-            self.link.call("robot.sound", {"tag": tag})
-        except Exception:
-            pass
         played = False
         try:
             from anka.shared import S as _S
@@ -1434,15 +1433,22 @@ class SimBody:
             muted = not (_SIM_SOUND and _S.sound_on)
         except Exception:
             muted = False
-        if sys.platform == "darwin" and not muted:
+        linux = sys.platform.startswith("linux")   # on Linux robotd plays the sound itself (with aplay)
+        if not (linux and muted):
+            try:
+                self.link.call("robot.sound", {"tag": tag})
+            except Exception:
+                pass
+        if not linux and not muted:
             import glob, subprocess
+            from anka.sound import play_file
             files = glob.glob(os.path.join(SOUND_BANK, tag, "*.wav"))
             if files:
-                subprocess.Popen(["afplay", random.choice(files)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                play_file(random.choice(files), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
                 played = True
         self.sounds[tag] = self.sounds.get(tag, 0) + 1
         self._sleep(0.8)
-        return f"you made your '{tag}' sound ({SOUNDS[tag]})" + ("" if played or muted or sys.platform != "darwin" else " – but no sound came out"), True
+        return f"you made your '{tag}' sound ({SOUNDS[tag]})" + ("" if played or muted or linux else " – but no sound came out"), True
 
     KICK_X, KICK_Y = 0.09, 0.042     # where Pollen's kick wants the ball: 9 cm ahead, 4.2 cm to the side of the foot
 
