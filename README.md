@@ -39,6 +39,7 @@ looking back on the day.
 - **Either way**, only facts reach the brain ("the ball, about 1.6 m ahead, a little to the left"). What it means, and what to do about it, is up to him.
 
 - 🚀 **[Quick start](#quick-start)** – install and run him (macOS tested; Linux and Windows untested)
+- 🗂️ **[Which file starts what](#which-file-starts-what)** – the launchers and folders, explained
 - 📖 **[docs/GUIDE.md](docs/GUIDE.md)** – how to install and run him, and how everything works inside
 - 📊 **[STATUS.md](STATUS.md)** – what is done and working, how well (with numbers), what should be fixed, and what's next
 - 📓 **[docs/JOURNAL.md](docs/JOURNAL.md)** – what we tried, what worked, and what didn't (with numbers)
@@ -284,10 +285,55 @@ Set-Content cloud_key.txt "YOUR-KEY"
 & $HOME\anka-env\Scripts\python run_anka.py --simulate --body
 ```
 
-**Other ways to run him:**
-- **The 3D simulator:** this needs Pollen's [microduck](https://github.com/pollen-robotics/microduck) and `microduck_rl` in `~/Pollen/`, plus Rust and GStreamer. Run `tools/Update Pollen (0.18.9).command` once. Then start `Start Anka sim.command`, and after it `tools/Anka in sim (everything).command`.
-- **For real, with your computer's camera, microphone and speakers:** double-click `Start Anka.command` on a Mac, or run `python run_anka.py` (with the Python from step 1) anywhere else. See [Real or simulated?](#real-or-simulated) for the differences.
-- **The full guide**, with every option, is in [docs/GUIDE.md](docs/GUIDE.md).
+## Which file starts what
+
+On a Mac you double-click the `.command` files. Elsewhere, run the command in the right-hand column with the Python
+from step 1 of the quick start.
+
+**Start here:**
+
+| I want to… | Double-click (macOS) | Or run |
+|---|---|---|
+| **Talk to Anka for real** (your camera, microphone, speakers) | `Start Anka.command` | `python run_anka.py` |
+| **Watch him in the 3D simulator**, all in one go | `Start everything.command` | – (does the two steps below for you) |
+| **Watch him in the 2D simulator** (no extra software needed) | – | `python run_anka.py --simulate --body` |
+
+**The 3D simulator, step by step** (what `Start everything.command` does for you):
+
+The 3D simulator needs Pollen's [microduck](https://github.com/pollen-robotics/microduck) and [microduck_rl](https://github.com/pollen-robotics/microduck_rl)
+in `~/Pollen/`, plus Rust and GStreamer (macOS or Linux). Details in the [guide](docs/GUIDE.md#7-the-3d-simulator-in-practice).
+
+1. `Start Anka sim.command` builds Anka's room and starts Pollen's MuJoCo simulator. **Leave that window open.**
+2. Then start his brain, with one of:
+   - `Anka in sim.command` – a normal test day in the simulator,
+   - `tools/Anka in sim (everything).command` – the 17-minute day that tests everything (like the [example](examples/mujoco-day/)).
+3. Optional: `tools/Anka eyes.command` opens a window with what the duck's camera and depth sensor see.
+
+The first time, run `tools/Update Pollen (0.18.9).command` once. It puts your copy of Pollen's software on the version
+Anka is tested with.
+
+**Other launchers in the top folder:**
+
+| File | What it does |
+|---|---|
+| `Learn a face.command` | Teaches Anka someone's face (asks for the name). Anka must be asleep, because it uses the camera. |
+| `Camera floor test.command` | Tests depth from your real webcam with the laptop standing on the floor (no cloud, costs nothing). Made for the real duck later. |
+
+**The other files and folders:**
+
+| | What it is |
+|---|---|
+| `run_anka.py` | The program every launcher starts. Its options are listed in the [guide](docs/GUIDE.md#4-the-ways-to-run-him). |
+| `settings.py` | All settings in one place: brains, timings, memory, voice, the body, the test days. |
+| `requirements.txt` · `download_models.sh` | What to install (quick start steps 1 and 3). |
+| `anka/` | His mind: thinking, feelings, memory, nights, voice, ears, eyes, and the 2D body. |
+| `ankasim/` | His body in Pollen's MuJoCo simulator: the link to the duck's software, the living body, his 3D map. |
+| `tools/` | Test days, measuring, experiments and fault-finding. Every file is explained in [tools/README.md](tools/README.md). |
+| `docs/` | The [guide](docs/GUIDE.md), the [journal](docs/JOURNAL.md) and images. |
+| `examples/` | One recorded day in the 3D simulator. |
+| `memory/` | Created when he first runs: his memory. Never part of the repository. |
+| `test_logs/` | Created by test days: logs, maps and thought traces. Never part of the repository. |
+| `STATUS.md` · `LICENSE` · `NOTICE` | What works now · the license · who to credit. |
 
 **Anka starts with an empty memory**: this repository contains none. He learns everything from you. His memory is kept in `memory/real/` and `memory/simulation/`, and it is never part of the repository. The [guide](docs/GUIDE.md) has all the details.
 
