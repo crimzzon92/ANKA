@@ -1,7 +1,7 @@
 """B2 – "what I tried": a short history of what his body did lately and what came of it, grouped by what it was
 aimed at (the sofa, the cup ...). Only FACTS from his body – Python never says "this doesn't work" or "try
 something else". What the history means (keep trying, a new plan, give up the goal) is his own choice.
-See claude/anka-thinking-plan.md (B2). Written 2026-11-06 after day 3 of the cup test: he walked to the sofa twice
+Written 2026-11-06 after day 3 of the cup test: he walked to the sofa twice
 "to climb up to the cup" and never noticed it brought him no closer."""
 import re
 import threading

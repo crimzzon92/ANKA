@@ -1,4 +1,4 @@
-"""Scores Anka's thinking from his thought logs (test_logs/trace_*.jsonl) - see claude/anka-thinking-plan.md.
+"""Scores Anka's thinking from his thought logs (test_logs/trace_*.jsonl) - see docs/GUIDE.md, section 8.
 
     python tools/score_run.py                  score every new run, add them to test_logs/scores.csv, show the newest
     python tools/score_run.py <trace.jsonl>    score one run and show its scorecard
