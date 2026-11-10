@@ -1,0 +1,11 @@
+Anka – an autonomous embodied AI agent for the Microduck robot duck
+Copyright 2026 crimzzon92
+
+Originally created by crimzzon92 – https://github.com/crimzzon92/ANKA
+
+This product includes software developed as part of the Anka project.
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+Anka talks to, but does not include, Pollen Robotics' Microduck software
+(https://github.com/pollen-robotics/microduck, Apache-2.0). Pollen's robot 3D
+models (microduck_rl, CC BY-NC-SA 4.0) are not included in this repository.
