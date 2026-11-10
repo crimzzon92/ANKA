@@ -31,6 +31,7 @@ looking back on the day.
 
 - 📖 **[docs/GUIDE.md](docs/GUIDE.md)** – how to install and run him, and how everything works inside
 - 📊 **[STATUS.md](STATUS.md)** – what is done and working, how well (with numbers), what should be fixed, and what's next
+- 📓 **[docs/JOURNAL.md](docs/JOURNAL.md)** – what we tried, what worked, and what didn't (with numbers)
 - 🎬 **[examples/mujoco-day/](examples/mujoco-day/)** – a whole recorded day in the simulator: the log, his thoughts, his map
 
 ## About this project
@@ -100,7 +101,7 @@ In Pollen's MuJoCo simulator, running the real Microduck software:
 Before every action he says what he expects. Afterwards he rates how surprised he was. Over three days in one life, his
 average surprise fell from 0.28 to 0.11 to 0.04, because he learned to predict his world.
 
-➡️ All the numbers, and what doesn't work yet, are in **[STATUS.md](STATUS.md)**.
+➡️ All the numbers, and what doesn't work yet, are in **[STATUS.md](STATUS.md)**. The failures along the way are in the **[journal](docs/JOURNAL.md)**.
 
 ## An example day
 
