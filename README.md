@@ -166,7 +166,9 @@ Apache License 2.0 – see [LICENSE](LICENSE), the same license as Pollen's Micr
 
 ## Credits
 
-The 3D body builds on Pollen Robotics' open-source [Microduck](https://github.com/pollen-robotics/microduck) software,
-its MuJoCo models and its emotion set (Apache-2.0). The voice is [Kokoro](https://github.com/thewh1teagle/kokoro-onnx).
+The 3D body builds on Pollen Robotics' open-source [Microduck](https://github.com/pollen-robotics/microduck) software and
+its emotion set (Apache-2.0), and on the robot's 3D models from
+[microduck_rl](https://github.com/pollen-robotics/microduck_rl). Those models are licensed CC BY-NC-SA 4.0 and are **not**
+included here: `ankasim/make_scene.py` reads them from your own copy of `microduck_rl`. The voice is [Kokoro](https://github.com/thewh1teagle/kokoro-onnx).
 The face sensor and recogniser come from [OpenCV Zoo](https://github.com/opencv/opencv_zoo). Depth from the camera uses
 Depth Anything V2.
