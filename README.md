@@ -4,6 +4,10 @@
 
 *Anka* simply means **"duck"** in Swedish.
 
+**In one sentence:** Anka is an experimental embodied AI agent that keeps autobiographical memories, reflects on his
+experiences at night, thinks up ideas to try, and lets past experience shape what he does next. He is not a claim about
+consciousness: everything described here is a mechanism you can read in the code and measure in the logs.
+
 Anka is a hobby project: a mind for **Microduck**, Pollen Robotics' 25 cm walking robot duck. Until the real duck
 arrives, Anka lives in two simulators. One is a simple 2D room. The other is Pollen's own **MuJoCo** simulator, which runs
 the real duck software.
@@ -141,6 +145,30 @@ That night he wrote:
 The day cost about $0.25 in cloud calls.
 
 ## How it is built
+
+```mermaid
+flowchart TB
+    SENSE["👁️ Senses<br/>camera + 8x8 depth sensor"]
+    FACTS["🐍 Python gathers facts, not rules<br/>what he sees, his own map, what his body did,<br/>his 7 feelings, time, who is here"]
+    MEM[("📔 Memory<br/>facts, diary, conversations, pictures<br/>found by meaning")]
+    LLM{{"🧠 Language model (Gemini)<br/>THOUGHT · FEEL · ACT · EXPECT · BODY · SAY · GOAL"}}
+    BODY["🦆 Body acts<br/>walk, look, kick, peck, sit, sounds, emotions, pose"]
+    NIGHT["🌙 Night (bigger model)<br/>review, lessons, ideas to try, self-image, dream"]
+
+    SENSE --> FACTS
+    MEM -- "memories that fit" --> FACTS
+    FACTS --> LLM
+    LLM --> BODY
+    BODY -- "what really happened" --> FACTS
+    LLM -- "diary, pictures, feelings" --> MEM
+    MEM -- "the whole day" --> NIGHT
+    NIGHT -- "lessons, ideas, beliefs for tomorrow" --> MEM
+```
+
+Every few seconds Python gathers the facts, and the language model writes one thought with its answer fields. Python
+carries out the action, and what *really* happened (not what he hoped) becomes a fact for the next thought. At night a
+bigger model goes over the day and writes lessons, ideas and beliefs about himself that he sees the next day.
+
 
 | Part | What it does |
 |---|---|
