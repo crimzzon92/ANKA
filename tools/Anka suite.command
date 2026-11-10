@@ -10,9 +10,7 @@
 #   "Anka suite.command" nextday    = one more day of the same life (cup task, life mode, memory kept) – run after twodays
 #   "Anka suite.command" transfer   = TRANSFER TEST: cup (day 1) → night → the sock up on the sofa (day 2), vs the sofa task
 #                                     in a fresh life (control) – ×3 (9 runs, ~65 min, ≈ $1.20)
-#   "Anka suite.command" wise       = ASK THE WISER BRAIN WHEN STUCK: the ball in the corner ×3 (~21 min, ≈ $0.50) – compare by hand
-#                                     with the 2026-11-09 19:11–20:07 runs ("thinkhalf" = the same runs)
-#   "Anka suite.command" think      = THINK HARDER WHEN STUCK: the ball stuck in the corner, ×3 with / ×3 without (one day each)
+#   "Anka suite.command" wise       = ASK THE WISER BRAIN WHEN STUCK: the ball in the corner, ×3 with / ×3 without (--no-wise), one day each (~42 min, ≈ $0.90)
 #   "Anka suite.command" balltransfer = TRANSFER TEST 2: ball stuck in a corner (day 1) → ball against another wall (day 2):
 #                                     WITH night ideas / WITHOUT ideas (--no-ideas) / fresh life (control) – ×3 (15 runs, ~1 h 50, ≈ $2)
 #   "Anka suite.command" expect     = B1: the surprise scenario ×3 with expectations + ×3 without (--no-expect)
@@ -36,16 +34,15 @@ case "$SUITE" in
     transfer) RUNS=("cup --life --newlife" "high --life" "high --life --newlife"
                     "cup --life --newlife" "high --life" "high --life --newlife"
                     "cup --life --newlife" "high --life" "high --life --newlife") ;;
-    thinkhalf|wise) RUNS=("ballcorner --life --newlife" "ballcorner --life --newlife" "ballcorner --life --newlife") ;;
-    think)    RUNS=("ballcorner --life --newlife" "ballcorner --life --newlife --no-think-harder"
-                    "ballcorner --life --newlife" "ballcorner --life --newlife --no-think-harder"
-                    "ballcorner --life --newlife" "ballcorner --life --newlife --no-think-harder") ;;
+    wise)     RUNS=("ballcorner --life --newlife" "ballcorner --life --newlife --no-wise"
+                    "ballcorner --life --newlife" "ballcorner --life --newlife --no-wise"
+                    "ballcorner --life --newlife" "ballcorner --life --newlife --no-wise") ;;
     balltransfer) RUNS=("ballcorner --life --newlife" "ballwall --life" "ballcorner --life --newlife --no-ideas" "ballwall --life --no-ideas" "ballwall --life --newlife"
                     "ballcorner --life --newlife" "ballwall --life" "ballcorner --life --newlife --no-ideas" "ballwall --life --no-ideas" "ballwall --life --newlife"
                     "ballcorner --life --newlife" "ballwall --life" "ballcorner --life --newlife --no-ideas" "ballwall --life --no-ideas" "ballwall --life --newlife") ;;
     expect)   RUNS=("surprise" "surprise --no-expect" "surprise" "surprise --no-expect" "surprise" "surprise --no-expect") ;;
     echo)     RUNS=("shout" "shout --no-echo" "shout" "shout --no-echo" "shout" "shout --no-echo") ;;
-    *) echo "Unknown suite '$SUITE' (baseline, feelings, lonely, twodays, nextday, quick, talk, echo, expect, transfer, balltransfer, think, thinkhalf, wise)"; read -r -p "Press Enter..."; exit 1 ;;
+    *) echo "Unknown suite '$SUITE' (baseline, feelings, lonely, twodays, nextday, quick, talk, echo, expect, transfer, balltransfer, wise)"; read -r -p "Press Enter..."; exit 1 ;;
 esac
 if [ ! -x "$PY" ]; then echo "❌ Can't find $PY"; read -r -p "Press Enter..."; exit 1; fi
 if ! curl -s http://localhost:11434/api/tags >/dev/null 2>&1; then open -a Ollama; sleep 8; fi   # (memory search needs it)
@@ -66,9 +63,7 @@ echo; echo "📈 Scoring..."
 "$PY" tools/score_run.py >/dev/null
 SINCE_ARGS=""; [ "$SUITE" = "echo" ] && SINCE_ARGS="shout --since $STARTED"
 [ "$SUITE" = "expect" ] && SINCE_ARGS="surprise --since $STARTED"
-[ "$SUITE" = "think" ] && SINCE_ARGS="ballcorner --since $STARTED"
-[ "$SUITE" = "thinkhalf" ] && SINCE_ARGS="ballcorner --since 2026-11-09_19"
-[ "$SUITE" = "wise" ] && SINCE_ARGS="ballcorner --since 2026-11-09_19"
+[ "$SUITE" = "wise" ] && SINCE_ARGS="ballcorner --since $STARTED"
 if [ "$SUITE" = "balltransfer" ]; then
     "$PY" tools/score_run.py --transfer "$STARTED" ballwall | tee "test_logs/compare_$(date +%Y-%m-%d_%H%M)_$SUITE.txt"
 elif [ "$SUITE" = "transfer" ]; then

@@ -236,6 +236,8 @@ Small test programs, to run with the simulator on and Anka off:
 - `tools/Anka headtest.command`
 - `tools/Anka kick test.command`
 
+Every file in `tools/` is explained in [tools/README.md](../tools/README.md).
+
 ## 8. Measuring him
 
 Every simulation writes a **thought trace** (`test_logs/trace_<time>_<scenario>_<condition>.jsonl`), one JSON line per
