@@ -223,7 +223,17 @@ bigger model goes over the day and writes lessons, ideas and beliefs about himse
 
 ## Quick start
 
-**Tested on macOS (Apple Silicon) only.** Linux and Windows should work for most parts, including his voice, but are untested; the 3D simulator needs macOS or Linux. Details: [which computers](docs/GUIDE.md#which-computers). The `.command` files are double-click launchers for macOS.
+**Tested on macOS (Apple Silicon) only.** Linux and Windows should work for most parts, his voice included, but nobody
+has tried them yet; if you do, please open an issue and say how it went. Details: [which computers](docs/GUIDE.md#which-computers).
+
+| | macOS | Linux | Windows |
+|---|---|---|---|
+| Brain, memory, nights, real mode, 2D simulator | ✅ Tested | Should work | Should work |
+| His voice and duck sounds | ✅ Tested | Should work (`paplay`, `aplay` or `ffplay`) | Should work (Python's `sounddevice`) |
+| 3D simulator (Pollen's MuJoCo) | ✅ Tested | Should work | ❌ Not supported by Pollen's software |
+| Double-click launchers (`.command`) | ✅ | Run them with `bash "<file>.command"` | ❌ Use the commands below |
+
+**macOS and Linux:**
 
 ```bash
 # 1. Python packages, in the environment the launchers use
@@ -243,9 +253,34 @@ echo "YOUR-KEY" > cloud_key.txt
 ~/anka-env/bin/python run_anka.py --simulate --body
 ```
 
+On Linux, also install a sound player if you don't have one, for example `sudo apt install pulseaudio-utils` (for
+`paplay`) or `alsa-utils` (for `aplay`).
+
+**Windows** (PowerShell, untested):
+
+```powershell
+# 1. Python packages
+py -m venv $HOME\anka-env
+& $HOME\anka-env\Scripts\pip install -r requirements.txt
+
+# 2. Ollama (https://ollama.com) for memory search
+ollama pull nomic-embed-text
+
+# 3. The voice model (too big for GitHub)
+$k = "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0"
+Invoke-WebRequest "$k/kokoro-v1.0.onnx" -OutFile kokoro-v1.0.onnx
+Invoke-WebRequest "$k/voices-v1.0.bin" -OutFile voices-v1.0.bin
+
+# 4. Your Gemini API key: one line, never committed
+Set-Content cloud_key.txt "YOUR-KEY"
+
+# 5. A test day in the 2D room
+& $HOME\anka-env\Scripts\python run_anka.py --simulate --body
+```
+
 **Other ways to run him:**
 - **The 3D simulator:** this needs Pollen's [microduck](https://github.com/pollen-robotics/microduck) and `microduck_rl` in `~/Pollen/`, plus Rust and GStreamer. Run `tools/Update Pollen (0.18.9).command` once. Then start `Start Anka sim.command`, and after it `tools/Anka in sim (everything).command`.
-- **For real, with your Mac's camera, microphone and speakers:** double-click `Start Anka.command`. See [Real or simulated?](#real-or-simulated) for the differences.
+- **For real, with your computer's camera, microphone and speakers:** double-click `Start Anka.command` on a Mac, or run `python run_anka.py` (with the Python from step 1) anywhere else. See [Real or simulated?](#real-or-simulated) for the differences.
 - **The full guide**, with every option, is in [docs/GUIDE.md](docs/GUIDE.md).
 
 **Anka starts with an empty memory**: this repository contains none. He learns everything from you. His memory is kept in `memory/real/` and `memory/simulation/`, and it is never part of the repository. The [guide](docs/GUIDE.md) has all the details.
