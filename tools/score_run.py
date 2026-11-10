@@ -26,7 +26,7 @@ FEELINGS = ["curiosity", "boredom", "loneliness", "happiness", "affection", "ner
 STOP = set("""that this with what about there here still just like looks wonder maybe really very from when would could
 think feel exactly same again more much some something also seems feels your have been were they them their into than
 then only over want need know going right want make made does doing want little have has will shall where which while
-these those want into onto very much alex anka""".split())
+these those want into onto very much alex robin anka""".split())
 MOVE = re.compile(r"\b(walk|go|come|move|waddle|run|head|turn|explore|step|approach|face)\b")
 SOCIAL = re.compile(r"\b(alex|robin|you|me|him|her|the human|person)\b")
 

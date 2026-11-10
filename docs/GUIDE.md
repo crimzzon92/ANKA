@@ -11,7 +11,7 @@ measure and tune him. For what works and what doesn't yet, see [STATUS.md](../ST
 |---|---|
 | **Computer** | A Mac with Apple Silicon is the only one tested (developed on an M1 with 8 GB). Linux and Windows should work for most parts but are untested. See [Which computers](#which-computers) below. |
 | **Python** | 3.11 or newer, in a virtual environment at `~/anka-env`. The launchers use `~/anka-env/bin/python`. |
-| **Cloud brain** | A Google Gemini API key, used for the day brain and the night brain. |
+| **Cloud brain** | A Google Gemini API key ([get one here](https://aistudio.google.com/apikey)), used for the day brain and the night brain. A paid key is recommended: on the free tier Google uses what you send to improve its products. See [Privacy](../README.md#privacy-what-leaves-your-computer). |
 | **Local brain** | [Ollama](https://ollama.com), for memory search and the reserve brain. |
 | **Camera + microphone** | Only for the real mode. The simulators don't need them. |
 
