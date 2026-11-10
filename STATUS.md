@@ -9,6 +9,9 @@ difference is a strong hint, not proof. The language model answers differently e
 The tool that does the measuring is `tools/score_run.py`. It reads the thought traces (`test_logs/trace_*.jsonl`) and
 counts what he actually did: actions, failures, repeats, goals, feelings, memory use, cost. No AI judges anything.
 
+This page is the current state. The history, including the experiments that failed and what they taught us, is in
+[docs/JOURNAL.md](docs/JOURNAL.md).
+
 ---
 
 ## ✅ Done and working
