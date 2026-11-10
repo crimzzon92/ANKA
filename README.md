@@ -14,6 +14,14 @@ looking back on the day.
 ![Anka's walk through the room in the example day](examples/mujoco-day/room_map.png)
 *Left: the room and the path he walked in one simulated day. Right: the floor plan he built himself from his depth sensor and his own step counting.*
 
+<p>
+  <img src="examples/mujoco-day/camera/015_ball1.6_pitch-9.png" width="32%" alt="Anka's camera: a desk and a door, with the red ball marked 1.62 m away">
+  <img src="examples/mujoco-day/camera/021_sock0.1_pitch-30.png" width="32%" alt="Anka's camera looking down at a red sock 10 cm away">
+  <img src="examples/mujoco-day/camera/026_ball2.2_pitch-6.png" width="32%" alt="Anka's camera: the corner of the room and the sofa, with the ball marked 2.18 m away">
+</p>
+
+*What Anka sees: his own camera, about 20 cm above the floor. The green boxes are drawn by his colour finder, with how far away each thing is: the ball across the room (1.62 m), the sock right under his beak (0.10 m), and the ball again by the sofa (2.18 m).*
+
 - 📖 **[docs/GUIDE.md](docs/GUIDE.md)** – how to install and run him, and how everything works inside
 - 📊 **[STATUS.md](STATUS.md)** – what is done and working, how well (with numbers), what should be fixed, and what's next
 - 🎬 **[examples/mujoco-day/](examples/mujoco-day/)** – a whole recorded day in the simulator: the log, his thoughts, his map
