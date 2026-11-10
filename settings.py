@@ -413,7 +413,7 @@ if BODY:
     SIM_SCRIPT = SIM_SCRIPT_MUJOCO if MUJOCO else SIM_SCRIPT_BODY
     NAP_WHEN_ALONE = False   # alone, he has a room to explore instead
 
-# ---------- Measuring his thinking (see the project notes) ----------
+# ---------- Measuring his thinking (see docs/GUIDE.md, section 8) ----------
 # Short, fixed test scenarios. Run one with:  python run_anka.py --simulate --body --scenario alone
 # (each is run several times, because the brain never answers exactly the same way twice)
 SCENARIOS = {

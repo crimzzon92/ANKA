@@ -12,9 +12,11 @@ It does not give him behaviour rules. His personality is meant to grow from what
 looking back on the day.
 
 ![Anka's walk through the room in the example day](examples/mujoco-day/room_map.png)
+*Left: the room and the path he walked in one simulated day. Right: the floor plan he built himself from his depth sensor and his own step counting.*
 
-👉 **[docs/GUIDE.md](docs/GUIDE.md)** – how to install and run him, and how everything works inside.
-👉 **[STATUS.md](STATUS.md)** – what is done and working, how well (with numbers), what should be fixed, and what's next.
+- 📖 **[docs/GUIDE.md](docs/GUIDE.md)** – how to install and run him, and how everything works inside
+- 📊 **[STATUS.md](STATUS.md)** – what is done and working, how well (with numbers), what should be fixed, and what's next
+- 🎬 **[examples/mujoco-day/](examples/mujoco-day/)** – a whole recorded day in the simulator: the log, his thoughts, his map
 
 ## About this project
 
@@ -146,17 +148,32 @@ The day cost about $0.25 in cloud calls.
 - **Reserve:** Qwen3.5-4B (3-bit) in Ollama, for when the network is gone. It fits in the 8 GB of RAM that the dev machine (an M1 MacBook) has.
 - **Memory search:** `nomic-embed-text`.
 
-## Running it
+## Quick start
 
 Developed on macOS (Apple Silicon). The `.command` files are double-click launchers for macOS.
 
-1. **Python packages:** run `pip install -r requirements.txt`. Then install [Ollama](https://ollama.com) and run `ollama pull nomic-embed-text`.
-2. **The voice model:** run `./download_models.sh`. The face models and the depth AI download themselves the first time they are needed.
-3. **A Gemini API key:** put it in `cloud_key.txt`, one line. This file is in `.gitignore`.
-4. Then:
-   - **2D test day:** `python run_anka.py --simulate --body` (or a scenario: `--scenario shout`, `sock`, `cup`, `alone` …)
-   - **MuJoCo:** this needs Pollen's [microduck](https://github.com/pollen-robotics/microduck) and `microduck_rl` in `~/Pollen/`, Rust, and GStreamer. Run `tools/Update Pollen (0.18.9).command` once, then `Start Anka sim.command`, then `tools/Anka in sim (everything).command`.
-   - **With a real camera and microphone:** `Start Anka.command` (`python run_anka.py`).
+```bash
+# 1. Python packages, in the environment the launchers use
+python3 -m venv ~/anka-env
+~/anka-env/bin/pip install -r requirements.txt
+
+# 2. Ollama (https://ollama.com) for memory search
+ollama pull nomic-embed-text
+
+# 3. The voice model (too big for GitHub)
+./download_models.sh
+
+# 4. Your Gemini API key: one line, never committed
+echo "YOUR-KEY" > cloud_key.txt
+
+# 5. A test day in the 2D room (no robot or simulator needed)
+~/anka-env/bin/python run_anka.py --simulate --body
+```
+
+**Other ways to run him:**
+- **The 3D simulator:** this needs Pollen's [microduck](https://github.com/pollen-robotics/microduck) and `microduck_rl` in `~/Pollen/`, plus Rust and GStreamer. Run `tools/Update Pollen (0.18.9).command` once. Then start `Start Anka sim.command`, and after it `tools/Anka in sim (everything).command`.
+- **With your Mac's camera, microphone and speakers:** double-click `Start Anka.command`.
+- **The full guide**, with every option, is in [docs/GUIDE.md](docs/GUIDE.md).
 
 **Anka starts with an empty memory**: this repository contains none. He learns everything from you. His memory is kept in `memory/real/` and `memory/simulation/`, and it is never part of the repository. The [guide](docs/GUIDE.md) has all the details.
 

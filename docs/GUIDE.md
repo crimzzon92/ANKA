@@ -19,7 +19,7 @@ measure and tune him. For what works and what doesn't yet, see [STATUS.md](../ST
 ## 2. Installation
 
 ```bash
-git clone <this repository> Duck && cd Duck
+git clone https://github.com/crimzzon92/ANKA.git anka && cd anka
 
 # Python environment (the launchers expect it in ~/anka-env)
 python3 -m venv ~/anka-env
@@ -67,7 +67,7 @@ His memory lives in two folders. Both are created automatically, and both are in
 | `Learn a face.command` | `python run_anka.py --learn-face <name>` | Teaches him a face. He must be asleep first, because he uses the camera. |
 | `Start Anka sim.command` | (Pollen's `duck-sim`) | Starts the **MuJoCo simulator** with Anka's room. Leave it running. |
 | `Anka in sim.command` | `python run_anka.py --simulate --mujoco` | Anka's brain with the simulated duck as his body (the default test day). |
-| `tools/Anka in sim (everything).command` | `… --mujoco --scenario all` | A **17-minute day that tests everything** (see section 8). |
+| `tools/Anka in sim (everything).command` | `… --mujoco --scenario all` | A **17-minute day that tests everything**. A recorded example, with the full script, is in [examples/mujoco-day](../examples/mujoco-day/). |
 | `Start everything.command` | | Starts the simulator, waits for it, and starts Anka in it. |
 | `Camera floor test.command` | `python camera_floor_test.py` | Tests depth from the camera with your real webcam on the floor. |
 
@@ -77,7 +77,7 @@ His memory lives in two folders. Both are created automatically, and both are in
 |---|---|
 | `--simulate` | Fake camera, mic and voice, a script instead of you. Uses his real brain and a separate memory. |
 | `--simulate --body` | The 2D virtual body in a room, with a window that shows the room from above. |
-| `--scenario <name>` | A fixed test day: `alone`, `cup`, `sock`, `shout`, `surprise`, `high`, `ballcorner`, `ballwall`, `all` (see `SCENARIOS` in `settings.py`). |
+| `--scenario <name>` | A fixed test day: `alone`, `cup`, `sock`, `shout`, `surprise`, `high`, `ballcorner`, `ballwall` (2D room), and `all` (made for the 3D simulator). See `SCENARIOS` in `settings.py`, where you can also write your own. |
 | `--life` / `--newlife` | Life mode: the simulation keeps its memory between runs, so you can test several days in a row. `--newlife` starts a new life. |
 | `--local` | Use only the local brain. |
 | `--cloud <model>` | Use another cloud model. |
@@ -134,16 +134,20 @@ Each thought is one call to the language model. The call contains:
 
 He answers in fields:
 
-```
-THOUGHT:  his thought                     FEEL:     feeling numbers that changed
-FEELING:  how he feels, in his own words  FACE:     his face expression
-SURPRISE: how different the last result was from what he expected (0–1) – why
-ACT:      what his body does (or none)    EXPECT:   what he thinks will happen
-BODY:     how his feelings show in his body right now
-SAY:      something to say out loud – or none (most thoughts stay inside)
-KEEP_PICTURE: why he wants to keep what he sees – or none
-PLACE_NOTE:   a note about the spot he's at
-```
+| Field | What he writes |
+|---|---|
+| `THOUGHT` | His thought |
+| `FEEL` | The feeling numbers that changed |
+| `FEELING` | How he feels, in his own words |
+| `FACE` | His face expression |
+| `MINDFUL` | Which lesson or self-belief matters right now, if any |
+| `SURPRISE` | How different the last result was from what he expected (0–1), and why |
+| `ACT` | What his body does (or none) |
+| `EXPECT` | What he thinks will happen when it does |
+| `BODY` | How his feelings show in his body right now |
+| `SAY` | Something to say out loud, or none (most thoughts stay inside) |
+| `KEEP_PICTURE` | Why he wants to keep what he sees as a picture memory, or none |
+| `PLACE_NOTE` | A note about the spot he is at |
 
 Every few thoughts he also sets, finishes or drops goals.
 
