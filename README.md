@@ -144,6 +144,33 @@ That night he wrote:
 
 The day cost about $0.25 in cloud calls.
 
+## Real or simulated?
+
+The same brain runs in every mode: thinking, feelings, memory and nights. Only his senses and his body change.
+
+| | 🏠 **For real, on your computer** | 🟦 **2D simulator** | 🦆 **MuJoCo simulator** | 🤖 **The real Microduck** |
+|---|---|---|---|---|
+| **Status** | ✅ Works | ✅ Works | ✅ Works | ⏳ Not built yet (no duck yet) |
+| **Who he meets** | You, for real | A script plays the people | A script plays the people | You, for real |
+| **How he hears you** | Your microphone (press ENTER and talk) | Typed lines from the script | Typed lines from the script | The duck's microphones |
+| **His eyes** | Your Mac's webcam | A drawn picture and a pretend depth sensor | A simulated camera and the 8×8 depth sensor | The real camera and depth sensor |
+| **His body** | None. He sees, hears, talks and has a face on screen, but can't move | A simple 2D duck: walks, picks up, carries, kicks | Pollen's real duck software: walks, looks, kicks, pecks, sounds, emotions (no beak motor) | The real thing |
+| **Recognising things** | Faces he has learned | A pretend detector | A colour finder for the ball and sock | Still to come (YOLO, faces) |
+| **His memory** | `memory/real/`, his real life | `memory/simulation/` | `memory/simulation/` | `memory/real/` |
+| **Start** | `Start Anka.command` | `run_anka.py --simulate --body` | `Start everything.command` | – |
+
+**Simulations never touch his real memory.** You can test as much as you like, and the Anka you talk to at home doesn't
+remember any of it.
+
+**What the simulators can't show** (and the reason the real duck matters):
+- real things in a real room, which a colour finder can't handle (in the simulator YOLO recognised nothing);
+- real light, real noise and a real floor;
+- real people who don't follow a script;
+- falls, battery and wear on a real body.
+
+The 3D body (`ankasim/simbody.py`) talks to the same programs the real duck runs, so it should carry over with few
+changes when the duck arrives. That is still untested.
+
 ## How it is built
 
 ```mermaid
@@ -218,7 +245,7 @@ echo "YOUR-KEY" > cloud_key.txt
 
 **Other ways to run him:**
 - **The 3D simulator:** this needs Pollen's [microduck](https://github.com/pollen-robotics/microduck) and `microduck_rl` in `~/Pollen/`, plus Rust and GStreamer. Run `tools/Update Pollen (0.18.9).command` once. Then start `Start Anka sim.command`, and after it `tools/Anka in sim (everything).command`.
-- **With your Mac's camera, microphone and speakers:** double-click `Start Anka.command`.
+- **For real, with your Mac's camera, microphone and speakers:** double-click `Start Anka.command`. See [Real or simulated?](#real-or-simulated) for the differences.
 - **The full guide**, with every option, is in [docs/GUIDE.md](docs/GUIDE.md).
 
 **Anka starts with an empty memory**: this repository contains none. He learns everything from you. His memory is kept in `memory/real/` and `memory/simulation/`, and it is never part of the repository. The [guide](docs/GUIDE.md) has all the details.
