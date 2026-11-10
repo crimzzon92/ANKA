@@ -164,7 +164,7 @@ Developed on macOS (Apple Silicon). The `.command` files are double-click launch
 
 ## License
 
-Apache License 2.0 – see [LICENSE](LICENSE), the same license as Pollen's Microduck software.
+Apache License 2.0 – see [LICENSE](LICENSE), the same license as Pollen's Microduck software. If you share or build on Anka, keep the [NOTICE](NOTICE) file with it.
 
 ## Credits
 
