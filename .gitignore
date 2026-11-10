@@ -1,0 +1,39 @@
+# ---- NEVER commit these ----
+# your Gemini API key
+cloud_key.txt
+*.key
+# Anka's memory (real AND simulation) - personal
+memory/
+memory*.json
+memory*.json.bak
+*_vectors.npz
+*_vectors.npz.bak
+# faces he has learned (biometric)
+known_faces.npz
+*.npz
+room_memory*.json
+
+# ---- big model files (downloaded, see download_models.sh) ----
+*.onnx
+*.bin
+*.pt
+*.ts
+models/
+
+# ---- generated while running ----
+/test_logs/
+/simulation_log*.txt
+/room_map.png
+/room_3d.html
+/camera_floor_test.png
+# built by make_scene.py (contains paths of this computer)
+ankasim/scene/
+ankasim/seen_now.json
+backups/
+archive/
+_backup/
+_att_radera/
+_to_delete/
+__pycache__/
+*.pyc
+.DS_Store
