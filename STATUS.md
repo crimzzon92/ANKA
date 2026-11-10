@@ -70,6 +70,7 @@ This page is the current state. The history, including the experiments that fail
 - **`gemini-3-flash-preview` is deprecated.** It should move to a newer Flash model, which costs about 50 % more per token.
 - **The code has grown fast.** `anka/body.py` (the 2D body) is 170 KB. The 2D and 3D bodies share ideas but not code. There are many small test scripts, and `settings.py` is long.
 - **Small samples:** most experiments are 3 runs against 3 runs.
+- **Only tested on macOS.** Sound now has a Linux and a Windows path (`anka/sound.py`), and the rest is plain Python, but nobody has run Anka on Linux or Windows yet.
 
 ## 📋 Next
 

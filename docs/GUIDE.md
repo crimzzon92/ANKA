@@ -9,11 +9,28 @@ measure and tune him. For what works and what doesn't yet, see [STATUS.md](../ST
 
 | | |
 |---|---|
-| **Computer** | A Mac with Apple Silicon. Developed on an M1 with 8 GB. Linux should mostly work too, but the `.command` launchers are for macOS. |
+| **Computer** | A Mac with Apple Silicon is the only one tested (developed on an M1 with 8 GB). Linux and Windows should work for most parts but are untested. See [Which computers](#which-computers) below. |
 | **Python** | 3.11 or newer, in a virtual environment at `~/anka-env`. The launchers use `~/anka-env/bin/python`. |
 | **Cloud brain** | A Google Gemini API key, used for the day brain and the night brain. |
 | **Local brain** | [Ollama](https://ollama.com), for memory search and the reserve brain. |
 | **Camera + microphone** | Only for the real mode. The simulators don't need them. |
+
+### Which computers
+
+**Only macOS has been tested.** Everything is written in plain Python, so most of it should run elsewhere, but nobody has
+tried yet. If you do, please open an issue and say how it went.
+
+| Part | macOS | Linux | Windows |
+|---|---|---|---|
+| Brain, feelings, memory, nights | ✅ Tested | Should work | Should work |
+| Real mode (camera, microphone, voice) | ✅ Tested | Should work | Should work |
+| 2D simulator | ✅ Tested | Should work | Should work |
+| 3D simulator (Pollen's MuJoCo) | ✅ Tested | Should work: Pollen's software is built for Linux | ❌ Pollen's software doesn't support Windows |
+| His voice and duck sounds | ✅ `afplay` | `paplay`, `aplay` or `ffplay` | Python's `sounddevice` |
+| Double-click launchers (`.command`) | ✅ | Run them with `bash "<file>.command"`; start Ollama yourself first | ❌ Run `python run_anka.py …` instead (see section 4) |
+
+How the sound works on each computer is in `anka/sound.py`. If Kokoro (the voice) can't start, a Mac falls back to its
+own `say` voice. On other computers he then only prints what he would have said.
 | **3D simulator (optional)** | Pollen Robotics' [microduck](https://github.com/pollen-robotics/microduck) and `microduck_rl` repositories, plus Rust (`cargo`) and GStreamer. |
 
 ## 2. Installation
@@ -290,5 +307,6 @@ The log prints a 💰 line after each simulation with the exact cost.
 | Memory search unavailable | Start Ollama and run `ollama pull nomic-embed-text`. |
 | The 3D simulator has no camera | Install GStreamer (`brew install gstreamer libnice-gstreamer`). |
 | The duck can't walk in 3D | Start with `./"Start Anka sim.command" --robot groundcontact`. |
-| No sound in 3D | Check the mute button. The Mac plays his voice and duck sounds itself (Pollen's simulator plays sound with `aplay`, which macOS doesn't have). |
+| No sound in 3D | Check the mute button. On a Mac (or Windows) Anka plays his voice and duck sounds himself, because Pollen's simulator plays sound with `aplay`, which only Linux has. On Linux Pollen's simulator plays the duck sounds, so the mute button only silences his voice there. |
+| No sound at all (Linux or Windows) | Linux: install `pulseaudio-utils` (for `paplay`) or `alsa-utils` (for `aplay`). Windows: check that `sounddevice` is installed (`pip install sounddevice`). This path is untested, so please report what you find. |
 | A `.command` file won't open | Run `chmod +x "<file>.command"` and try again. |
