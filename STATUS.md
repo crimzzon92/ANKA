@@ -70,15 +70,25 @@ counts what he actually did: actions, failures, repeats, goals, feelings, memory
 
 ## 📋 Next
 
-1. **The real duck** (expected around March 2027). Run `ankasim/simbody.py` against the real robot: the same JSON-RPC calls, a real camera, a real depth sensor. Things that need real hardware to test:
-   - the camera floor test,
-   - depth from the camera (Depth Anything V2),
-   - YOLO for things in the room,
-   - hearing where a voice comes from,
-   - hands-free listening,
-   - the beak.
+The work goes on in the simulator until the real duck arrives, and this repository is updated along the way.
+
+**In the simulator (now):**
+1. **Make the kick work in MuJoCo:** a reliable step-up to the ball, so Pollen's kick actually hits it.
 2. **Self-paced thinking:** he chooses when his next thought comes (soon / in a while / when something happens), instead of a fixed timer.
 3. **Goals with reasons:** why he wants something, and checking that later.
-4. **A better transfer test:** does experience beat common sense in a new situation?
-5. **Flowing conversation** with a live voice model, where he can be interrupted.
-6. **Later:** a stronger local brain (more RAM, or a brain on board the duck), and emotion steering vectors for the local model.
+4. **Richer body language:** a better reading of his `BODY` words, more use of Pollen's emotions, and fewer but better-chosen sounds.
+5. **A better transfer test:** does experience beat common sense in a new situation?
+6. **Tidy the code:** split the big files, and share more between the 2D and 3D bodies.
+7. **Flowing conversation** with a live voice model, where he can be interrupted.
+
+**When the real duck arrives** (expected around March 2027):
+- Run `ankasim/simbody.py` against the real robot: the same JSON-RPC calls, a real camera, a real depth sensor.
+- Test what only real hardware can show:
+  - the camera floor test,
+  - depth from the camera (Depth Anything V2),
+  - YOLO for things in the room,
+  - hearing where a voice comes from,
+  - hands-free listening,
+  - the beak.
+
+**Later:** a stronger local brain (more RAM, or a brain on board the duck), and emotion steering vectors for the local model.
