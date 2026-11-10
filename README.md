@@ -38,15 +38,18 @@ looking back on the day.
 - **On the real duck (later):** a learned object detector, **YOLO** (`yolo11n`, plus `yoloe` for things like "sock" and "guitar"), with the distance taken from the duck's **8×8 depth sensor**. We tried YOLO in the simulator first and it recognised nothing, because the simulator's objects are simple shapes and YOLO is trained on photos. Whether it works on the real camera is one of the first things to test ([STATUS](STATUS.md#-next)).
 - **Either way**, only facts reach the brain ("the ball, about 1.6 m ahead, a little to the left"). What it means, and what to do about it, is up to him.
 
+- 🚀 **[Quick start](#quick-start)** – install and run him (macOS tested; Linux and Windows untested)
 - 📖 **[docs/GUIDE.md](docs/GUIDE.md)** – how to install and run him, and how everything works inside
 - 📊 **[STATUS.md](STATUS.md)** – what is done and working, how well (with numbers), what should be fixed, and what's next
 - 📓 **[docs/JOURNAL.md](docs/JOURNAL.md)** – what we tried, what worked, and what didn't (with numbers)
 - 🎬 **[examples/mujoco-day/](examples/mujoco-day/)** – a whole recorded day in the simulator: the log, his thoughts, his map
+- 🔒 **[Privacy](#privacy-what-leaves-your-computer)** – what is sent to the cloud, and what stays on your computer
 
 ## About this project
 
 I'm a hobbyist building this in my spare time. **I don't have a Microduck yet**, so I honestly don't know how much of this
-holds up in the real world. Everything here has only run in simulation. As soon as my duck arrives (planned for around
+holds up in the real world. His body has only run in simulation; his mind has also run on my Mac with its camera,
+microphone and speakers, but never inside a real robot. As soon as my duck arrives (planned for around
 March 2027), I'll test it on the real thing and report what works and what doesn't.
 
 This repository is updated often. Expect things to change, break and get better. Ideas, questions and issues are welcome.
@@ -55,7 +58,7 @@ Much of the code was written together with an AI assistant (Claude).
 
 ## What he can do
 
-Nobody tells Anka what to do. There are no scripts and no "if X then do Y". Every few seconds he looks, thinks, feels and
+Nobody tells Anka what to do. Nothing in the code scripts his behaviour, and there is no "if X then do Y". Every few seconds he looks, thinks, feels and
 decides for himself. Then at night he goes over what happened, and he wakes up a little different.
 
 Everything quoted below he really wrote in a test run, word for word. Only the human's name was changed, to Alex.
@@ -251,7 +254,7 @@ ollama pull nomic-embed-text
 # 3. The voice model (too big for GitHub)
 ./download_models.sh
 
-# 4. Your Gemini API key: one line, never committed
+# 4. Your Gemini API key (get one at https://aistudio.google.com/apikey): one line, never committed
 echo "YOUR-KEY" > cloud_key.txt
 
 # 5. A test day in the 2D room (no robot or simulator needed)
@@ -276,7 +279,7 @@ $k = "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-
 Invoke-WebRequest "$k/kokoro-v1.0.onnx" -OutFile kokoro-v1.0.onnx
 Invoke-WebRequest "$k/voices-v1.0.bin" -OutFile voices-v1.0.bin
 
-# 4. Your Gemini API key: one line, never committed
+# 4. Your Gemini API key (get one at https://aistudio.google.com/apikey): one line, never committed
 Set-Content cloud_key.txt "YOUR-KEY"
 
 # 5. A test day in the 2D room
@@ -289,6 +292,23 @@ Set-Content cloud_key.txt "YOUR-KEY"
 - **The full guide**, with every option, is in [docs/GUIDE.md](docs/GUIDE.md).
 
 **Anka starts with an empty memory**: this repository contains none. He learns everything from you. His memory is kept in `memory/real/` and `memory/simulation/`, and it is never part of the repository. The [guide](docs/GUIDE.md) has all the details.
+
+## Privacy: what leaves your computer
+
+Anka's cloud brain is Google's Gemini API. While he runs, these are sent to Google:
+- what his **camera** sees (a small picture with each thought or answer),
+- what you **say** to him (your recorded voice, so Gemini hears your words and your tone),
+- the parts of his **memory** that fit the moment, his feelings and his notes, as text,
+- at night, the day's memories and a few of his kept pictures, for the review and the dream.
+
+What stays on your computer: his whole memory files, the **faces** he has learned (`known_faces.npz`), the memory search
+(Ollama, local) and your API key.
+
+**Use a paid Gemini key if this matters to you.** Google's [pricing page](https://ai.google.dev/pricing) says content
+sent on the **free tier is used to improve Google's products**, and content on the paid tier is not. With `--local` he
+uses only the local brain (Ollama) and nothing leaves your computer, but that brain is much weaker.
+
+Don't point him at people who haven't agreed to it, and ask before you teach him someone's face.
 
 ## License
 
