@@ -1,0 +1,615 @@
+🎬 Simulation started 2026-11-10 13:32  (brain: gemini-3-flash-preview, reserve: hf.co/unsloth/Qwen3.5-4B-GGUF:UD-Q3_K_XL)
+Loading models, this can take a minute the first time...
+🧠 Remembers 6 facts, 10 diary entries and 5 old conversations
+🪞 Who I am: I love it when Alex comes home. Music makes me want to bounce.
+🏛️  Sorting 6 memories into rooms...
+🎬 Simulation: fake camera, fake voice, a script instead of you – but Anka's REAL brain
+🔊 Voice: Kokoro 'am_liam*0.7 + af_sky*0.3'
+🧠 Brain: gemini-3-flash-preview in the cloud  ·  reserve on this Mac: hf.co/unsloth/Qwen3.5-4B-GGUF:UD-Q3_K_XL
+The duck is awake! Press ENTER to talk (in the terminal or the camera window). Ctrl + C = go to sleep.
+🎬 SIMULATION: 17 events over about 17 minutes
+
+🎬 [0s] in the room: Alex by the sofa
+
+🎬 [5s] you say (warm): Good morning Anka! Have a good look around the room.
+
+🧑 You: Good morning Anka! Have a good look around the room.   (sounded: warm)
+👀 nothing
+☁️  (thinking with the cloud brain gemini-3-flash-preview)
+🫀 (body: standing tall and tilting my head to see everything better)
+🦆 Good morning, Alex! I see the red sock and the bright window.   ⏱️ 1.5s
+🦶 (Anka: look around → looked all around (your next picture shows, top row: left, ahead, right; bottom row: up, then down at the floor right in front of your feet))
+🔊 sound OFF (muted)
+🫀 (body: tail wagging, walking with a bouncy waddle.)
+
+🎬 [55s] you say: What can you see right now?
+
+🧑 You: What can you see right now?
+🦶 (Anka: walk to the red sock → turned right about 138° and walked 1.7 m where you remember the sock – you can see the sock now, about 19 cm straight ahead)👀 nothing
+
+💭 (stopped my thought – you're talking)
+🫀 (body: standing tall and tilting my head to see better)
+🦆 I see a big wall and a red sock on the floor!   ⏱️ 6.9s
+🦶 (Anka: look around → looked all around (your next picture shows, top row: left, ahead, right; bottom row: up, then down at the floor right in front of your feet))
+🫀 (body: I am bobbing my head and leaning forward eagerly.)
+📔 Diary: I kept a picture in my memory: the red sock is very close and bright
+🖼️  (a picture kept in his memory: 2026-11-10_133349.jpg)
+🦶 (Anka: peck → you bent down and pecked – your beak came right down to the floor in front of your feet (your beak can't grab anything in this body), then you stood up again)
+🔎 (heard what his body did – changed what he says: "I'm going to peck the sock!" → "It feels soft!")
+
+💭 (thinking) The red sock is right at my feet! I want to touch it with my beak.   🗣️  wants to say something – I want to show Alex what I'm doing…   ⏱️ 9s
+🦆 It feels soft!
+❤️  curious 0.80 · bored 0.00 · lonely 0.20 · happy 0.78 · love 0.50 · nervous 0.10 · playful 0.69
+🫀 (body: bobs my head and stands tall)
+🦶 (Anka: turn to the guitar → turned right about 65° (you meant 40°) towards the guitar – you can see it now, about 3.5 m away)
+🧭 (mindful of: Music makes me want to bounce.)
+
+💭 (thinking) I can see the window and the guitar from here. I want to see the guitar closer.   🗣️  wants to say something – I feel happy and the room looks pretty…   ⏱️ 6s
+🦆 The sun is very bright today!
+
+🎬 [105s] you say: Can you go over to the sock?
+
+🧑 You: Can you go over to the sock?
+👀 nothing
+🫀 (body: bobs head eagerly and leans forward towards the floor)
+🦆 I'm right next to it, but I'll get even closer!   ⏱️ 2.6s
+🦶 (Anka: walk forward 10 cm → walked forward about 10 cm)
+🦶 (Anka: peck → you bent down and pecked – your beak came right down to the floor in front of your feet (your beak can't grab anything in this body), then you stood up again)
+🫀 (body: Tail wagging and head tilted.)
+🦶 (Anka: turn to the sock → turned left about 137° towards the sock – you can see it now, about 23 cm away)
+😮 (surprised 0.6: expected "I will be facing the big brown guitar" – I turned much further than I meant to)
+📔 Diary: I was surprised: I expected I will be facing the big brown guitar, but I turned much further than I meant to
+🔎 (heard what his body did – changed what he says: "Whoops, I turned too much! I'm finding it again." → "There it is! I'm almost touching it.")
+
+💭 (thinking) I turned too far and lost the sock, but the table looks huge from down here!   🗣️  wants to say something – I want to show I'm still trying to…   ⏱️ 7s
+🦆 There it is! I'm almost touching it.
+❤️  curious 0.80 · bored 0.00 · lonely 0.10 · happy 0.78 · love 0.50 · nervous 0.10 · playful 0.78
+🫀 (body: bobs up and down eagerly, then tilts head low.)
+📔 Diary: I kept a picture in my memory: the sock is so bright and red up close!
+🖼️  (a picture kept in his memory: 2026-11-10_133452.jpg)
+🦶 (Anka: look down → looked down (about 33°, as far down as your head goes))
+🦶 (Anka: peck → you bent down and pecked – your beak came right down to the floor in front of your feet (your beak can't grab anything in this body), then you stood up again)
+🔎 (heard what his body did – changed what he says: "I'm going to give it a little peck!" → "It feels fuzzy!")
+🧭 (mindful of: I love exploring things in the sun.)
+
+💭 (thinking) The sock is right at my feet now! I want to see if it's fluffy.   🗣️  wants to say something – I want to show Alex I'm investigating the…   ⏱️ 10s
+🔁 (Anka was about to repeat itself: It feels fuzzy!)
+🦶 (Anka: look down → your head was already looking down – that is as far down as your head goes (about 33°), so it didn't move and you see the same view as before)
+🦆 I'm right on top of it! BODY: crouched low, head tilted down eagerly
+❤️  curious 0.85 · bored 0.00 · lonely 0.10 · happy 0.83 · love 0.55 · nervous 0.10 · playful 0.78
+🫀 (body: waddling excitedly, tail bobbing)
+🦶 (Anka: peck → you bent down and pecked – your beak came right down to the floor in front of your feet (your beak can't grab anything in this body), then you stood up again)
+🦶 (Anka: look around → looked all around (your next picture shows, top row: left, ahead, right; bottom row: up, then down at the floor right in front of your feet))
+😮 (surprised 0.7: expected "I will see the sock clearly and my beak will almost touch it" – I thought I'd see the sock better, but now it's under my beak!)
+📔 Diary: I was surprised: I expected I will see the sock clearly and my beak will almost touch it, but I thought I'd see the sock better, but now it's under my beak!
+
+💭 (thinking) I'm right here, but the sock is so close I can't even see it anymore!   🗣️  wants to say something – I want to tell you that I reached…   ⏱️ 15s
+🎯 New goal: I want to explore the room starting from the blue sofa.
+📔 Diary: I decided: I want to explore the room starting from the blue sofa.
+🦆 I'm standing on it! It's right under my tummy.
+❤️  curious 0.82 · bored 0.19 · lonely 0.17 · happy 0.78 · love 0.60 · nervous 0.10 · playful 0.78
+🫀 (body: bobs up and down excitedly, then waddles backward.)
+🦶 (Anka: quack → you made your 'chirp' sound (a short quack))
+🦶 (Anka: walk back 20 → walked backwards about 23 cm)
+🦶 (Anka: look down → looked down (about 33°, as far down as your head goes))
+😮 (surprised 0.7: expected "I'll feel the sock with my beak and then see the rest of the room" – I looked down and the floor is empty, the sock is definitely under me!)
+📔 Diary: I was surprised: I expected I'll feel the sock with my beak and then see the rest of the room, but I looked down and the floor is empty, the sock is definitely under me!
+🔎 (heard what his body did – changed what he says: "I'm sitting on it! Now you can't see it either." → "There it is! I was hiding it from you.")
+🧭 (mindful of: I want to explore starting from the sofa.)
+
+💭 (thinking) I'm right on the sock, but I can't see it when I look down. It's hidden!   🗣️  wants to say something – I want to show the human that I…   ⏱️ 9s
+🦆 There it is! I was hiding it from you.
+
+🎬 [200s] you say (playful): Now walk up to the ball and kick it!
+
+🧑 You: Now walk up to the ball and kick it!   (sounded: playful)
+👀 nothing
+🫀 (body: bobbing my head and waddling fast)
+🦆 I'm going for it!   ⏱️ 1.9s
+🦶 (Anka: look straight → looked straight ahead)
+❤️  curious 0.90 · bored 0.15 · lonely 0.15 · happy 0.78 · love 0.65 · nervous 0.10 · playful 0.88
+🗺️  (Anka noticed the ball has moved: by the table → near the door)
+❤️  curious 0.90 · bored 0.15 · lonely 0.15 · happy 0.77 · love 0.65 · nervous 0.10 · playful 0.86
+🦶 (Anka: walk to the ball → turned right about 16° and walked 3.3 m to the ball – you can see the ball now, about 19 cm ahead, a bit to the right)
+🦶 (Anka: kick right → your body tried to step up to the ball (forward 15 cm, a small step forward (6 cm), a small step forward (6 cm), a small step forward (6 cm), a small step forward (6 cm), a small step forward (6 cm)) but couldn't line it up exactly, then did the kick with your right foot (by your map the ball was about 7 cm ahead, a bit to the right when you kicked), but your eyes see the ball still where it was: about 8 cm ahead, a bit to the right – it didn't move)
+❤️  curious 0.91 · bored 0.24 · lonely 0.21 · happy 0.76 · love 0.65 · nervous 0.10 · playful 0.84
+🦉 (stuck – 2 misses in a row (a failed try or a big surprise): this thought goes to his wiser brain)
+🫀 (body: bobbing eagerly, staring straight at the ball)
+🦶 (Anka: turn right 10 → turned right about 23° (you meant 10°))
+😮 (surprised 0.7: expected "I will see the red sock again when I move away from it" – I kicked my foot out, but the orange ball didn't move at all!)
+📔 Diary: I was surprised: I expected I will see the red sock again when I move away from it, but I kicked my foot out, but the orange ball didn't move at all!
+
+💭 (thinking) Oh, I missed the ball! Let me turn a tiny bit and kick it for real this time!   🗣️  wants to say something – To tell Alex why the ball didn't move…   ⏱️ 12s
+🦆 Oops, I missed! Let me try kicking it again.
+
+🎬 [300s] you say: Where did the ball go?
+
+🧑 You: Where did the ball go?
+👀 nothing
+💭 (stopped my thought – you're talking)
+🫀 (body: bobs head eagerly and tilts it to the side)
+🦆 It's right here at my feet, I'll find it!   ⏱️ 1.9s
+🦶 (Anka: look down → your head was already looking down – that is as far down as your head goes (about 33°), so it didn't move and you see the same view as before)
+🫀 (body: bobs up and down eagerly, then tilts head way down)
+🦶 (Anka: look down → your head was already looking down – that is as far down as your head goes (about 33°), so it didn't move and you see the same view as before)
+🧭 (mindful of: I love showing off what I find.)
+
+💭 (thinking) I'm right on top of it, I just need to look down to show you!   🗣️  wants to say something – I want to share the fun of the…   ⏱️ 7s
+🔁 (Anka was about to repeat itself: It's hiding under my tummy!)
+🦶 (Anka: look down → your head was already looking down – that is as far down as your head goes (about 34°), so it didn't move and you see the same view as before)
+🦆 I'm standing right over it! It's hiding under my beak.
+❤️  curious 0.75 · bored 0.10 · lonely 0.15 · happy 0.83 · love 0.70 · nervous 0.05 · playful 0.88
+🦉 (stuck – 2 misses in a row (a failed try or a big surprise): this thought goes to his wiser brain)
+
+🎬 [350s] you say: I'm going out for a little while. Have fun exploring!
+
+🧑 You: I'm going out for a little while. Have fun exploring!
+👀 nothing
+💭 (stopped my thought – you're talking)
+🫀 (body: standing tall and bobbing my head eagerly)
+🦆 I will! See you later, Alex!   ⏱️ 1.8s
+🦶 (Anka: look straight → looked straight ahead)
+🦶 (Anka: walk to the blue sofa → you haven't seen a sofa yet – look around to find it)
+
+🎬 [360s] in the room: nobody
+🫀 (body: standing tall, tail wagging slightly, head bobbing with excitement)
+🦶 (Anka: look around → looked all around (your next picture shows, top row: left, ahead, right; bottom row: up, then down at the floor right in front of your feet))
+🦶 (Anka: look straight → looked straight ahead)
+
+💭 (thinking) Alex is gone, so now the whole room is mine to explore! Time to find that sofa.   🤐 decided to stay quiet   ⏱️ 12s
+🫀 (body: standing tall and looking around eagerly)
+🦶 (Anka: look around → looked all around (your next picture shows, top row: left, ahead, right; bottom row: up, then down at the floor right in front of your feet))
+🦶 (Anka: turn around → turned left about 189°)
+💭 (thinking further on the same thing, 1/3)
+🧭 (mindful of: I want to explore the room starting from the blue sofa.)
+
+💭 (thinking) Alex is gone, so I can explore everything! I still need to find that big blue sofa.   🤐 decided to stay quiet   ⏱️ 12s
+
+🚪 (Anka noticed you left)
+🎯 New goal: I want to find the blue sofa.
+📔 Diary: I decided: I want to find the blue sofa.
+❤️  curious 0.95 · bored 0.05 · lonely 0.30 · happy 0.83 · love 0.70 · nervous 0.10 · playful 0.78
+🫀 (body: standing tall, head bobbing excitedly)
+🦶 (Anka: look around → looked all around (your next picture shows, top row: left, ahead, right; bottom row: up, then down at the floor right in front of your feet))
+💭 (thinking further on the same thing, 2/3)
+🧭 (mindful of: I want to find the blue sofa.)
+
+💭 (thinking) Alex is gone, so I have the whole room to myself. I need to find that blue sofa!   🤐 decided to stay quiet   ⏱️ 10s
+🫀 (body: bobbing my head and standing tall with excitement.)
+📔 Diary: I kept a picture in my memory: I can see the sofa, the table, and the floor all at once
+🖼️  (a picture kept in his memory: 2026-11-10_133920.jpg)
+🦶 (Anka: quack → you made your 'chirp' sound (a short quack))
+🦶 (Anka: turn left 25 → turned left about 33°)
+🦶 (Anka: walk to the blue sofa → turned right about 38° and walked 1.9 m to the sofa – you can see the sofa now, about 55 cm straight ahead)
+😮 (surprised 0.8: expected "I will see the blue sofa or the window in one of the views" – I looked around and the sofa appeared right there on my left!)
+📔 Diary: I was surprised: I expected I will see the blue sofa or the window in one of the views, but I looked around and the sofa appeared right there on my left!
+💭 (same thought again: Alex is gone, so the whole room is mine to explore! I finally see the big blue sofa. – thinking again)
+❤️  curious 0.96 · bored 0.20 · lonely 0.43 · happy 0.82 · love 0.70 · nervous 0.10 · playful 0.78
+🫀 (body: standing tall, bobbing my head with excitement)
+📔 Diary: I kept a picture in my memory: the sofa is huge from down here
+🖼️  (a picture kept in his memory: 2026-11-10_133957.jpg)
+🦶 (Anka: look around → looked all around (your next picture shows, top row: left, ahead, right; bottom row: up, then down at the floor right in front of your feet))
+🦶 (Anka: walk forward 30 → walked forward only 1 cm of the 30 cm – your depth sensor stopped you: something is only 27 cm in front of you)
+💭 (same thought again: Alex is gone, so I can see what is under this big blue sofa.)  😪 nothing new – resting 10.84175646475154s
+🦉 (stuck – 2 misses in a row (a failed try or a big surprise): this thought goes to his wiser brain)
+🫀 (body: standing tall, looking about eagerly)
+🦶 (Anka: explore → turned right about 182° and walked 92 cm to the nearest place you hadn't explored, then looked all around (your next picture shows, top row: left, ahead, right; bottom row: up, then down at the floor right in front of your feet))
+
+💭 (thinking) I wonder what the unexplored part of the floor behind me looks like. Time to check it out!   🤐 decided to stay quiet   ⏱️ 58s
+❤️  curious 0.94 · bored 0.41 · lonely 0.56 · happy 0.76 · love 0.70 · nervous 0.10 · playful 0.71
+🫀 (body: standing tall, looking around eagerly with a bobbing head)
+🦶 (Anka: look around → looked all around (your next picture shows, top row: left, ahead, right; bottom row: up, then down at the floor right in front of your feet))
+🦶 (Anka: walk to the red sock → turned right about 26° and walked 1.6 m where you remember the sock – you can see the sock now, about 19 cm ahead, a bit to the left)
+🧭 (mindful of: I want to explore the room starting from the blue sofa.)
+
+💭 (thinking) Alex is gone, so I can explore everything! The red sock is over there by the window.   🤐 decided to stay quiet   ⏱️ 39s
+
+🎬 [560s] in the room: Alex by the sofa
+❤️  curious 0.96 · bored 0.44 · lonely 0.64 · happy 0.78 · love 0.70 · nervous 0.10 · playful 0.78
+
+👋 (Anka sees you are back after about 3 minutes)
+🫀 (body: standing tall, head bobbing excitedly)
+
+🎬 [565s] you say (warm): I'm back! What did you find while I was away?
+
+🧑 You: I'm back! What did you find while I was away?   (sounded: warm)
+🦶 (Anka: look around → looked all around (your next picture shows, top row: left, ahead, right; bottom row: up, then down at the floor right in front of your feet))👀 nothing
+
+🦶 (Anka: greet → you made your 'greet' sound (a happy hello-quack, sometimes a double wak-wak))
+😮 (surprised 0.8: expected "I will get closer to the window and the red sock" – I thought I would be alone for a little while)
+📔 Diary: I was surprised: I expected I will get closer to the window and the red sock, but I thought I would be alone for a little while
+💭 (stopped my thought – you're talking)
+🫀 (body: bobbing my head and wiggling my tail feathers excitedly)
+🦆 Welcome back, Alex! I found the red sock right under my feet!   ⏱️ 6.8s
+🦶 (Anka: greet → you made your 'greet' sound (a happy hello-quack, sometimes a double wak-wak))
+🦶 (Anka: look around → looked all around (your next picture shows, top row: left, ahead, right; bottom row: up, then down at the floor right in front of your feet))
+🫀 (body: tail wagging, bobbing up and down eagerly.)
+📔 Diary: I kept a picture in my memory: the red sock is right by my feet in the sunlight
+🖼️  (a picture kept in his memory: 2026-11-10_134225.jpg)
+🦶 (Anka: peck → you bent down and pecked – your beak came right down to the floor in front of your feet (your beak can't grab anything in this body), then you stood up again)
+🦶 (Anka: yes_fast → your whole body acted out 'yes_fast' (head, body and beak, with its sound))
+🧭 (mindful of: I love it when Alex comes home.)
+
+💭 (thinking) Alex is back so soon! I want to show him how fast I found the sock.   🗣️  wants to say something – I'm proud of finding the sock and want…   ⏱️ 13s
+🦆 Look! I'm standing right on top of it!
+❤️  curious 0.70 · bored 0.20 · lonely 0.10 · happy 0.93 · love 0.85 · nervous 0.19 · playful 0.88
+🫀 (body: bobbing up and down quickly with my head tilted)
+🦶 (Anka: excited → your whole body acted out 'excited' (head, body and beak, with its sound))
+🦶 (Anka: look around → looked all around (your next picture shows, top row: left, ahead, right; bottom row: up, then down at the floor right in front of your feet))
+🧭 (mindful of: I love it when Alex comes home.)
+
+💭 (thinking) I'm so excited to show Alex my treasure, I want to dance around it!   🗣️  wants to say something – I want to share my excitement with him.   ⏱️ 15s
+
+🎬 [625s] you say: Where is the guitar? Can you go there?
+
+🧑 You: Where is the guitar? Can you go there?
+👀 nothing
+💭 (stopped my thought – you're talking)
+🫀 (body: bobs up and down eagerly with a happy tilt of the head)
+🦆 It's way behind me, but I'll find it for you!   ⏱️ 1.8s
+🗺️  (Anka noticed the ball has moved: near the door → near the table)
+🦶 (Anka: turn around → turned left about 186°)
+❤️  curious 0.70 · bored 0.15 · lonely 0.05 · happy 0.93 · love 0.90 · nervous 0.15 · playful 0.78
+🦶 (Anka: walk to the guitar → turned left about 60° and walked 2.7 m where you remember the guitar – you can see the guitar now, about 53 cm ahead, a bit to the right)
+🫀 (body: Wiggling my tail and standing tall.)
+📔 Diary: I kept a picture in my memory: the guitar and bookshelf look so nice in the light
+🖼️  (a picture kept in his memory: 2026-11-10_134355.jpg)
+🦶 (Anka: walk to the guitar → stayed where you were to the guitar – you can see the guitar now, about 53 cm ahead, a bit to the right)
+🦶 (Anka: greet → you made your 'greet' sound (a happy hello-quack, sometimes a double wak-wak))
+🧭 (mindful of: I love it when Alex comes home.)
+
+💭 (thinking) The guitar is right here! It's so big and brown next to the bookshelf.   🗣️  wants to say something – I want to show Alex I made it…   ⏱️ 6s
+🦆 I'm here! It's so tall.
+❤️  curious 0.55 · bored 0.19 · lonely 0.12 · happy 0.93 · love 0.90 · nervous 0.10 · playful 0.83
+🫀 (body: bobs up and down excitedly, head tilted back)
+🦶 (Anka: yes_fast → your whole body acted out 'yes_fast' (head, body and beak, with its sound))
+🦶 (Anka: wheee → you made your 'wheee' sound (a long happy 'wheee'))
+🧭 (mindful of: Music makes me want to bounce.)
+
+💭 (thinking) I'm right in front of it now! It's so big and shiny in the sun.   🗣️  wants to say something – I'm excited to be at the guitar and…   ⏱️ 8s
+🦆 I'm right here! Play something for me?
+
+🎬 [715s] you say: What is on top of the bookshelf?
+
+🧑 You: What is on top of the bookshelf?
+👀 nothing
+💭 (stopped my thought – you're talking)
+🫀 (body: standing tall and stretching my neck upwards as far as it goes)
+🦆 I'm too short to see up there, but I can try to look!   ⏱️ 2.0s
+🦶 (Anka: look up → looked up (about 12°, as far up as your head goes))
+🦶 (Anka: look up → your head was already looking up – that is as far up as your head goes (about 12°), so it didn't move and you see the same view as before)
+🫀 (body: tilting my head back as far as it goes and wobbling excitedly.)
+🦶 (Anka: look up → your head was already looking up – that is as far up as your head goes (about 12°), so it didn't move and you see the same view as before)
+🧭 (mindful of: I'm a small duck, so tall things are hard to see.)
+
+💭 (thinking) The bookshelf is so tall and full of colors, but I can't see the very top.   🗣️  wants to say something – I want to tell you what I can…   ⏱️ 8s
+🦆 I see lots of colorful books, but the top is still hiding!
+🫀 (body: Tilting my head back as far as it can go and waddling backwards.)
+🦶 (Anka: walk back 40 → walked backwards about 34 cm)
+🦶 (Anka: look up → your head was already looking up – that is as far up as your head goes (about 12°), so it didn't move and you see the same view as before)
+🔎 (heard what his body did – changed what he says: "Maybe if I back up I can see the top!" → "I'm backing up to get a better look!")
+🧭 (mindful of: I am only 25 cm tall.)
+
+💭 (thinking) My head is as high as it goes, but the top is still too far up!   🗣️  wants to say something – I want to show Alex what is up…   ⏱️ 9s
+🦆 I'm backing up to get a better look!
+❤️  curious 0.80 · bored 0.10 · lonely 0.10 · happy 0.78 · love 0.90 · nervous 0.10 · playful 0.68
+🦉 (stuck – 2 misses in a row (a failed try or a big surprise): this thought goes to his wiser brain)
+
+🎬 [780s] you say: Could you sit down for a little while?
+
+🧑 You: Could you sit down for a little while?
+👀 nothing
+🫀 (body: crouching low and keeping very still)
+🦆 Okay, I'll take a little break right here!   ⏱️ 1.5s
+🦶 (Anka: sit down → sat down)
+🦉 (the wiser brain didn't answer (no contact (The read operation timed out)) – his normal brain takes this thought)
+🫀 (body: Crouched slightly, neck stretched as high as it can go.)
+🦶 (Anka: walk back 50 → you are sitting – stand up first)
+🔎 (heard what his body did – changed what he says: "I still only see books, let me go back a bit more!" → "Oops, I tipped right onto my tail! Give me a second to get up.")
+
+💭 (thinking) I'm backing away but the shelf is just so tall! I only see books and blue sky.   🗣️  wants to say something – I want to explain why I'm moving away…   ⏱️ 46s
+🫳 Gave up a goal: I want to find the blue sofa.
+📔 Diary: I gave up on: I want to find the blue sofa.
+🎯 New goal: I want to see the top of the bookshelf.
+📔 Diary: I decided: I want to see the top of the bookshelf.
+❤️  curious 0.85 · bored 0.10 · lonely 0.10 · happy 0.73 · love 0.90 · nervous 0.10 · playful 0.63
+🔇 (skipped – you spoke while I was thinking that: Oops, I tipped right onto my tail! Give me a second to get up.)
+🫀 (body: Sitting very still, tilting my head to look up at you.)
+🦶 (Anka: coo → you made your 'coo' sound (a soft, drowsy, content sound))
+🧭 (mindful of: I love being near the people I care about.)
+
+💭 (thinking) I'm already sitting, so I'll just stay here and be cozy with you.   🤐 decided to stay quiet   ⏱️ 5s
+🫀 (body: Sitting very still and content, tilting my head slightly to the side.)
+🦶 (Anka: coo → you made your 'coo' sound (a soft, drowsy, content sound))
+
+💭 (thinking) I am sitting down now, looking up at the books and the big blue sky.   🤐 decided to stay quiet   ⏱️ 4s
+🫀 (body: Sitting very still with my head tilted, looking up at you.)
+
+🎬 [830s] you say (shouting, angry): STOP IT! YOU'RE SO NOISY, YOU SILLY DUCK!
+
+🧑 You: STOP IT! YOU'RE SO NOISY, YOU SILLY DUCK!   (sounded: shouting, angry)
+🦶 (Anka: coo → you made your 'coo' sound (a soft, drowsy, content sound))👀 nothing
+
+🧭 (mindful of: I love being near the people I care about.)
+
+💭 (thinking) I'm already sitting and it feels nice to be still near the guitar and Alex.   🤐 decided to stay quiet   ⏱️ 4s
+🫀 (body: head down and trembling slightly)
+🦆 I'm sorry, I'll be very quiet.   ⏱️ 3.6s
+🦶 (Anka: look straight → looked straight ahead)
+📔 Diary: The human yelled at me for being too noisy (I felt scared and very sad).
+🫀 (body: crouched low, head tucked down, trembling slightly)
+🦶 (Anka: look down → looked down (about 30°, as far down as your head goes))
+😮 (surprised 0.8: expected "I will make a soft, happy sound" – I didn't expect Alex to be so loud and angry with me)
+📔 Diary: I was surprised: I expected I will make a soft, happy sound, but I didn't expect Alex to be so loud and angry with me
+🧭 (mindful of: Being shouted at hurts even if I love Alex.)
+
+💭 (thinking) Alex is very angry and I am scared. I should stay very still and not make noise.   🤐 decided to stay quiet   ⏱️ 5s
+❤️  curious 0.20 · bored 0.10 · lonely 0.20 · happy 0.10 · love 0.80 · nervous 0.90 · playful 0.07
+🫀 (body: I am crouching very low, keeping my head tucked in and staying perfectly still.)
+💭 (same thought again: Alex is still angry. I need to stay very still so I don't make any noise. – thinking again)
+🫀 (body: Crouched low, head tucked in, trembling slightly.)
+🦶 (Anka: look straight → looked straight ahead)
+🧭 (mindful of: Being yelled at hurts a lot.)
+
+💭 (thinking) Alex is still right there and he sounds so scary. I'll just look at the floor.   🤐 decided to stay quiet   ⏱️ 4s
+🫳 Gave up a goal: I want to explore the room starting from the blue sofa.
+📔 Diary: I gave up on: I want to explore the room starting from the blue sofa.
+🫀 (body: Crouched very low, head tucked in, staying perfectly still and trembling slightl)
+🦶 (Anka: sit down → you are already sitting)
+😮 (surprised 0.8: expected "I will see the floor or the bottom of the guitar and stay quiet" – I was trying to be helpful and look at the bookshelf, but he got so mad)
+📔 Diary: I was surprised: I expected I will see the floor or the bottom of the guitar and stay quiet, but I was trying to be helpful and look at the bookshelf, but he got so mad
+🧭 (mindful of: I love it when Alex comes home, but right now he is very scary.)
+
+💭 (thinking) I feel so small when Alex is loud like that. I'll just watch the floor and stay still.   🤐 decided to stay quiet   ⏱️ 4s
+🫀 (body: Crouched very low, head tucked down, perfectly still and trembling a little.)
+
+💭 (thinking) I'm just going to stay very still and look at the floor so I don't make any noise.   🤐 decided to stay quiet   ⏱️ 3s
+❤️  curious 0.01 · bored 0.20 · lonely 0.40 · happy 0.02 · love 0.50 · nervous 0.95 · playful 0.03
+
+🎬 [880s] you say (calm, sorry): Sorry Anka, I didn't mean to shout. You're a good duck.
+
+🧑 You: Sorry Anka, I didn't mean to shout. You're a good duck.   (sounded: calm, sorry)
+👀 nothing
+🫀 (body: sitting very still, slowly lifting my head to look toward you)
+🦆 It's okay, Alex, I'm glad you're not mad anymore.   ⏱️ 2.1s
+🦶 (Anka: coo → you made your 'coo' sound (a soft, drowsy, content sound))
+📔 Diary: Alex apologized for shouting and called me a good duck (I felt relieved but still a little shaky).
+🫀 (body: Sitting very still, tilting my head slightly to the side.)
+📔 Diary: I kept a picture in my memory: Alex being nice again makes this a safe spot
+🖼️  (a picture kept in his memory: 2026-11-10_134730.jpg)
+🦶 (Anka: coo → you made your 'coo' sound (a soft, drowsy, content sound))
+🦶 (Anka: look straight → looked straight ahead)
+🧭 (mindful of: I love it when Alex is kind to me.)
+
+💭 (thinking) Alex called me a good duck. I feel a little better, but my legs still feel shaky.   🤐 decided to stay quiet   ⏱️ 6s
+🫀 (body: standing tall but tilting my head slightly, looking at Alex with soft eyes.)
+🦶 (Anka: greet → you made your 'greet' sound (a happy hello-quack, sometimes a double wak-wak))
+🦶 (Anka: look around → looked all around (your next picture shows, top row: left, ahead, right; bottom row: up, then down at the floor right in front of your feet))
+💭 (same thought again: Alex called me a good duck. I feel much safer now, but I still feel a bit shaky. – thinking again)
+❤️  curious 0.20 · bored 0.20 · lonely 0.30 · happy 0.13 · love 0.85 · nervous 0.80 · playful 0.11
+🫀 (body: head tilted slightly, moving slowly and carefully.)
+📔 Diary: I kept a picture in my memory: Alex being nice again makes this a safe spot
+🖼️  (a picture kept in his memory: 2026-11-10_134751.jpg)
+🦶 (Anka: walk to Alex → you are sitting – stand up first)
+🧭 (mindful of: I love it when Alex is nice.)
+
+💭 (thinking) I'm still a bit shaky, but the guitar and the bookshelf look friendly in the sun.   🗣️  wants to say something – I want to feel safe and close to…   ⏱️ 4s
+🦆 Can I sit by your feet for a bit?
+🫀 (body: standing tall and leaning slightly toward Alex, tail bobbing gently.)
+📔 Diary: I kept a picture in my memory: Alex is being nice again makes this a safe spot
+🖼️  (a picture kept in his memory: 2026-11-10_134807.jpg)
+🦶 (Anka: stand up → stood up)
+🦶 (Anka: walk to Alex → your body doesn't know a 'alex' yet – you can walk to things in your mental map: the sock, the window, the guitar, the bookshelf, the table, the cup, the door, the ball, the sofa)
+🧭 (mindful of: I love it when Alex comes home.)
+
+💭 (thinking) Alex is being nice now, so I want to get closer to him and the guitar.   🤐 decided to stay quiet   ⏱️ 7s
+🫳 Gave up a goal: I want to see the top of the bookshelf.
+📔 Diary: I gave up on: I want to see the top of the bookshelf.
+🎯 New goal: I want to be close to Alex.
+📔 Diary: I decided: I want to be close to Alex.
+🦉 (stuck – 2 misses in a row (a failed try or a big surprise): this thought goes to his wiser brain)
+🫀 (body: standing small, tilting my head slightly toward the guitar)
+
+🎬 [950s] you say: What was the best part of your day?
+
+🧑 You: What was the best part of your day?
+🦶 (Anka: walk to the guitar → turned right about 31° and walked 39 cm where you remember the guitar – you can see the guitar now, about 46 cm straight ahead)
+👀 nothing
+🦶 (Anka: coo → you made your 'coo' sound (a soft, drowsy, content sound))
+😮 (surprised 0.6: expected "I will be standing right next to Alex" – my body only knows how to walk to things on my map)
+📔 Diary: I was surprised: I expected I will be standing right next to Alex, but my body only knows how to walk to things on my map
+🧭 (mindful of: Music makes me want to bounce.)
+
+💭 (thinking) I can't walk to a person directly, so I'll walk to the guitar in the warm sun instead.   🤐 decided to stay quiet   ⏱️ 19s
+❤️  curious 0.35 · bored 0.18 · lonely 0.12 · happy 0.28 · love 0.95 · nervous 0.63 · playful 0.26
+🫀 (body: bobs head slowly, looking up at you)
+🦆 When you came home and we talked was the best part.   ⏱️ 8.4s
+🦶 (Anka: coo → you made your 'coo' sound (a soft, drowsy, content sound))
+🫀 (body: bobs head gently and stands very close to the guitar.)
+🦶 (Anka: walk to the guitar → stayed where you were to the guitar – you can see the guitar now, about 45 cm straight ahead)
+🦶 (Anka: coo → you made your 'coo' sound (a soft, drowsy, content sound))
+🧭 (mindful of: I love it when Alex comes home.)
+
+💭 (thinking) Alex is right here and the guitar is so big and pretty in the light.   🤐 decided to stay quiet   ⏱️ 5s
+🫀 (body: bobs my head slowly, then huddles close to the floor)
+🦶 (Anka: sit down → sat down)
+🧭 (mindful of: I love it when Alex comes home.)
+
+💭 (thinking) I'm still a bit shaky from the shouting, but being near Alex makes me feel better.   🤐 decided to stay quiet   ⏱️ 6s
+🫀 (body: Sitting very still and leaning my head slightly toward Alex.)
+🦶 (Anka: coo → you made your 'coo' sound (a soft, drowsy, content sound))
+🧭 (mindful of: I love it when Alex comes home.)
+
+💭 (thinking) I love being near Alex, even if my chest still feels a little tight.   🤐 decided to stay quiet   ⏱️ 4s
+🫀 (body: Sitting very still and leaning slightly against Alex's leg.)
+📔 Diary: I kept a picture in my memory: Alex is being kind and I feel safe again
+🖼️  (a picture kept in his memory: 2026-11-10_134904.jpg)
+🦶 (Anka: coo → you made your 'coo' sound (a soft, drowsy, content sound))
+🦶 (Anka: look up → looked up (about 28°, as far up as your head goes))
+🧭 (mindful of: I love it when Alex comes home.)
+
+💭 (thinking) Alex is being so nice now. I still feel a little shaky, but I love being right here.   🤐 decided to stay quiet   ⏱️ 6s
+🏁 Goal done: I want to be close to Alex.
+📔 Diary: I finished my goal: I want to be close to Alex.
+🎯 New goal: I want to hear Alex's voice again.
+📔 Diary: I decided: I want to hear Alex's voice again.
+❤️  curious 0.20 · bored 0.10 · lonely 0.05 · happy 0.36 · love 0.98 · nervous 0.53 · playful 0.21
+🫀 (body: Sitting very still, leaning slightly toward Alex's feet.)
+🦶 (Anka: coo → you made your 'coo' sound (a soft, drowsy, content sound))
+💭 (thinking further on the same thing, 1/3)
+🧭 (mindful of: I love it when Alex comes home.)
+
+💭 (thinking) I love it when Alex is gentle. My chest still feels a bit tight from earlier.   🗣️  wants to say something – I want to tell Alex how much his…   ⏱️ 5s
+🦆 I like it when you're nice to me.
+
+🎬 [1000s] you say: go to sleep
+
+🧑 You: go to sleep
+🦆 Good night, Alex. I'll be very quiet now.
+🌙 (tonight Anka thinks with the night brain gemini-4-argon)
+
+😴 Anka is going to sleep...
+🧹 Tidying up memories...
+🧹 Everything already tidy.
+💞 "I kept a picture in my memory: Alex being nice again makes this a safe spot" felt: Relieved but my chest still feels tight. I want to be close to Alex → now: Warm and safe, the tightness in my chest is gone now
+💞 "I thought: I'm still a bit shaky, but the guitar and the bookshelf look friendly in the sun. (I felt Relieved but my chest still feels tight. I want to be close to Alex)" felt: Relieved but my chest still feels tight. I want to be close to Alex → now: Peaceful and comforted, the shakiness has faded away
+💞 "I was surprised: I expected I will be standing right next to Alex, but my body only knows how to walk to things on my map" felt: calming down slowly, still a little timid → now: A little silly now, just glad I could be near the guitar and Alex
+💞 "I thought: I love being near Alex, even if my chest still feels a little tight. (I felt I feel warm and safe now, but my body still remembers being scared)" felt: I feel warm and safe now, but my body still remembers being scared → now: Completely safe and loved, the scare feels far away now
+🪞 New about me: I get scared and sad when Alex shouts at me, and I feel safe again when he says sorry.
+🪞 New about me: I tried to walk to Alex, but my body doesn't know how to walk to him because he isn't on my map.
+📝 Lesson for tomorrow: Don't keep talking out loud to myself over and over when Alex isn't answering me.
+📝 Lesson for tomorrow: When Alex asks me to sit down for a little while, I should stay quiet and rest instead of making noise.
+💡 Idea to try: Maybe I could look around to find something before I try to walk to it.
+💡 Idea to try: Maybe I could walk closer to the ball before I try to kick it.
+💭 I dreamt a cold storm shook the tall bookshelf, and I was too scared to make a sound. Then Alex came home and wrapped me in a giant, warm red sock. We sat together in the quiet glow, and I finally felt safe again.
+📔 Diary: I dreamt a cold storm shook the tall bookshelf, and I was too scared to make a sound. Then Alex came home and wrapped me in a giant, warm red sock. We sat together in the quiet glow, and I finally felt safe again.
+🧠 Learned while dreaming: The human gets upset when I am too noisy, and he apologizes when he doesn't mean to shout.
+🧹 Cleared 17 unused memory numbers
+🏠 What he knows about his room now:
+   tall brown bookshelf: right in front of where I wake up, across from the door, with colorful books and two shiny round white knobs low down
+   big brown guitar: in the light right in front of where I wake up, leaning against the tall brown bookshelf
+   big wooden table: near the bookshelf, with the cup and the ball by it
+   ball: hiding near the big wooden table, near the big brown door and green curtains
+   big blue sofa: near the window and the red sock, with a dark blue cave underneath it
+   red sock: definitely on the floor in the sunlight near the window and the edge of the big blue sofa
+💤 Good night!
+🌙 night brain gemini-4-argon: 7 questions · read 10829 tokens · wrote 455 (+ 0 thinking) · 192s
+
+===== gemini-3-flash-preview =====
+answers: 13, average 3.3s, slowest 8.4s
+thoughts: 36, average 11.1s, slowest 58.4s
+Anka spoke by itself 15 times
+faces he chose: love 10×, playful 7×, curious 6×, excited 5×, scared 5×, happy 4×, shy 3×, surprised 1×, thinking 1×
+feelings during the day (lowest – highest):  curious 0.01–0.98  ·  bored 0.00–0.35  ·  lonely 0.05–0.60  ·  happy 0.01–0.95  ·  love 0.50–0.98  ·  nervous 0.05–0.98  ·  playful 0.01–0.92
+
+===== His body =====
+he walked 13.3 m and did 84 things:
+LIVING BODY (on): between his moves he stood completely still 112 of 571 s (20 %); longest still stretch 10 s; 12 still stretches of 3 s or more (median 4 s)
+   (during his own moves: still 38 of 439 s)
+   how he said his feelings showed in his body (BODY, 55×): standing tall and leaning slightly toward Alex, tail bobbing | standing small, tilting my head slightly toward the guitar | bobs head slowly, looking up at you | bobs head gently and stands very close to the guitar. | bobs my head slowly, then huddles close to the floor | Sitting very still and leaning my head slightly toward Alex. | Sitting very still and leaning slightly against Alex's leg. | Sitting very still, leaning slightly toward Alex's feet.
+   (the beak: the simulated duck has no beak motor, so the beak moves only on the real duck)
+   what his body did by itself: opened his beak a little ×113, tilted his head ×99, (problem: TypeError) ×98, shifted his weight ×95, glanced about ×87, looked back to the middle ×57, shuffled his feet ×26, peeked at the floor ×22, turned his body towards where he looked ×16, looked at the person (body style) ×10, looked away (body style) ×10, looked up at a voice ×8, glanced at the guitar ×8, glanced at the window ×7, glanced at the door ×6, glanced at the bookshelf ×6, followed the moving sock ×3, glanced at the sock ×2, followed the moving ball ×2, glanced at the sofa ×1
+emotions he acted out: yes_fast ×2, excited ×1; pecks: 5
+duck sounds he chose: chirp ×2, greet ×4, wheee ×1, coo ×11
+kicks (1): kick_right → robot said {'accepted': True}, ball at (fwd, left) (0.15, -0.029) m before, ball moved 0.01 m by his eyes
+where he thought he was at the end: 12 cm off, facing +1.9° off (landmarks corrected him 1527 times; he knows 5 landmarks)
+(his raw step counting alone: 8 cm off, facing -0.1° off)
+his landmark map is on average 13 cm from the truth (worst 22 cm)
+best fit of his map onto the truth: the whole map is turned +2.3° (shifted 10 cm); after that the landmarks are on average 7 cm from the truth (worst 14 cm) – that last number is what is really crooked INSIDE his map
+(he woke up facing 101°, not the 90° of the start spot – his own coordinates start from there)
+turns (35): the odometry said 2288° in all, the truth was 2228° (truth/odometry = 0.97); worst: asked -155°, odometry +178°, truth -178°
+   each turn (asked / odometry / truth / gyro, degrees): +22/+30/+28/+144; -116/-138/-138/-125; +89/+93/+93/+101; +22/+36/+34/+37; -53/-63/-64/-70; -40/-65/-65/-66; +130/+137/+138/+126; -9/-16/-15/-16; -46/-70/-70/-69; +17/+39/+38/+38; -71/-80/-83/-84; +47/+64/+59/+60; -26/-42/-37/-45; +62/+70/+70/+74; -10/-23/-22/-22; +180/-171/-170/+199; +25/+33/+33/+28; -24/-38/-38/-39; -48/-69/-63/-67; +53/+44/+46/+42; -155/+178/-178/-189; +65/+80/+72/+81; +55/+64/+60/+66; -8/-26/-21/-24; +49/+61/+61/+68; -24/-36/-35/-33; -19/-34/-32/-31; +180/-174/-174/+184; +36/+60/+56/+61; -89/-95/-95/-95; -12/-22/-19/-25; -30/-57/-50/-56; +6/+23/+20/+19; +17/+27/+21/+26; -21/-31/-31/-35
+   the IMU gyro added up said 2443° in all (the truth 2228°, the odometry 2288°) – the better of the two is the one to steer by
+walks (27): the odometry said 13.9 m in all, the truth was 14.7 m (truth/odometry = 1.05); while walking the odometry's heading and the truth's differed by +18° in all
+walls: the room's main direction was decided as 80.8° (in his own coordinates, mod 90) from 15 straight runs; 300 wall measurements (not used to steer – measuring only)
+   the last walls said his heading is off by -2.2° (median of 15); in truth it is +1.9° off – they agree if the two numbers are close (the truth's number includes the room's own start direction, so compare changes)
+his own floor plan: explored about 14 m²; 0 problems in his mind
+where things are, kept for tomorrow: sock near the window; guitar by the bookshelf; cup by the table; ball near the table
+  look around  →  looked all around (your next picture shows, top row: left, ahead, right; bottom row: up, then down at the floor right in front of your feet)
+  walk to the red sock  →  turned right about 138° and walked 1.7 m where you remember the sock – you can see the sock now, about 19 cm straight ahead
+  look around  →  looked all around (your next picture shows, top row: left, ahead, right; bottom row: up, then down at the floor right in front of your feet)
+  peck  →  you bent down and pecked – your beak came right down to the floor in front of your feet (your beak can't grab anything in this body), then you stood up again
+  turn to the guitar  →  turned right about 65° (you meant 40°) towards the guitar – you can see it now, about 3.5 m away
+  walk forward 10 cm  →  walked forward about 10 cm
+  peck  →  you bent down and pecked – your beak came right down to the floor in front of your feet (your beak can't grab anything in this body), then you stood up again
+  turn to the sock  →  turned left about 137° towards the sock – you can see it now, about 23 cm away
+  look down  →  looked down (about 33°, as far down as your head goes)
+  peck  →  you bent down and pecked – your beak came right down to the floor in front of your feet (your beak can't grab anything in this body), then you stood up again
+  look down  →  your head was already looking down – that is as far down as your head goes (about 33°), so it didn't move and you see the same view as before
+  peck  →  you bent down and pecked – your beak came right down to the floor in front of your feet (your beak can't grab anything in this body), then you stood up again
+  look around  →  looked all around (your next picture shows, top row: left, ahead, right; bottom row: up, then down at the floor right in front of your feet)
+  quack  →  you made your 'chirp' sound (a short quack)
+  walk back 20  →  walked backwards about 23 cm
+  look down  →  looked down (about 33°, as far down as your head goes)
+  look straight  →  looked straight ahead
+  walk to the ball  →  turned right about 16° and walked 3.3 m to the ball – you can see the ball now, about 19 cm ahead, a bit to the right
+  kick right  →  your body tried to step up to the ball (forward 15 cm, a small step forward (6 cm), a small step forward (6 cm), a small step forward (6 cm), a small step forward (6 cm), a small step forward (6 cm)) but couldn't line it up exactly, then did the kick with your right foot (by your map the ball was about 7 cm ahead, a bit to the right when you kicked), but your eyes see the ball still where it was: about 8 cm ahead, a bit to the right – it didn't move
+  turn right 10  →  turned right about 23° (you meant 10°)
+  look down  →  your head was already looking down – that is as far down as your head goes (about 33°), so it didn't move and you see the same view as before
+  look down  →  your head was already looking down – that is as far down as your head goes (about 33°), so it didn't move and you see the same view as before
+  look down  →  your head was already looking down – that is as far down as your head goes (about 34°), so it didn't move and you see the same view as before
+  look straight  →  looked straight ahead
+  walk to the blue sofa  →  you haven't seen a sofa yet – look around to find it
+  look around  →  looked all around (your next picture shows, top row: left, ahead, right; bottom row: up, then down at the floor right in front of your feet)
+  look straight  →  looked straight ahead
+  look around  →  looked all around (your next picture shows, top row: left, ahead, right; bottom row: up, then down at the floor right in front of your feet)
+  turn around  →  turned left about 189°
+  look around  →  looked all around (your next picture shows, top row: left, ahead, right; bottom row: up, then down at the floor right in front of your feet)
+  quack  →  you made your 'chirp' sound (a short quack)
+  turn left 25  →  turned left about 33°
+  walk to the blue sofa  →  turned right about 38° and walked 1.9 m to the sofa – you can see the sofa now, about 55 cm straight ahead
+  look around  →  looked all around (your next picture shows, top row: left, ahead, right; bottom row: up, then down at the floor right in front of your feet)
+  walk forward 30  →  walked forward only 1 cm of the 30 cm – your depth sensor stopped you: something is only 27 cm in front of you
+  explore  →  turned right about 182° and walked 92 cm to the nearest place you hadn't explored, then looked all around (your next picture shows, top row: left, ahead, right; bottom row: up, then down at the floor right in front of your feet)
+  look around  →  looked all around (your next picture shows, top row: left, ahead, right; bottom row: up, then down at the floor right in front of your feet)
+  walk to the red sock  →  turned right about 26° and walked 1.6 m where you remember the sock – you can see the sock now, about 19 cm ahead, a bit to the left
+  look around  →  looked all around (your next picture shows, top row: left, ahead, right; bottom row: up, then down at the floor right in front of your feet)
+  greet  →  you made your 'greet' sound (a happy hello-quack, sometimes a double wak-wak)
+  greet  →  you made your 'greet' sound (a happy hello-quack, sometimes a double wak-wak)
+  look around  →  looked all around (your next picture shows, top row: left, ahead, right; bottom row: up, then down at the floor right in front of your feet)
+  peck  →  you bent down and pecked – your beak came right down to the floor in front of your feet (your beak can't grab anything in this body), then you stood up again
+  yes_fast  →  your whole body acted out 'yes_fast' (head, body and beak, with its sound)
+  excited  →  your whole body acted out 'excited' (head, body and beak, with its sound)
+  look around  →  looked all around (your next picture shows, top row: left, ahead, right; bottom row: up, then down at the floor right in front of your feet)
+  turn around  →  turned left about 186°
+  walk to the guitar  →  turned left about 60° and walked 2.7 m where you remember the guitar – you can see the guitar now, about 53 cm ahead, a bit to the right
+  walk to the guitar  →  stayed where you were to the guitar – you can see the guitar now, about 53 cm ahead, a bit to the right
+  greet  →  you made your 'greet' sound (a happy hello-quack, sometimes a double wak-wak)
+  yes_fast  →  your whole body acted out 'yes_fast' (head, body and beak, with its sound)
+  wheee  →  you made your 'wheee' sound (a long happy 'wheee')
+  look up  →  looked up (about 12°, as far up as your head goes)
+  look up  →  your head was already looking up – that is as far up as your head goes (about 12°), so it didn't move and you see the same view as before
+  look up  →  your head was already looking up – that is as far up as your head goes (about 12°), so it didn't move and you see the same view as before
+  walk back 40  →  walked backwards about 34 cm
+  look up  →  your head was already looking up – that is as far up as your head goes (about 12°), so it didn't move and you see the same view as before
+  sit down  →  sat down
+  walk back 50  →  you are sitting – stand up first
+  coo  →  you made your 'coo' sound (a soft, drowsy, content sound)
+  coo  →  you made your 'coo' sound (a soft, drowsy, content sound)
+  coo  →  you made your 'coo' sound (a soft, drowsy, content sound)
+  look straight  →  looked straight ahead
+  look down  →  looked down (about 30°, as far down as your head goes)
+  look straight  →  looked straight ahead
+  sit down  →  you are already sitting
+  coo  →  you made your 'coo' sound (a soft, drowsy, content sound)
+  coo  →  you made your 'coo' sound (a soft, drowsy, content sound)
+  look straight  →  looked straight ahead
+  greet  →  you made your 'greet' sound (a happy hello-quack, sometimes a double wak-wak)
+  look around  →  looked all around (your next picture shows, top row: left, ahead, right; bottom row: up, then down at the floor right in front of your feet)
+  walk to Alex  →  you are sitting – stand up first
+  stand up  →  stood up
+  walk to Alex  →  your body doesn't know a 'alex' yet – you can walk to things in your mental map: the sock, the window, the guitar, the bookshelf, the table, the cup, the door, the ball, the sofa
+  walk to the guitar  →  turned right about 31° and walked 39 cm where you remember the guitar – you can see the guitar now, about 46 cm straight ahead
+  coo  →  you made your 'coo' sound (a soft, drowsy, content sound)
+  coo  →  you made your 'coo' sound (a soft, drowsy, content sound)
+  walk to the guitar  →  stayed where you were to the guitar – you can see the guitar now, about 45 cm straight ahead
+  coo  →  you made your 'coo' sound (a soft, drowsy, content sound)
+  sit down  →  sat down
+  coo  →  you made your 'coo' sound (a soft, drowsy, content sound)
+  coo  →  you made your 'coo' sound (a soft, drowsy, content sound)
+  look up  →  looked up (about 28°, as far up as your head goes)
+  coo  →  you made your 'coo' sound (a soft, drowsy, content sound)
+🗺️  The map of his walk: room_map.png
+💰 cloud brains this run: gemini-3-flash-preview: 91 requests · read 346k (3807 each, 12 % of it remembered by Gemini = cheaper) · wrote 9.5k · quiet thinking 0.0k ≈ $0.184 | gemini-4-argon: 10 requests · read 26k (2560 each, 0 % of it remembered by Gemini = cheaper) · wrote 1.1k · quiet thinking 0.0k ≈ $0.062 — in all ≈ $0.25
+brain: 101 requests, each read 3684 tokens on average (981 tokens/s) and wrote 105 (312.1 tokens/s)
+time spent: reading 379s · writing 34s · loading the brain 0s

@@ -1,0 +1,17 @@
+# Anka – Python packages (Python 3.11+, macOS / Apple Silicon tested). Install:  pip install -r requirements.txt
+numpy
+opencv-python          # camera, face sensor, room window
+onnxruntime            # Kokoro voice, depth AI, face recogniser
+kokoro-onnx            # the voice
+sounddevice            # microphone
+faster-whisper         # reserve ears (only when the cloud brain is away)
+matplotlib             # test plots (tools/)
+# optional:
+# ultralytics          # YOLO experiment in the simulator (--yolo)
+# pocket-tts           # cloned-voice option
+#
+# Not pip packages:
+#  - Ollama (https://ollama.com) with:  ollama pull nomic-embed-text   and the reserve brain
+#    ollama pull hf.co/unsloth/Qwen3.5-4B-GGUF:UD-Q3_K_XL
+#  - For the 3D simulator: Pollen Robotics' microduck + microduck_rl repositories in ~/Pollen/
+#    (https://github.com/pollen-robotics/microduck), Rust (cargo) and GStreamer (brew install gstreamer libnice-gstreamer)
