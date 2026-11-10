@@ -38,7 +38,7 @@ looking back on the day.
 - **On the real duck (later):** a learned object detector, **YOLO** (`yolo11n`, plus `yoloe` for things like "sock" and "guitar"), with the distance taken from the duck's **8×8 depth sensor**. We tried YOLO in the simulator first and it recognised nothing, because the simulator's objects are simple shapes and YOLO is trained on photos. Whether it works on the real camera is one of the first things to test ([STATUS](STATUS.md#-next)).
 - **Either way**, only facts reach the brain ("the ball, about 1.6 m ahead, a little to the left"). What it means, and what to do about it, is up to him.
 
-- 🚀 **[Quick start](#quick-start)** – install and run him (macOS tested; Linux and Windows untested)
+- 🚀 **[Quick start](#quick-start)** – install and run him. You need a **Google Gemini API key** (macOS tested; Linux and Windows untested)
 - 🗂️ **[Which file starts what](#which-file-starts-what)** – the launchers and folders, explained
 - 📖 **[docs/GUIDE.md](docs/GUIDE.md)** – how to install and run him, and how everything works inside
 - 📊 **[STATUS.md](STATUS.md)** – what is done and working, how well (with numbers), what should be fixed, and what's next
@@ -230,6 +230,17 @@ bigger model goes over the day and writes lessons, ideas and beliefs about himse
 
 ## Quick start
 
+### What you need
+
+- 🔑 **A Google Gemini API key.** Anka's brain runs on Google's Gemini, so he can't think properly without one. Get a key at
+  [Google AI Studio](https://aistudio.google.com/apikey). A **paid key** is recommended: it costs about $0.10–0.25 per
+  simulated test day, and on the free tier Google uses what you send to improve its products (see [Privacy](#privacy-what-leaves-your-computer)).
+- 🐍 **Python 3.11 or newer.**
+- 🦙 **[Ollama](https://ollama.com)**, free and local, for his memory search (and a much weaker reserve brain if the network is gone).
+- 🦆 **For the 3D simulator only:** Pollen's Microduck software, Rust and GStreamer (macOS or Linux).
+
+### Which computers
+
 **Tested on macOS (Apple Silicon) only.** Linux and Windows should work for most parts, his voice included, but nobody
 has tried them yet; if you do, please open an issue and say how it went. Details: [which computers](docs/GUIDE.md#which-computers).
 
@@ -239,6 +250,8 @@ has tried them yet; if you do, please open an issue and say how it went. Details
 | His voice and duck sounds | ✅ Tested | Should work (`paplay`, `aplay` or `ffplay`) | Should work (Python's `sounddevice`) |
 | 3D simulator (Pollen's MuJoCo) | ✅ Tested | Should work | ❌ Not supported by Pollen's software |
 | Double-click launchers (`.command`) | ✅ | Run them with `bash "<file>.command"` | ❌ Use the commands below |
+
+### Install and run
 
 **macOS and Linux:**
 
