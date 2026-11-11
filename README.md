@@ -1,4 +1,4 @@
-# Anka – an AI brain for the Microduck robot duck
+# ANKA – Microduck AI Brain
 
 *An LLM-driven mind for [Pollen Robotics' Microduck](https://github.com/pollen-robotics/microduck): he thinks, feels, remembers, dreams and explores – in the Microduck MuJoCo simulator today, on the real robot duck next.*
 
