@@ -38,7 +38,7 @@ looking back on the day.
 - **On the real duck (later):** a learned object detector, **YOLO** (`yolo11n`, plus `yoloe` for things like "sock" and "guitar"), with the distance taken from the duck's **8×8 depth sensor**. We tried YOLO in the simulator first and it recognised nothing, because the simulator's objects are simple shapes and YOLO is trained on photos. Whether it works on the real camera is one of the first things to test ([STATUS](STATUS.md#-next)).
 - **Either way**, only facts reach the brain ("the ball, about 1.6 m ahead, a little to the left"). What it means, and what to do about it, is up to him.
 
-- 🚀 **[Quick start](#quick-start)** – install and run him. You need a **Google Gemini API key** (macOS tested; Linux and Windows untested)
+- 🚀 **[Quick start](#quick-start)** – install and run him, or just open the **start menu** (`Anka menu.command`). You need a **Google Gemini API key** (macOS tested; Linux and Windows untested)
 - 🗂️ **[Which file starts what](#which-file-starts-what)** – the launchers and folders, explained
 - 📖 **[docs/GUIDE.md](docs/GUIDE.md)** – how to install and run him, and how everything works inside
 - 📊 **[STATUS.md](STATUS.md)** – what is done and working, how well (with numbers), what should be fixed, and what's next
@@ -251,7 +251,27 @@ has tried them yet; if you do, please open an issue and say how it went. Details
 | 3D simulator (Pollen's MuJoCo) | ✅ Tested | Should work | ❌ Not supported by Pollen's software |
 | Double-click launchers (`.command`) | ✅ | Run them with `bash "<file>.command"` | ❌ Use the commands below |
 
-### Install and run
+### The easiest way: the start menu
+
+```
+🦆  ANKA – Microduck AI Brain
+
+  1) Talk to Anka for real               (camera, microphone, speakers)
+  2) Watch him in 2D                     (fast, no extra software)
+  3) Watch him in 3D                     (Pollen's MuJoCo simulator)
+  4) Teach him a face
+  5) Check that everything is installed  (and fix what is missing)
+  6) Connect to my Microduck             (the real robot)
+  q) Quit
+```
+
+Start it with **`Anka menu.command`** (macOS, double-click), **`python3 anka_menu.py`** (Linux) or **`anka_menu.bat`**
+(Windows, double-click). The first time, it offers to install everything for you: the Python packages, his voice,
+Ollama's memory model and your Gemini key (you still install [Ollama](https://ollama.com) and, for 3D, Pollen's software
+yourself). Option 5 checks what is there and fixes what is missing. Option 6 finds your Microduck on your wifi and tests
+the connection (camera, console, SSH); starting Anka in the real body comes when the duck has arrived.
+
+### Install and run by hand
 
 **macOS and Linux:**
 
@@ -303,7 +323,9 @@ Set-Content cloud_key.txt "YOUR-KEY"
 On a Mac you double-click the `.command` files. Elsewhere, run the command in the right-hand column with the Python
 from step 1 of the quick start.
 
-**Start here:**
+**Easiest:** the start menu, `Anka menu.command` (or `python3 anka_menu.py`, or `anka_menu.bat`). It starts everything below.
+
+**Or start one thing directly:**
 
 | I want to… | Double-click (macOS) | Or run |
 |---|---|---|
@@ -336,6 +358,7 @@ Anka is tested with.
 
 | | What it is |
 |---|---|
+| `anka_menu.py` | The start menu (`Anka menu.command` and `anka_menu.bat` start it). |
 | `run_anka.py` | The program every launcher starts. Its options are listed in the [guide](docs/GUIDE.md#4-the-ways-to-run-him). |
 | `settings.py` | All settings in one place: brains, timings, memory, voice, the body, the test days. |
 | `requirements.txt` · `download_models.sh` | What to install (quick start steps 1 and 3). |

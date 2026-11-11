@@ -57,11 +57,14 @@ This page is the current state. The history, including the experiments that fail
 - **Pollen's 13 emotions** (sad, laugh, yes, no, excited …), a peck (bending down), and 7 duck sounds: all of them are his own choice, as actions.
 - **His real voice in the simulator,** with a mute button in the room window.
 
+### Using him
+- **A start menu** (`Anka menu.command`, `anka_menu.py`, `anka_menu.bat`, built 2026-11-11): starts every mode, checks what is installed and offers to fix it (environment, packages, Ollama and its memory model, his voice, the Gemini key), and finds and tests a real Microduck on your wifi. Tested on macOS; Linux and Windows untested.
+
 ---
 
 ## 🔧 Should be fixed
 
-- **The kick in MuJoCo has not hit the ball yet.** Pollen's kick is blind and needs the ball 9 cm in front of the kicking foot. The step-up to the ball is still being tuned: very short steps don't make the walking policy move at all, and longer ones push the ball away.
+- **The kick in MuJoCo has not hit the ball yet.** Pollen's kick is blind and needs the ball 9 cm in front of the kicking foot. The old step-up used short step pulses, and Pollen's walking policy just steps on the spot when a command is short or slow. **Rewritten 2026-11-11:** the body now walks continuously while it watches the ball, turns before it walks, steps sideways close up, backs off straight, and stops before the spot because the legs carry on a moment (it learns how far). Offline, against a fake duck with that behaviour, it lined up 5 of 6 times. Not yet tested in MuJoCo.
 - **No beak motor in the simulated duck,** so in 3D he can peck but not carry anything. The real duck has one.
 - **He talks a lot when people are around:** about 16–19 lines of his own in 5–6 minutes. A lesson about it exists, he is reminded of it, and it barely changes his behaviour.
 - **He chooses a lot of duck sounds** (30–40 in 17 minutes). Telling him the count worked for picture memories; it may be needed here too.
@@ -77,7 +80,7 @@ This page is the current state. The history, including the experiments that fail
 The work goes on in the simulator until the real duck arrives, and this repository is updated along the way.
 
 **In the simulator (now):**
-1. **Make the kick work in MuJoCo:** a reliable step-up to the ball, so Pollen's kick actually hits it.
+1. **Test the new kick in MuJoCo** (rewritten 2026-11-11), and tune it until Pollen's kick actually hits the ball.
 2. **Self-paced thinking:** he chooses when his next thought comes (soon / in a while / when something happens), instead of a fixed timer.
 3. **Goals with reasons:** why he wants something, and checking that later.
 4. **Richer body language:** a better reading of his `BODY` words, more use of Pollen's emotions, and fewer but better-chosen sounds.

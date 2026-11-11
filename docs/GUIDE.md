@@ -78,6 +78,11 @@ His memory lives in two folders. Both are created automatically, and both are in
 
 ## 4. The ways to run him
 
+**The start menu** starts all of these, checks what is installed and fixes what is missing, and connects to a real
+Microduck: `Anka menu.command` (macOS), `python3 anka_menu.py` (Linux) or `anka_menu.bat` (Windows). Its option 6 remembers
+your duck's address in `duck_address.txt` and tests it the way Pollen's console does: the address, the console on port
+8080 (it saves his camera picture to `test_logs/duck_camera.png`), port 8443 and SSH.
+
 | Double-click | Same as | What it does |
 |---|---|---|
 | `Start Anka.command` | `python run_anka.py` | **The real Anka:** your Mac's camera, microphone and speakers. |

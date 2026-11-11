@@ -196,7 +196,10 @@ class SimBody:
         self.sounds = {}                 # how often he made each duck sound
         self.emotions, self.pecks = {}, 0    # Pollen's ready-made emotions he chose, and pecks
         self.showing = None                  # (text, until): what drives his body right now - for the room window
-        self._pulse_extra = 0.15             # the kick approach learns how long a step pulse must be to take a step
+        self._pulse_extra = 0.15             # (old step-pulse approach, unused since 2026-11-11)
+        self._kick_stop = 0.05               # m: the kick approach stops this far before the spot (the legs go on a moment); it learns
+        self._kick_side_stop = 0.04          # m: the same for stepping sideways
+        self._kick_turn_stop = 0.2           # rad: and for turning (about 11°)
         self.kicks = []                  # every kick: the skill, the robot's answer, how far his eyes saw the ball move
         self.living = L.Living(self, on="--no-living" not in sys.argv).start()   # what his body does by itself between thoughts
         print(f"[SimBody] the moves this body has besides walking: {', '.join(self.link.skills()) or '(none reported)'}")
@@ -882,11 +885,15 @@ class SimBody:
         if self.kicks:
             lines.append(f"kicks ({len(self.kicks)}): " + "; ".join(
                 f"{k['skill']} → robot said {str(k['answer'])[:60]}, ball at (fwd, left) {k.get('ball_at')} m before" + (f", ball moved {k['moved_m']} m by his eyes" if 'moved_m' in k else "")
+                + (f" | approach: {'lined up' if k['approach']['lined_up'] else 'NOT lined up'}, {' '.join(k['approach']['phases']) or 'no moves'},"
+                   f" walked {k['approach']['walked_m']} m in {k['approach']['seconds']} s, off by {k['approach']['error_cm']} cm (ahead, side),"
+                   f" stop margin now {k['approach']['stop_margin']} m" if k.get('approach') else "")
                 for k in self.kicks[-8:]))
         t, pose = self.link.truth(), self.mind.pose()
         # numbers for the thought log's end row (tools/score_run.py scores them) - 2026-11-10
         self.summary_numbers = dict(self.living.numbers(), falls=self.falls, kicks=len(self.kicks),
                                     kicks_moved_ball=sum(1 for k in self.kicks if k.get("moved_m", 0) >= 0.08),
+                                    kicks_lined_up=sum(1 for k in self.kicks if (k.get("approach") or {}).get("lined_up")),
                                     sounds=sum(self.sounds.values()), map_error_cm=None,
                                     emotions=sum(self.emotions.values()), pecks=self.pecks)
         if t and pose is not None:
@@ -1451,6 +1458,9 @@ class SimBody:
         return f"you made your '{tag}' sound ({SOUNDS[tag]})" + ("" if played or muted or linux else " – but no sound came out"), True
 
     KICK_X, KICK_Y = 0.09, 0.042     # where Pollen's kick wants the ball: 9 cm ahead, 4.2 cm to the side of the foot
+    KICK_OK_X, KICK_OK_Y = 0.035, 0.03   # close enough to that spot (in cm: 3.5 ahead/behind, 3 to the side)
+    KICK_WALK_BACK = -0.25           # m/s backing off straight (slower doesn't step - see below)
+    KICK_SIDE = 0.20                 # m/s stepping sideways (the walking policy's most)
 
     def _fresh_ball(self, after, wait=1.5):
         """A sighting of the ball made by his eyes AFTER a given moment (not an old one from before a step)."""
@@ -1462,58 +1472,126 @@ class SimBody:
             self._sleep(0.1)
         return None
 
+    def _ball_from_feet(self, v):
+        """Where a sighting puts the ball, measured from his feet (forward, left) in metres."""
+        rel = math.radians(v["b"] + v.get("head", 0.0))
+        cam = ((self.link.state() or {}).get("frames") or {}).get("camera") or {}
+        cx, cy = (cam["pos"][0], cam["pos"][1]) if cam.get("pos") else (0.03, 0.0)   # the camera sits ahead of his feet
+        return cx + v["d"] * math.cos(rel), cy + v["d"] * math.sin(rel)
+
     def _kick_approach(self, side):
+        """His body steps up to the ball before a kick - a motor skill of the kick, like a footballer's last steps.
+
+        Rewritten 2026-11-11. Before, it used short step pulses, but Pollen's walking policy steps on the spot when a
+        command is short or slow (run 2026-11-10 13:32: five "6 cm" steps by odometry, and the ball stayed 15 cm away).
+        Now, like DuckPet's kick (github.com/a125477365/DuckPet), the body keeps walking while it watches the ball:
+        - the ball's place is smoothed over several sightings (the gait sways the body about ±10°),
+        - far away it turns first and then walks straight (walking at an angle drifts further off),
+        - close up it steps sideways to line up the kicking foot (turning next to the ball sweeps it away),
+        - too close, it backs off straight,
+        - it stops a little before the spot, because the legs go on a moment after "stop" - and it learns how much.
+        Nothing here decides WHETHER to kick: that was his choice. The body only gets the foot to the ball."""
         fy = -self.KICK_Y if side == "right" else self.KICK_Y
         self.link.look_at(*LOOKS["down"])                   # the ball at his feet is below his level view
         self._gaze, self._home_point = "down", LOOKS["down"]
         self._sleep(0.8)
-        steps, after = [], time.time()
-        for _ in range(6):
-            v = self._fresh_ball(after)
-            if not v:
-                return ("you looked down at your feet to kick, but you can't see the ball there – "
-                        + ("after stepping " + ", ".join(steps) if steps else "it isn't right in front of you")), False
-            rel = math.radians(v["b"] + v.get("head", 0.0))
-            cam = ((self.link.state() or {}).get("frames") or {}).get("camera") or {}
-            cx, cy = (cam["pos"][0], cam["pos"][1]) if cam.get("pos") else (0.03, 0.0)   # the camera sits ahead of his feet
-            bx, by = cx + v["d"] * math.cos(rel), cy + v["d"] * math.sin(rel)           # the ball, measured from his feet
-            if v["d"] > 0.7:
-                return f"the ball is about {_metres(v['d'])} away – too far to kick from here (walk up to it first)", False
-            if bx - self.KICK_X > 0.10:                       # far: walk most of the way first (walking turns a little)
-                self._walk(bx - self.KICK_X - 0.04, False, target="ball")
-                steps.append(f"forward {_metres(bx - self.KICK_X - 0.04)}")
-            elif abs(by - fy) > 0.025:                        # line the ball up with the kicking foot: a short turn pulse
-                ang = math.atan2(by, bx) - math.asin(max(-1.0, min(1.0, fy / max(v["d"], 0.05))))
-                ang *= 0.6                                    # (a bit less each time - an overshoot loses the ball from view)
-                secs = max(0.08, abs(ang) / TURN_MIN - 0.5 * self._turn_lag)    # (the legs go on a moment after the stop)
-                self.link.move(TURN_VX, 0, math.copysign(TURN_MIN, ang), seconds=secs)
-                self._sleep(secs + 0.6)
-                steps.append(f"{'left' if ang > 0 else 'right'} {abs(math.degrees(ang)):.0f}°")
-                if self._fresh_ball(time.time() - 0.05, wait=1.0) is None:    # lost it: turn back the same way and look again
-                    self.link.move(TURN_VX, 0, -math.copysign(TURN_MIN, ang), seconds=secs)
-                    self._sleep(secs + 0.6)
-                    steps.append("back again")
-            elif bx - self.KICK_X > 0.025:                    # the last few cm: a short step pulse (a walk overshoots
-                dx = bx - self.KICK_X                         # and pushes the ball away with his feet)
-                secs = dx / WALK_SPEED + self._pulse_extra    # (the legs need a moment to start stepping at all)
-                o0 = self._odom()
-                self.link.move(WALK_SPEED, 0, 0, seconds=secs)
-                self._sleep(secs + 0.6)
+        o0 = self._odom()
+        t0 = time.time()
+        phases, lined_up, f = [], False, None
+
+        def look(n=3, wait=1.2):
+            """The ball's place from a few fresh sightings while standing still (averaged), or None."""
+            pts, end, after = [], time.time() + wait, time.time() - 0.05
+            while len(pts) < n and time.time() < end:
+                v = self._fresh_ball(after, wait=max(0.05, end - time.time()))
+                if v is None:
+                    break
+                after = v["t"]
+                pts.append(self._ball_from_feet(v))
+            return (sum(p[0] for p in pts) / len(pts), sum(p[1] for p in pts) / len(pts), pts[-1]) if pts else None
+
+        first = self._fresh_ball(time.time() - 0.3, wait=1.0)
+        if first is None:
+            return ("you looked down at your feet to kick, but you can't see the ball there – "
+                    "it isn't right in front of you"), False
+        if first["d"] > 0.7:
+            return f"the ball is about {_metres(first['d'])} away – too far to kick from here (walk up to it first)", False
+        while time.time() - t0 < 25 and len(phases) < 16:
+            seen = look()
+            if seen is None:
                 o1 = self._odom()
-                moved = math.hypot(o1[0] - o0[0], o1[1] - o0[1])
-                if moved < 0.01:                              # no step at all: a longer pulse next time
-                    self._pulse_extra = min(0.7, self._pulse_extra + 0.12)
-                elif moved > dx * 1.6:                        # too far: a shorter one
-                    self._pulse_extra = max(0.0, self._pulse_extra - 0.08)
-                steps.append(f"a small step forward ({_metres(moved)})")
+                return (f"your body moved towards the ball ({_metres(math.hypot(o1[0] - o0[0], o1[1] - o0[1]))}) "
+                        "but lost sight of it – it may have rolled away"), False
+            f = seen[:2]
+            ex, ey = f[0] - self.KICK_X, f[1] - fy
+            ang = math.atan2(ey, max(f[0], 0.05))
+            if abs(ex) <= self.KICK_OK_X and abs(ey) <= self.KICK_OK_Y:
+                lined_up = True
+                break
+            # one move at a time, from standing: back off / step sideways / turn / walk - then stop before the spot
+            if ex < -self.KICK_OK_X:
+                kind, cmd = "back", (self.KICK_WALK_BACK, 0.0, 0.0)
+                done = lambda ex, ey, ang: ex >= -self._kick_stop
+            elif ex < 0.12 and abs(ey) > self.KICK_OK_Y:
+                kind, cmd = "side", (0.0, math.copysign(self.KICK_SIDE, ey), 0.0)
+                sgn = math.copysign(1, ey)
+                done = lambda ex, ey, ang, sgn=sgn: ey * sgn <= self._kick_side_stop
+            elif ex >= 0.12 and abs(ang) > math.radians(10):
+                kind, cmd = "turn", (TURN_VX, 0.0, math.copysign(TURN_MIN, ang))
+                sgn = math.copysign(1, ang)
+                done = lambda ex, ey, ang, sgn=sgn: ang * sgn <= self._kick_turn_stop
             else:
-                self.kick_lineup = (round(bx, 3), round(by, 3))
-                return ("your body stepped up to the ball (" + ", ".join(steps) + ")" if steps
-                        else "the ball was right in front of your foot"), True
-            self._sleep(0.3)
-            after = time.time()
-        self.kick_lineup = (round(bx, 3), round(by, 3))
-        return "your body tried to step up to the ball (" + ", ".join(steps) + ") but couldn't line it up exactly", True
+                kind, cmd = "walk", (WALK_SPEED, 0.0, 0.0)
+                done = lambda ex, ey, ang: ex <= self._kick_stop
+            phases.append(kind)
+            self.link.move(*cmd)                        # keeps going until stopped (no short pulses: they step on the spot)
+            end, est = time.time() + 6.0, f
+            while time.time() < end:
+                v = self._fresh_ball(time.time() - 0.05, wait=0.6)
+                if v is None:
+                    break
+                bx, by = self._ball_from_feet(v)
+                est = (est[0] + 0.5 * (bx - est[0]), est[1] + 0.5 * (by - est[1]))      # smoothed: the gait sways
+                if done(est[0] - self.KICK_X, est[1] - fy, math.atan2(est[1] - fy, max(est[0], 0.05))):
+                    break
+            self.link.stop()
+            self._sleep(0.7)                            # the legs go on a moment - let them settle before looking
+            after = look()
+            if after is not None:                       # learn how far the legs carry on after "stop"
+                ex2, ey2 = after[0] - self.KICK_X, after[1] - fy
+                if kind in ("walk", "back"):
+                    over = (-ex2 if kind == "walk" else ex2) > self.KICK_OK_X
+                    short = (ex2 if kind == "walk" else -ex2) > self.KICK_OK_X
+                    if over:
+                        self._kick_stop = min(0.15, self._kick_stop + 0.015)
+                    elif short:
+                        self._kick_stop = max(0.0, self._kick_stop - 0.008)
+                elif kind == "side":
+                    if ey2 * math.copysign(1, ey) < -self.KICK_OK_Y:
+                        self._kick_side_stop = min(0.12, self._kick_side_stop + 0.025)
+                    elif ey2 * math.copysign(1, ey) > self.KICK_OK_Y:
+                        self._kick_side_stop = max(0.0, self._kick_side_stop - 0.008)
+                elif kind == "turn":
+                    ang2 = math.atan2(ey2, max(after[0], 0.05)) * math.copysign(1, ang)
+                    if ang2 < -math.radians(10):
+                        self._kick_turn_stop = min(math.radians(40), self._kick_turn_stop + math.radians(5))
+                    elif ang2 > math.radians(10):
+                        self._kick_turn_stop = max(math.radians(2), self._kick_turn_stop - math.radians(2))
+        self.link.stop()
+        self._sleep(0.5)
+        o1 = self._odom()
+        walked = math.hypot(o1[0] - o0[0], o1[1] - o0[1])
+        words = {"walk": "walked", "turn": "turned", "side": "stepped sideways", "back": "backed off"}
+        did = [f"{words[k]}{'' if phases.count(k) == 1 else ' ×' + str(phases.count(k))}"
+               for k in ("walk", "turn", "side", "back") if k in phases]
+        self.kick_lineup = (round(f[0], 3), round(f[1], 3)) if f else None
+        self.kick_approach = {"lined_up": lined_up, "phases": phases, "walked_m": round(walked, 2),
+                              "error_cm": (round((f[0] - self.KICK_X) * 100, 1), round((f[1] - fy) * 100, 1)) if f else None,
+                              "stop_margin": round(self._kick_stop, 3), "side_margin": round(self._kick_side_stop, 3), "turn_margin_deg": round(math.degrees(self._kick_turn_stop)), "seconds": round(time.time() - t0, 1)}
+        how = (f"{', '.join(did)}, about {_metres(walked)} in all" if did else "it was already in place")
+        if lined_up:
+            return f"your body stepped up to the ball ({how})", True
+        return f"your body tried to step up to the ball ({how}) but couldn't line it up exactly", True
 
     def _kick(self, side):
         have = self.link.skills()
@@ -1538,7 +1616,8 @@ class SimBody:
         self.link.head(0.0, 0.0, 0.0, 0.0)
         self._sleep(0.7)
         res = self.link.do(skill)
-        self.kicks.append({"skill": skill, "answer": res, "ball_at": getattr(self, "kick_lineup", None)})
+        self.kicks.append({"skill": skill, "answer": res, "ball_at": getattr(self, "kick_lineup", None),
+                           "approach": getattr(self, "kick_approach", None)})
         if isinstance(res, dict) and (res.get("accepted") is False or res.get("error")):
             why = res.get("reason") or res.get("error") or "no reason given"
             return f"your body didn't do the kick (it said: {str(why)[:120]})", False
