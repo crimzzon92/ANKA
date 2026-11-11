@@ -36,7 +36,7 @@ own `say` voice. On other computers he then only prints what he would have said.
 ## 2. Installation
 
 ```bash
-git clone https://github.com/crimzzon92/anka-microduck.git anka && cd anka
+git clone https://github.com/crimzzon92/ANKA-Microduck-AI-Brain.git anka && cd anka
 
 # Python environment (the launchers expect it in ~/anka-env)
 python3 -m venv ~/anka-env
