@@ -107,7 +107,13 @@ def layout(room, eyes, lines):
     eyes_w = min(eyes_w, int(rw * 0.6))
     whole = np.vstack([room, np.hstack([fit(eyes, eyes_w, bottom_h), log_panel(lines, rw - eyes_w, bottom_h)])])
     sw, sh = screen()
-    f = min(1.2, 0.98 * sw / whole.shape[1], 0.90 * sh / whole.shape[0])
+    # 2026-11-12: 20 % bigger than before. ANKA_WINDOW_SIZE changes it (1.0 = the old size); never bigger than
+    # the screen, so on a small screen it grows less than 20 %.
+    try:
+        size = float(os.environ.get("ANKA_WINDOW_SIZE", "1.2"))
+    except ValueError:
+        size = 1.2
+    f = min(1.2 * size, 0.98 * sw / whole.shape[1], 0.90 * size * sh / whole.shape[0], 0.95 * sh / whole.shape[0])
     if abs(f - 1.0) > 0.01:
         whole = cv2.resize(whole, (int(whole.shape[1] * f), int(whole.shape[0] * f)), interpolation=cv2.INTER_LINEAR)
     return whole, f

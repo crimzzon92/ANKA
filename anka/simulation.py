@@ -3,6 +3,7 @@ import collections
 import os
 import re
 import sys
+import threading
 import time
 from datetime import date
 
@@ -171,31 +172,58 @@ def real_frame():
     return [("person" if v["kind"] == "person" else k, "in view") for k, v in seen.items()]
 
 
+def _room_picture(t):
+    """The room picture: the room from above, the clock and caption, speech bubbles, who moves him, the mute button."""
+    now = time.time()
+    mins, secs = divmod(int(t), 60)
+    lines = [f"{mins}:{secs:02d}   {state.get('caption', '')}"]
+    if thoughts and thought_times and now - thought_times[-1] < 15:
+        lines.append(f"thinks: {thoughts[-1]}")
+    bubbles = []
+    if state["said"] and now - state["said"][-1][0] < 7:
+        bubbles.append((NAME, state["said"][-1][1]))
+    ps = state.get("person_said")
+    if ps and now - ps[0] < 6:
+        bubbles.append((ps[1], ps[2]))
+    img = body.draw(caption=lines, bubbles=bubbles)
+    img = _who_moves(img)
+    if SIM_SOUND:
+        img = _sound_button(img)
+    return img
+
+
+# 2026-11-12: the room picture for the window program is made in its OWN thread, 4 times a second. Before, it was only
+# made while the script loop waited for his eyes - so while his body was busy (a long walk, a kick approach of 20-30 s)
+# the map in the window stood still ("the map freezes sometimes").
+_handover_thread = {"started": False, "t": 0.0, "at": 0.0}
+
+
+def _handover_loop():
+    while _room_window[0]:
+        now = time.time()
+        try:
+            t = _handover_thread["t"] + (now - _handover_thread["at"])    # the script clock goes on while the loop is busy
+            _hand_over(_room_picture(t))
+        except Exception:
+            pass
+        time.sleep(max(0.05, 0.25 - (time.time() - now)))
+
+
 def show_room(t, wait):
     """Draws the room about 30 times a second for 'wait' seconds (or just waits, if there's no screen)."""
     end = time.time() + wait
+    if _room_window[0] and _viewer_on():               # the one window is its own program: a thread hands the room over
+        _handover_thread["t"], _handover_thread["at"] = t, time.time()
+        if not _handover_thread["started"]:
+            _handover_thread["started"] = True
+            threading.Thread(target=_handover_loop, daemon=True).start()
+        time.sleep(max(0.0, end - time.time()))
+        return
     while _room_window[0] and time.time() < end:
         now = time.time()
-        mins, secs = divmod(int(t), 60)
-        lines = [f"{mins}:{secs:02d}   {state.get('caption', '')}"]
-        if thoughts and thought_times and now - thought_times[-1] < 15:
-            lines.append(f"thinks: {thoughts[-1]}")
-        bubbles = []
-        if state["said"] and now - state["said"][-1][0] < 7:
-            bubbles.append((NAME, state["said"][-1][1]))
-        ps = state.get("person_said")
-        if ps and now - ps[0] < 6:
-            bubbles.append((ps[1], ps[2]))
         try:
-            img = body.draw(caption=lines, bubbles=bubbles)
-            img = _who_moves(img)
-            if SIM_SOUND:
-                img = _sound_button(img)
+            img = _room_picture(t)
             title = f"{NAME}'s room"
-            if _viewer_on():                           # the one window is its own program: just hand the picture over
-                _hand_over(img)
-                time.sleep(max(0.0, 0.25 - (time.time() - now)))
-                continue
             if _one_window_on():                       # the 3D simulator: room, eyes and log in ONE window (2026-11-11)
                 img, title = _one_window(img), NAME
             cv2.imshow(title, img)
@@ -243,7 +271,7 @@ def _hand_over(room):
     import json
     from ankasim import window as W
     now = time.time()
-    if now - _one["handed"] < 0.25:
+    if now - _one["handed"] < 0.2:
         return
     _one["handed"] = now
     try:

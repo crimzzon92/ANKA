@@ -200,6 +200,7 @@ class SimBody:
         self._kick_stop = 0.05               # m: the kick approach stops this far before the spot (the legs go on a moment); it learns
         self._kick_side_stop = 0.04          # m: the same for stepping sideways
         self._kick_turn_stop = 0.2           # rad: and for turning (about 11°)
+        self._side_works = True              # 2026-11-12: set to False when a sideways step doesn't move him (see the kick)
         self.kicks = []                  # every kick: the skill, the robot's answer, how far his eyes saw the ball move
         self.living = L.Living(self, on="--no-living" not in sys.argv).start()   # what his body does by itself between thoughts
         print(f"[SimBody] the moves this body has besides walking: {', '.join(self.link.skills()) or '(none reported)'}")
@@ -704,7 +705,7 @@ class SimBody:
                 rx, ry = self._own_to_room(*pos)
                 cv2.rectangle(img, (px(rx, ry)[0] - 4, px(rx, ry)[1] - 4), (px(rx, ry)[0] + 4, px(rx, ry)[1] + 4), (160, 60, 160), 1)
                 cv2.putText(img, name + "?", (px(rx, ry)[0] + 7, px(rx, ry)[1] + 14), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (160, 60, 160), 1, cv2.LINE_AA)
-            for name, t in self.mind.things.items():             # where HE thinks the small things are (purple rings)
+            for name, t in list(self.mind.things.items()):       # where HE thinks the small things are (purple rings)
                 if t.get("kind") == "thing" and t.get("pos"):
                     rx, ry = self._own_to_room(*t["pos"])
                     cv2.circle(img, px(rx, ry), 8, (160, 60, 160), 2)
@@ -1475,6 +1476,8 @@ class SimBody:
     KICK_WALK_BACK = -0.25           # m/s backing off straight (slower doesn't step - see below)
     KICK_SIDE = 0.20                 # m/s stepping sideways (the walking policy's most)
     KICK_BLIND_FROM = 0.35           # m: seen this close, the body can do the last cm by counting its steps (see below)
+    KICK_TURN_ROOM = 0.14            # m: when side steps don't work, back off until the ball is this far past the kick spot,
+                                     # so there is room to turn towards it and walk in straight (2026-11-12)
 
     def _fresh_ball(self, after, wait=1.5):
         """A sighting of the ball made by his eyes AFTER a given moment (not an old one from before a step)."""
@@ -1552,11 +1555,20 @@ class SimBody:
         first = self._fresh_ball(time.time() - 0.3, wait=1.0)
         blind = False
         if first is None:
+            # 2026-11-12: he often tried to kick from too far away and only heard "it isn't right in front of you".
+            # Now his body also looks ahead once, so he learns where the ball IS (a fact - what to do is still his choice).
+            self.link.look_at(*LEVEL)
+            self._gaze, self._home_point = "straight", LEVEL
+            self._sleep(0.8)
+            ahead = self._fresh_ball(time.time() - 0.3, wait=1.0)
+            if ahead is not None:
+                return (f"you looked down at your feet to kick, but the ball isn't there – looking ahead you see it about "
+                        f"{_metres(ahead['d'])} away {_side(ahead['b'] + ahead.get('head', 0.0))}, too far to kick from here"), False
             return ("you looked down at your feet to kick, but you can't see the ball there – "
-                    "it isn't right in front of you"), False
+                    "it isn't right in front of you, and you don't see it straight ahead either"), False
         if first["d"] > 0.7:
             return f"the ball is about {_metres(first['d'])} away – too far to kick from here (walk up to it first)", False
-        while time.time() - t0 < 25 and len(phases) < 16:
+        while time.time() - t0 < 40 and len(phases) < 20:
             seen = look()
             if seen is None:
                 o1 = self._odom()
@@ -1572,10 +1584,22 @@ class SimBody:
             if ex < -self.KICK_OK_X:
                 kind, cmd = "back", (self.KICK_WALK_BACK, 0.0, 0.0)
                 done = lambda ex, ey, ang: ex >= -self._kick_stop
+            elif ex < 0.12 and abs(ey) > self.KICK_OK_Y and not self._side_works:
+                # side steps don't move him (runs 2026-11-11/12: a 10 cm side gap stayed after 25 s) - so do it like a
+                # footballer who is off to the side: step back, turn towards the ball, walk in straight
+                kind, cmd = "back off to turn", (self.KICK_WALK_BACK, 0.0, 0.0)
+                done = lambda ex, ey, ang: ex >= self.KICK_TURN_ROOM
             elif ex < 0.12 and abs(ey) > self.KICK_OK_Y:
                 kind, cmd = "side", (0.0, math.copysign(self.KICK_SIDE, ey), 0.0)
                 sgn = math.copysign(1, ey)
                 done = lambda ex, ey, ang, sgn=sgn: ey * sgn <= self._kick_side_stop
+            elif (ex >= 0.12 and abs(ey) > self.KICK_OK_Y and not self._side_works
+                  and abs(ang) <= max(math.radians(10), self._kick_turn_stop)):
+                # off to the side by a few cm, but at too small an angle to turn in (a turn carries on ~10°): turn AWAY a
+                # little first, so the turn back in is big enough to stop right on the line
+                kind, cmd = "turn away", (TURN_VX, 0.0, -math.copysign(TURN_MIN, ey))
+                sgn = math.copysign(1, ey)
+                done = lambda ex, ey, ang, sgn=sgn: ang * sgn >= self._kick_turn_stop + math.radians(12)
             elif ex >= 0.12 and abs(ang) > math.radians(10):
                 kind, cmd = "turn", (TURN_VX, 0.0, math.copysign(TURN_MIN, ang))
                 sgn = math.copysign(1, ang)
@@ -1585,8 +1609,11 @@ class SimBody:
                 done = lambda ex, ey, ang: ex <= self._kick_stop
             phases.append(kind)
             self.link.move(*cmd)                        # keeps going until stopped (no short pulses: they step on the spot)
-            end, est = time.time() + 6.0, f
+            end, est, start = time.time() + 6.0, f, time.time()
             while time.time() < end:
+                if kind == "side" and time.time() - start > 3.0 and abs(est[1] - f[1]) < 0.015:
+                    self._side_works = False            # 3 s of side steps and the ball hasn't moved sideways: they don't work
+                    break
                 v = self._fresh_ball(time.time() - 0.05, wait=0.3)
                 if v is not None:
                     bx, by = self._ball_from_feet(v)
@@ -1611,6 +1638,8 @@ class SimBody:
                     elif short:
                         self._kick_stop = max(0.0, self._kick_stop - 0.008)
                 elif kind == "side":
+                    if abs(after[1] - f[1]) < 0.02:     # a whole side step and the ball hasn't moved 2 cm sideways
+                        self._side_works = False
                     if ey2 * math.copysign(1, ey) < -self.KICK_OK_Y:
                         self._kick_side_stop = min(0.12, self._kick_side_stop + 0.025)
                     elif ey2 * math.copysign(1, ey) > self.KICK_OK_Y:
@@ -1625,13 +1654,15 @@ class SimBody:
         self._sleep(0.5)
         o1 = self._odom()
         walked = math.hypot(o1[0] - o0[0], o1[1] - o0[1])
-        words = {"walk": "walked", "turn": "turned", "side": "stepped sideways", "back": "backed off"}
+        words = {"walk": "walked", "turn": "turned", "side": "stepped sideways", "back": "backed off",
+                 "back off to turn": "stepped back to turn", "turn away": "turned away to come in straight"}
         did = [f"{words[k]}{'' if phases.count(k) == 1 else ' ×' + str(phases.count(k))}"
-               for k in ("walk", "turn", "side", "back") if k in phases]
+               for k in ("walk", "turn", "side", "back", "back off to turn", "turn away") if k in phases]
         self.kick_lineup = (round(f[0], 3), round(f[1], 3)) if f else None
         self.kick_approach = {"lined_up": lined_up, "phases": phases, "walked_m": round(walked, 2),
                               "error_cm": (round((f[0] - self.KICK_X) * 100, 1), round((f[1] - fy) * 100, 1)) if f else None,
-                              "stop_margin": round(self._kick_stop, 3), "side_margin": round(self._kick_side_stop, 3), "turn_margin_deg": round(math.degrees(self._kick_turn_stop)), "seconds": round(time.time() - t0, 1)}
+                              "stop_margin": round(self._kick_stop, 3), "side_margin": round(self._kick_side_stop, 3), "turn_margin_deg": round(math.degrees(self._kick_turn_stop)), "seconds": round(time.time() - t0, 1),
+                              "side_works": self._side_works}
         how = (f"{', '.join(did)}, about {_metres(walked)} in all" if did else "it was already in place")
         self.kick_approach["blind"] = blind
         if lined_up and blind:
