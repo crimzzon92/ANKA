@@ -56,7 +56,7 @@ This page is the current state. The history, including the experiments that fail
 - **Feelings in the body (the `BODY` line):** he writes it on almost every thought and reply. When shouted at he wrote "Crouched low, head tucked down, trembling", and the body did that.
 - **Pollen's 13 emotions** (sad, laugh, yes, no, excited …), a peck (bending down), and 7 duck sounds: all of them are his own choice, as actions.
 - **His real voice in the simulator,** with a mute button in the room window.
-- **One window for the 3D simulator** (2026-11-12): the room, his floor plan, his camera and the log together. It runs as its own program, so it doesn't slow his thinking down.
+- **One window for the 3D simulator** (2026-11-12): the room, his floor plan, his camera and the log together, as big as your screen allows (also on Retina screens). It runs as its own program, so it doesn't slow his thinking down. Sound starts muted; click the button or press M to hear him.
 - **The kick works:** he walks up to the ball, takes the last few centimetres without seeing it (the camera can't see that close) and kicks. First real kick: the ball rolled 1.2 m.
 
 ### Using him

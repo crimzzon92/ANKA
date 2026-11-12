@@ -15,7 +15,7 @@ S.can_turn_off_thinking = True   # False if the brain doesn't understand Ollama'
 S.can_see_pictures = True        # False if the brain can't look at pictures
 S.faces_known = None   # (FaceMemory – made when the eyes start)
 S.speech = None   # what Anka is saying right now
-S.sound_on = True  # the mute button (room window / M key) - only used in the simulation
+S.sound_on = False  # the mute button (starts muted) (room window / M key) - only used in the simulation
 S.voice = None    # the Kokoro voice (LazyModel), if it could be loaded
 
 # OpenCV and Whisper's sound library (PyAV) both bring their own copy of the same Mac video library, so macOS

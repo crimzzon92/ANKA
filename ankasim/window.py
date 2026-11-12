@@ -12,6 +12,8 @@ This file has the drawing that both programs share.
 """
 import os
 import re
+import subprocess
+import sys
 import textwrap
 
 import numpy as np
@@ -83,13 +85,37 @@ def fit(img, w, h):
     return out
 
 
+_SCREEN = []
+
+
+def _mac_screen():
+    """On a Mac: the usable part of the screen (without the menu bar and the Dock) in PICTURE pixels. A Retina screen
+    shows one picture pixel per screen pixel, and has 2 screen pixels per point - so a window measured in points came
+    out half as big as meant (2026-11-12: "the window is too small")."""
+    js = ("ObjC.import('AppKit'); var s = $.NSScreen.mainScreen; var f = s.visibleFrame;"
+          "f.size.width + ',' + f.size.height + ',' + s.backingScaleFactor")
+    out = subprocess.run(["osascript", "-l", "JavaScript", "-e", js], capture_output=True, text=True, timeout=5).stdout
+    w, h, k = [float(v) for v in out.strip().split(",")[:3]]
+    return int(w * k), int((h - 30) * k)          # (30 points for the window's own title bar)
+
+
 def screen():
-    """The screen size the window fits into (ANKA_SCREEN="width,height", set by the start menu)."""
-    try:
-        w, h = [int(float(v)) for v in os.environ.get("ANKA_SCREEN", "1440,860").split(",")[:2]]
-        return w, h
-    except Exception:
-        return 1440, 860
+    """The screen size the window fits into, in picture pixels. On a Mac it is measured; elsewhere ANKA_SCREEN
+    ("width,height", set by the start menu) or a guess."""
+    if not _SCREEN:
+        size = None
+        if sys.platform == "darwin":
+            try:
+                size = _mac_screen()
+            except Exception:
+                size = None
+        if size is None:
+            try:
+                size = tuple(int(float(v)) for v in os.environ.get("ANKA_SCREEN", "1440,860").split(",")[:2])
+            except Exception:
+                size = (1440, 860)
+        _SCREEN.append(size)
+    return _SCREEN[0]
 
 
 def waiting_room(w=1240, h=620):
@@ -102,18 +128,17 @@ def layout(room, eyes, lines):
     """The whole window: the room on top, his eyes and the log side by side below. Returns (picture, scale)."""
     room = room if room is not None else waiting_room()
     rh, rw = room.shape[:2]
-    bottom_h = int(rh * 0.65)
-    eyes_w = int(bottom_h * (eyes.shape[1] / eyes.shape[0])) if eyes is not None else int(rw * 0.45)
-    eyes_w = min(eyes_w, int(rw * 0.6))
+    bottom_h = int(rh * 1.15)          # 2026-11-12: his eyes and the log a bit BIGGER than the room and the floor plan
+    eyes_w = int(bottom_h * (eyes.shape[1] / eyes.shape[0])) if eyes is not None else int(rw * 0.5)
+    eyes_w = min(eyes_w, int(rw * 0.55))
     whole = np.vstack([room, np.hstack([fit(eyes, eyes_w, bottom_h), log_panel(lines, rw - eyes_w, bottom_h)])])
     sw, sh = screen()
-    # 2026-11-12: 20 % bigger than before. ANKA_WINDOW_SIZE changes it (1.0 = the old size); never bigger than
-    # the screen, so on a small screen it grows less than 20 %.
+    # As big as fits on the screen (keeping its shape). ANKA_WINDOW_SIZE makes it smaller: 0.8 = 80 % of that.
     try:
-        size = float(os.environ.get("ANKA_WINDOW_SIZE", "1.2"))
+        size = max(0.3, min(1.0, float(os.environ.get("ANKA_WINDOW_SIZE", "1.0"))))
     except ValueError:
-        size = 1.2
-    f = min(1.2 * size, 0.98 * sw / whole.shape[1], 0.90 * size * sh / whole.shape[0], 0.95 * sh / whole.shape[0])
+        size = 1.0
+    f = size * min(0.99 * sw / whole.shape[1], 0.99 * sh / whole.shape[0])
     if abs(f - 1.0) > 0.01:
         whole = cv2.resize(whole, (int(whole.shape[1] * f), int(whole.shape[0] * f)), interpolation=cv2.INTER_LINEAR)
     return whole, f

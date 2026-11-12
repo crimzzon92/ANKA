@@ -24,6 +24,7 @@ It also MEASURES: how much of the time between his moves he stands completely st
 he is asleep is not counted). --no-living turns the movements off (the meter still runs).
 """
 import math
+import os
 import random
 import re
 import threading
@@ -221,7 +222,8 @@ class Living:
         if age > STYLE_LASTS:
             return default
         v = self.style[key]
-        if isinstance(v, (int, float)) and not isinstance(v, bool) and age > STYLE_LASTS * 2 / 3:
+        if (isinstance(v, (int, float)) and not isinstance(v, bool) and isinstance(default, (int, float))
+                and age > STYLE_LASTS * 2 / 3):
             k = (age - STYLE_LASTS * 2 / 3) / (STYLE_LASTS / 3)
             return v + (default - v) * k
         return v
@@ -272,15 +274,21 @@ class Living:
                 if not self.acting:
                     self._step(now)
             except Exception as e:
-                self.glances["(problem: " + type(e).__name__ + ")"] += 1
+                key = "(problem: " + type(e).__name__ + ")"
+                if not self.glances[key]:          # 2026-11-12: say once WHERE it went wrong, so it can be fixed
+                    import traceback
+                    where = traceback.extract_tb(e.__traceback__)[-1]
+                    print(f"[living body] problem: {type(e).__name__}: {e} – in {os.path.basename(where.filename)} "
+                          f"line {where.lineno} ({where.line})", flush=True)
+                self.glances[key] += 1
             finally:
                 self.sb.lock.release()
 
     def _energy(self, now):
         """1 right after his own move, calming towards DOZE_FLOOR the longer he stands - times his BODY style."""
         base = DOZE_FLOOR + (1 - DOZE_FLOOR) * math.exp(-(now - self.last_move_end) / DOZE_TAU)
-        e = self._style("energy", None)
-        return base if e is None else max(0.08, min(1.6, e))
+        e = self._style("energy", base)     # (fades back to his own energy - with None it crashed: TypeError, 2026-11-12)
+        return max(0.08, min(1.6, e))
 
     def _base(self):
         return dict(self.home) if self.home else self._solve(self._home_point())

@@ -1558,7 +1558,7 @@ class SimBody:
             # 2026-11-12: he often tried to kick from too far away and only heard "it isn't right in front of you".
             # Now his body also looks ahead once, so he learns where the ball IS (a fact - what to do is still his choice).
             self.link.look_at(*LEVEL)
-            self._gaze, self._home_point = "straight", LEVEL
+            self._gaze, self._home_point = "straight ahead", LEVEL
             self._sleep(0.8)
             ahead = self._fresh_ball(time.time() - 0.3, wait=1.0)
             if ahead is not None:

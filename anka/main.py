@@ -29,7 +29,7 @@ def main():
         pass  # (shared values live on S)
         S.faces_known = types.SimpleNamespace(names=["Alex", "Robin"])  # (pretend he was taught these two faces)
         if SIM_SOUND:      # (his real voice in the MuJoCo sim - the room window has a mute button)
-            S.sound_on = True
+            S.sound_on = False   # 2026-11-12: starts MUTED - click the button (or press M) to hear him
             load_voice()
     else:
         print("👀 Eyes: the brain looks at the camera picture itself + a light face/motion sensor")
