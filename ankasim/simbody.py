@@ -99,7 +99,7 @@ except Exception:
 
 
 # what he remembers about the room - a separate file for the simulator, so a real duck never inherits the simulator's room
-_DUCK = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # (the Anka folder)
+_DUCK = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # (~/Downloads/Duck)
 MEMORY_FILE = (os.path.join(_DUCK, "memory", "simulation", "room_memory_sim.json") if "--simulate" in sys.argv
                else os.path.join(_DUCK, "memory", "real", "room_memory.json"))   # his room memory (kept between days)
 os.makedirs(os.path.dirname(MEMORY_FILE), exist_ok=True)
@@ -1232,6 +1232,19 @@ class SimBody:
         if pos is not None and name in self.mind.things and abs(self.mind.from_me(pos)[1]) < 35 and not math.isnan(ahead) and ahead < 0.55:
             return (f"{text} {where} {label} – {label} is right in front of you, but too close for your camera to see it with "
                     f"your head level; your depth sensor feels something {_metres(ahead)} straight ahead and your step counting says it is {M.about(self.mind.from_me(pos)[0])} away (look down to see it)"), True
+        # a small thing on the floor close by may just be below his view (2026-11-11, run 20:03: "walked 10 cm where you
+        # remember the ball – but you are NOT at the ball" while it lay at his feet): look down before saying it isn't here
+        if pos is not None and name in ("ball", "sock") and self.mind.from_me(pos)[0] < 0.5:
+            self.link.look_at(*LOOKS["down"])
+            self._gaze, self._home_point = "down", LOOKS["down"]
+            self._sleep(0.9)
+            low = self._visible_name(name, 0.8)
+            if low:
+                return (f"{text} {where} {label} – you looked down and see {label} {M.about(low['d'])} "
+                        f"{M.side(low['b'] + low.get('head', 0.0))} (your head is tilted down)"), True
+            if self.mind.from_me(pos)[0] < 0.15:
+                return (f"{text} {where} {label} – your step counting says {label} is right at your feet, closer than your camera "
+                        "can see even looking down (it may be there, or it may have rolled away – step back to see)"), True
         if self._scan_for(name):
             return f"{text} {where} {label} – looked left and right and spotted {label}", True
         return (f"{text} {where} {label} – but you are NOT at {label}: you can't see it from here (your map was off, or it was moved). "
@@ -1461,6 +1474,7 @@ class SimBody:
     KICK_OK_X, KICK_OK_Y = 0.035, 0.03   # close enough to that spot (in cm: 3.5 ahead/behind, 3 to the side)
     KICK_WALK_BACK = -0.25           # m/s backing off straight (slower doesn't step - see below)
     KICK_SIDE = 0.20                 # m/s stepping sideways (the walking policy's most)
+    KICK_BLIND_FROM = 0.35           # m: seen this close, the body can do the last cm by counting its steps (see below)
 
     def _fresh_ball(self, after, wait=1.5):
         """A sighting of the ball made by his eyes AFTER a given moment (not an old one from before a step)."""
@@ -1499,18 +1513,44 @@ class SimBody:
         t0 = time.time()
         phases, lined_up, f = [], False, None
 
+        # The last few cm are BLIND (run 2026-11-11 19:20): with his head down as far as it goes (33°) the camera
+        # loses the ball about 7 cm in front of it - and the kick wants it 9 cm in front of the FOOT, which is closer
+        # than that. So, like a footballer who stops looking at the ball for the last touch, the body remembers where it
+        # last saw the ball in its own step counting (odometry) and goes on from there.
+        mem = {"w": None, "t": 0.0, "d": 9.9}
+
+        def remember(p, d):
+            x, y, yaw = self._odom()
+            mem["w"] = (x + p[0] * math.cos(yaw) - p[1] * math.sin(yaw), y + p[0] * math.sin(yaw) + p[1] * math.cos(yaw))
+            mem["t"], mem["d"] = time.time(), d
+
+        def from_steps():
+            """Where the ball should be now (forward, left of his feet) from where he last saw it close up, or None."""
+            if mem["w"] is None or time.time() - mem["t"] > 20 or mem["d"] > self.KICK_BLIND_FROM:
+                return None
+            x, y, yaw = self._odom()
+            dx, dy = mem["w"][0] - x, mem["w"][1] - y
+            return dx * math.cos(yaw) + dy * math.sin(yaw), -dx * math.sin(yaw) + dy * math.cos(yaw)
+
         def look(n=3, wait=1.2):
-            """The ball's place from a few fresh sightings while standing still (averaged), or None."""
-            pts, end, after = [], time.time() + wait, time.time() - 0.05
+            """The ball's place from a few fresh sightings while standing still (averaged) - or, if it is too close to
+            see, from his steps since he last saw it - with a flag for 'blind'. None if neither."""
+            pts, end, after, d = [], time.time() + wait, time.time() - 0.05, 9.9
             while len(pts) < n and time.time() < end:
                 v = self._fresh_ball(after, wait=max(0.05, end - time.time()))
                 if v is None:
                     break
-                after = v["t"]
+                after, d = v["t"], v["d"]
                 pts.append(self._ball_from_feet(v))
-            return (sum(p[0] for p in pts) / len(pts), sum(p[1] for p in pts) / len(pts), pts[-1]) if pts else None
+            if pts:
+                avg = (sum(p[0] for p in pts) / len(pts), sum(p[1] for p in pts) / len(pts))
+                remember(avg, d)
+                return avg[0], avg[1], False
+            est = from_steps()
+            return (est[0], est[1], True) if est else None
 
         first = self._fresh_ball(time.time() - 0.3, wait=1.0)
+        blind = False
         if first is None:
             return ("you looked down at your feet to kick, but you can't see the ball there – "
                     "it isn't right in front of you"), False
@@ -1522,7 +1562,7 @@ class SimBody:
                 o1 = self._odom()
                 return (f"your body moved towards the ball ({_metres(math.hypot(o1[0] - o0[0], o1[1] - o0[1]))}) "
                         "but lost sight of it – it may have rolled away"), False
-            f = seen[:2]
+            f, blind = seen[:2], seen[2]
             ex, ey = f[0] - self.KICK_X, f[1] - fy
             ang = math.atan2(ey, max(f[0], 0.05))
             if abs(ex) <= self.KICK_OK_X and abs(ey) <= self.KICK_OK_Y:
@@ -1547,17 +1587,21 @@ class SimBody:
             self.link.move(*cmd)                        # keeps going until stopped (no short pulses: they step on the spot)
             end, est = time.time() + 6.0, f
             while time.time() < end:
-                v = self._fresh_ball(time.time() - 0.05, wait=0.6)
-                if v is None:
-                    break
-                bx, by = self._ball_from_feet(v)
-                est = (est[0] + 0.5 * (bx - est[0]), est[1] + 0.5 * (by - est[1]))      # smoothed: the gait sways
+                v = self._fresh_ball(time.time() - 0.05, wait=0.3)
+                if v is not None:
+                    bx, by = self._ball_from_feet(v)
+                    est = (est[0] + 0.5 * (bx - est[0]), est[1] + 0.5 * (by - est[1]))  # smoothed: the gait sways
+                    remember(est, v["d"])
+                else:                                   # out of sight: too close? then go on by counting steps
+                    est = from_steps()
+                    if est is None:
+                        break
                 if done(est[0] - self.KICK_X, est[1] - fy, math.atan2(est[1] - fy, max(est[0], 0.05))):
                     break
             self.link.stop()
             self._sleep(0.7)                            # the legs go on a moment - let them settle before looking
             after = look()
-            if after is not None:                       # learn how far the legs carry on after "stop"
+            if after is not None and not after[2]:      # learn how far the legs carry on after "stop" (only from sight)
                 ex2, ey2 = after[0] - self.KICK_X, after[1] - fy
                 if kind in ("walk", "back"):
                     over = (-ex2 if kind == "walk" else ex2) > self.KICK_OK_X
@@ -1589,6 +1633,10 @@ class SimBody:
                               "error_cm": (round((f[0] - self.KICK_X) * 100, 1), round((f[1] - fy) * 100, 1)) if f else None,
                               "stop_margin": round(self._kick_stop, 3), "side_margin": round(self._kick_side_stop, 3), "turn_margin_deg": round(math.degrees(self._kick_turn_stop)), "seconds": round(time.time() - t0, 1)}
         how = (f"{', '.join(did)}, about {_metres(walked)} in all" if did else "it was already in place")
+        self.kick_approach["blind"] = blind
+        if lined_up and blind:
+            return (f"your body stepped up to the ball ({how}) – the last few cm without seeing it: it is too close to "
+                    "your feet for your camera, so your body counted its steps from where it last saw it"), True
         if lined_up:
             return f"your body stepped up to the ball ({how})", True
         return f"your body tried to step up to the ball ({how}) but couldn't line it up exactly", True
@@ -1643,4 +1691,8 @@ class SimBody:
                 return f"{approach}, then kicked with your {side} foot{before} – your eyes see the ball now {where} (it moved about {_metres(moved)})", True
             return f"{approach}, then kicked with your {side} foot{before} – your eyes see the ball now {where}", True
         self._ball_at = False                 # nobody knows where it rolled to - he has to look
+        if (getattr(self, "kick_approach", None) or {}).get("blind"):
+            return (f"{approach}, then kicked with your {side} foot{before} – the ball is not in your camera picture now: "
+                    "it may still be right at your feet (too close for your camera to see) or it rolled away – step back "
+                    "or look around to find out"), True
         return f"{approach}, then kicked with your {side} foot{before} – the ball is not in your camera picture now: look to see where it went", True

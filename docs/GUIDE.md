@@ -79,7 +79,8 @@ His memory lives in two folders. Both are created automatically, and both are in
 ## 4. The ways to run him
 
 **The start menu** starts all of these, checks what is installed and fixes what is missing, and connects to a real
-Microduck: `Anka menu.command` (macOS), `python3 anka_menu.py` (Linux) or `anka_menu.bat` (Windows). Its option 6 remembers
+Microduck: `Anka menu (mac).command` (macOS), `Anka menu (linux).sh` (Linux) or `Anka menu (win).bat` (Windows), or
+`python3 anka_menu.py` anywhere. Its option 6 remembers
 your duck's address in `duck_address.txt` and tests it the way Pollen's console does: the address, the console on port
 8080 (it saves his camera picture to `test_logs/duck_camera.png`), port 8443 and SSH.
 
@@ -90,7 +91,7 @@ your duck's address in `duck_address.txt` and tests it the way Pollen's console 
 | `Start Anka sim.command` | (Pollen's `duck-sim`) | Starts the **MuJoCo simulator** with Anka's room. Leave it running. |
 | `Anka in sim.command` | `python run_anka.py --simulate --mujoco` | Anka's brain with the simulated duck as his body (the default test day). |
 | `tools/Anka in sim (everything).command` | `… --mujoco --scenario all` | A **17-minute day that tests everything**. A recorded example, with the full script, is in [examples/mujoco-day](../examples/mujoco-day/). |
-| `Start everything.command` | | Starts the simulator, waits for it, and starts Anka in it. |
+| `Start everything.command` | | Starts the simulator, waits for it, and starts Anka in it, with everything in one window. Options: `--show-3d` (Pollen's 3D window too), `--eyes` (separate eyes window), `--auto-close`. |
 | `Camera floor test.command` | `python camera_floor_test.py` | Tests depth from the camera with your real webcam on the floor. |
 
 **Other command-line options for `run_anka.py`:**

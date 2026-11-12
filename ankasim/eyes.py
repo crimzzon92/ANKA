@@ -220,6 +220,69 @@ def compose(link, overlay=False, rejected=False):
     return np.hstack([cam, panel])
 
 
+def one_window(link):
+    """Anka's ONE window (2026-11-11), as its own program so it never slows his brain down: the room picture and the
+    log come from small files his program writes (see window.py), his eyes come live from the simulator."""
+    try:
+        from . import window as W
+    except ImportError:
+        import window as W
+    title = "Anka"
+    cv2.namedWindow(title, cv2.WINDOW_AUTOSIZE)
+    pos = os.environ.get("ANKA_ROOM_POS", "")
+    if "," in pos:
+        cv2.moveWindow(title, *[int(float(v)) for v in pos.split(",")[:2]])
+    st = {"room": None, "room_m": 0.0, "lines": [], "log_m": 0.0, "rect": (0, 0, 0, 0), "scale": 1.0}
+
+    def mute():
+        try:
+            W.write_atomic(W.LIVE_CMD, b"mute")
+        except OSError:
+            pass
+
+    def click(event, x, y, flags, param):
+        if event == cv2.EVENT_LBUTTONDOWN:
+            x1, y1, x2, y2 = st["rect"]
+            if x1 <= x / st["scale"] <= x2 and y1 <= y / st["scale"] <= y2:
+                mute()
+
+    cv2.setMouseCallback(title, click)
+    for f in (W.LIVE_ROOM, W.LIVE_LOG, W.LIVE_INFO):        # nothing old from an earlier run
+        try:
+            os.remove(f)
+        except OSError:
+            pass
+    try:
+        while True:
+            try:
+                m = os.path.getmtime(W.LIVE_ROOM)
+                if m != st["room_m"]:
+                    img = cv2.imread(W.LIVE_ROOM)
+                    if img is not None:
+                        st["room"], st["room_m"] = img, m
+                        with open(W.LIVE_INFO) as f:
+                            st["rect"] = tuple(json.load(f).get("rect", (0, 0, 0, 0)))
+            except (OSError, ValueError):
+                pass
+            try:
+                m = os.path.getmtime(W.LIVE_LOG)
+                if m != st["log_m"]:
+                    with open(W.LIVE_LOG, encoding="utf-8") as f:
+                        st["lines"], st["log_m"] = f.read().splitlines(), m
+            except OSError:
+                pass
+            whole, st["scale"] = W.layout(st["room"], compose(link), st["lines"])
+            cv2.imshow(title, whole)
+            k = cv2.waitKey(60) & 0xFF
+            if k in (ord("m"), ord("M")):
+                mute()
+            if cv2.getWindowProperty(title, cv2.WND_PROP_VISIBLE) < 1:
+                break
+    finally:
+        link.close()
+        cv2.destroyAllWindows()
+
+
 def main():
     ap = argparse.ArgumentParser(description="Anka's eyes: what the simulated duck senses")
     ap.add_argument("--state-dir", default=None, help="where the simulator keeps its sockets (default ~/.cache/duck-sim)")
@@ -227,6 +290,8 @@ def main():
     ap.add_argument("--no-truth", action="store_true", help="don't ask the simulator where the duck really is")
     ap.add_argument("--once", metavar="FILE.png", help="save one picture and quit")
     ap.add_argument("--wait", type=float, default=6.0, help="seconds to wait for the simulator with --once")
+    ap.add_argument("--one-window", action="store_true",
+                    help="Anka's ONE window: the room and the log (handed over by Anka's program) with his live eyes")
     args = ap.parse_args()
 
     link = DuckLink(state_dir=args.state_dir, duck=args.duck, truth=not args.no_truth).start()
@@ -240,8 +305,15 @@ def main():
         link.close()
         return
 
+    if args.one_window:
+        one_window(link)
+        return
+
     overlay, rejected, title = False, False, "Anka's eyes"
     cv2.namedWindow(title, cv2.WINDOW_AUTOSIZE)
+    pos = os.environ.get("ANKA_EYES_POS", "")      # the start menu tells where the window goes (2026-11-11)
+    if "," in pos:
+        cv2.moveWindow(title, *[int(float(v)) for v in pos.split(",")[:2]])
     try:
         while True:
             cv2.imshow(title, compose(link, overlay, rejected))

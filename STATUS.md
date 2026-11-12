@@ -56,15 +56,17 @@ This page is the current state. The history, including the experiments that fail
 - **Feelings in the body (the `BODY` line):** he writes it on almost every thought and reply. When shouted at he wrote "Crouched low, head tucked down, trembling", and the body did that.
 - **Pollen's 13 emotions** (sad, laugh, yes, no, excited …), a peck (bending down), and 7 duck sounds: all of them are his own choice, as actions.
 - **His real voice in the simulator,** with a mute button in the room window.
+- **One window for the 3D simulator** (2026-11-12): the room, his floor plan, his camera and the log together. It runs as its own program, so it doesn't slow his thinking down.
+- **The kick works:** he walks up to the ball, takes the last few centimetres without seeing it (the camera can't see that close) and kicks. First real kick: the ball rolled 1.2 m.
 
 ### Using him
-- **A start menu** (`Anka menu.command`, `anka_menu.py`, `anka_menu.bat`, built 2026-11-11): starts every mode, checks what is installed and offers to fix it (environment, packages, Ollama and its memory model, his voice, the Gemini key), and finds and tests a real Microduck on your wifi. Tested on macOS; Linux and Windows untested.
+- **A start menu** (`Anka menu (mac).command`, `Anka menu (linux).sh`, `Anka menu (win).bat`, all starting `anka_menu.py`; built 2026-11-11): starts every mode, checks what is installed and offers to fix it (environment, packages, Ollama and its memory model, his voice, the Gemini key), and finds and tests a real Microduck on your wifi. Tested on macOS; Linux and Windows untested.
 
 ---
 
 ## 🔧 Should be fixed
 
-- **The kick in MuJoCo has not hit the ball yet.** Pollen's kick is blind and needs the ball 9 cm in front of the kicking foot. The old step-up used short step pulses, and Pollen's walking policy just steps on the spot when a command is short or slow. **Rewritten 2026-11-11:** the body now walks continuously while it watches the ball, turns before it walks, steps sideways close up, backs off straight, and stops before the spot because the legs carry on a moment (it learns how far). Offline, against a fake duck with that behaviour, it lined up 5 of 6 times. Not yet tested in MuJoCo.
+- **The kick doesn't always line up.** It works when the body can walk straight up to the ball (first real kick 2026-11-11: lined up within 1–2 cm, the ball rolled 1.2 m). When the ball is off to the side, the sideways steps often don't move the body, so he kicks from a few centimetres off and the ball barely moves. He also sometimes tries to kick when the ball isn't at his feet.
 - **No beak motor in the simulated duck,** so in 3D he can peck but not carry anything. The real duck has one.
 - **He talks a lot when people are around:** about 16–19 lines of his own in 5–6 minutes. A lesson about it exists, he is reminded of it, and it barely changes his behaviour.
 - **He chooses a lot of duck sounds** (30–40 in 17 minutes). Telling him the count worked for picture memories; it may be needed here too.

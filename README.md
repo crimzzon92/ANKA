@@ -38,7 +38,7 @@ looking back on the day.
 - **On the real duck (later):** a learned object detector, **YOLO** (`yolo11n`, plus `yoloe` for things like "sock" and "guitar"), with the distance taken from the duck's **8×8 depth sensor**. We tried YOLO in the simulator first and it recognised nothing, because the simulator's objects are simple shapes and YOLO is trained on photos. Whether it works on the real camera is one of the first things to test ([STATUS](STATUS.md#-next)).
 - **Either way**, only facts reach the brain ("the ball, about 1.6 m ahead, a little to the left"). What it means, and what to do about it, is up to him.
 
-- 🚀 **[Quick start](#quick-start)** – install and run him, or just open the **start menu** (`Anka menu.command`). You need a **Google Gemini API key** (macOS tested; Linux and Windows untested)
+- 🚀 **[Quick start](#quick-start)** – install and run him, or just open the **start menu** (`Anka menu (mac).command`). You need a **Google Gemini API key** (macOS tested; Linux and Windows untested)
 - 🗂️ **[Which file starts what](#which-file-starts-what)** – the launchers and folders, explained
 - 📖 **[docs/GUIDE.md](docs/GUIDE.md)** – how to install and run him, and how everything works inside
 - 📊 **[STATUS.md](STATUS.md)** – what is done and working, how well (with numbers), what should be fixed, and what's next
@@ -265,8 +265,8 @@ has tried them yet; if you do, please open an issue and say how it went. Details
   q) Quit
 ```
 
-Start it with **`Anka menu.command`** (macOS, double-click), **`python3 anka_menu.py`** (Linux) or **`anka_menu.bat`**
-(Windows, double-click). The first time, it offers to install everything for you: the Python packages, his voice,
+Start it with **`Anka menu (mac).command`** (macOS, double-click), **`Anka menu (linux).sh`** (Linux; the menu can also add
+Anka to your apps menu) or **`Anka menu (win).bat`** (Windows, double-click). `python3 anka_menu.py` works everywhere. The first time, it offers to install everything for you: the Python packages, his voice,
 Ollama's memory model and your Gemini key (you still install [Ollama](https://ollama.com) and, for 3D, Pollen's software
 yourself). Option 5 checks what is there and fixes what is missing. Option 6 finds your Microduck on your wifi and tests
 the connection (camera, console, SSH); starting Anka in the real body comes when the duck has arrived.
@@ -323,7 +323,7 @@ Set-Content cloud_key.txt "YOUR-KEY"
 On a Mac you double-click the `.command` files. Elsewhere, run the command in the right-hand column with the Python
 from step 1 of the quick start.
 
-**Easiest:** the start menu, `Anka menu.command` (or `python3 anka_menu.py`, or `anka_menu.bat`). It starts everything below.
+**Easiest:** the start menu, `Anka menu (mac).command`, `Anka menu (linux).sh` or `Anka menu (win).bat` (or `python3 anka_menu.py`). It starts everything below.
 
 **Or start one thing directly:**
 
@@ -342,7 +342,10 @@ in `~/Pollen/`, plus Rust and GStreamer (macOS or Linux). Details in the [guide]
 2. Then start his brain, with one of:
    - `Anka in sim.command` – a normal test day in the simulator,
    - `tools/Anka in sim (everything).command` – the 17-minute day that tests everything (like the [example](examples/mujoco-day/)).
-3. Optional: `tools/Anka eyes.command` opens a window with what the duck's camera and depth sensor see.
+Everything shows up in **one window**: the room and his floor plan on top, his camera and the log below, with a mute
+button. Pollen's own 3D window is off by default because it slows the simulator down (`--show-3d` turns it on).
+
+3. Optional: `tools/Anka eyes.command` opens a separate window with what the duck's camera and depth sensor see.
 
 The first time, run `tools/Update Pollen (0.18.9).command` once. It puts your copy of Pollen's software on the version
 Anka is tested with.
@@ -358,7 +361,7 @@ Anka is tested with.
 
 | | What it is |
 |---|---|
-| `anka_menu.py` | The start menu (`Anka menu.command` and `anka_menu.bat` start it). |
+| `anka_menu.py` | The start menu (the three `Anka menu (…)` files start it). |
 | `run_anka.py` | The program every launcher starts. Its options are listed in the [guide](docs/GUIDE.md#4-the-ways-to-run-him). |
 | `settings.py` | All settings in one place: brains, timings, memory, voice, the body, the test days. |
 | `requirements.txt` · `download_models.sh` | What to install (quick start steps 1 and 3). |

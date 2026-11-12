@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Anka's start menu: one place to start everything, check that it is installed, and connect to a real Microduck.
 
-    macOS:    double-click "Anka menu.command"
-    Linux:    python3 anka_menu.py
-    Windows:  double-click anka_menu.bat   (or: py anka_menu.py)
+    macOS:    double-click "Anka menu (mac).command"
+    Linux:    run "Anka menu (linux).sh" (or: python3 anka_menu.py) - the menu can also add Anka to your apps menu
+    Windows:  double-click "Anka menu (win).bat"   (or: py anka_menu.py)
 
 It only uses Python's own library, so it works before anything else is installed - and it can install the rest.
 It changes nothing in how Anka thinks: it starts the same programs as the other launchers.
@@ -12,6 +12,7 @@ import getpass
 import json
 import os
 import platform
+import shlex
 import shutil
 import socket
 import subprocess
@@ -27,8 +28,20 @@ IS_MAC = sys.platform == "darwin"
 IS_WIN = sys.platform.startswith("win")
 IS_LINUX = sys.platform.startswith("linux")
 
-VENV = Path.home() / "anka-env"                   # the same Python environment the .command launchers use
-PY = VENV / ("Scripts/python.exe" if IS_WIN else "bin/python")
+def find_env():
+    """Anka's Python environment: the one this menu runs in (if it is one), else ~/anka-env.
+    Returns (folder, python) - a new environment will be made at ~/anka-env if none is found."""
+    exe = "Scripts/python.exe" if IS_WIN else "bin/python"
+    if sys.prefix != getattr(sys, "base_prefix", sys.prefix):
+        return Path(sys.prefix), Path(sys.executable)
+    for name in ("anka-env",):
+        folder = Path.home() / name
+        if (folder / exe).exists() or (folder / exe).is_symlink():
+            return folder, folder / exe
+    return Path.home() / "anka-env", Path.home() / "anka-env" / exe
+
+
+VENV, PY = find_env()                             # the same Python environment the .command launchers use
 POLLEN = Path.home() / "Pollen" / "microduck"
 POLLEN_RL = Path.home() / "Pollen" / "microduck_rl"
 KOKORO_URL = "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0"
@@ -138,7 +151,7 @@ def check_python():
 
 
 def check_venv():
-    return PY.exists(), (f"Anka's Python environment ({VENV})" if PY.exists()
+    return PY.exists(), (f"Anka's Python environment ({VENV}, {sys.version.split()[0] if Path(sys.executable) == PY else 'found'})" if PY.exists()
                          else f"no Python environment for Anka yet ({VENV})")
 
 
@@ -326,6 +339,41 @@ def start_2d():
     pause()
 
 
+def screen_size():
+    """The screen's size in points (macOS), for placing the windows."""
+    if IS_MAC:
+        try:
+            out = subprocess.run(["osascript", "-e", 'tell application "Finder" to get bounds of window of desktop'],
+                                 capture_output=True, text=True, timeout=5).stdout
+            x0, y0, x1, y1 = [int(v) for v in out.replace(" ", "").split(",")]
+            return x1, y1
+        except Exception:
+            pass
+    return 1440, 900
+
+
+def run_simulation(args):
+    """Runs a 3D launcher. On a Mac it gets its own Terminal window (bottom right), separate from this menu, and the
+    window and the simulator close by themselves when Anka is asleep. Elsewhere it runs here."""
+    args = list(args) + ["--auto-close"]
+    w, h = screen_size()
+    env = {"ANKA_ROOM_POS": "0,25", "ANKA_EYES_POS": f"{w // 2},30", "ANKA_SCREEN": f"{w},{h - 25}"}
+    if not IS_MAC:
+        run(["bash"] + args, env={**os.environ, **env})
+        pause()
+        return
+    cmd = (f"cd {shlex.quote(str(HERE))} && " + " ".join(f"{k}={v}" for k, v in env.items())
+           + " bash " + " ".join(shlex.quote(a) for a in args) + "; exit")
+    cmd = cmd.replace("\\", "\\\\").replace('"', '\\"')
+    script = (f'tell application "Terminal"\n do script "{cmd}"\n delay 0.8\n'
+              f' set miniaturized of front window to true\nend tell')
+    subprocess.run(["osascript", "-e", script], capture_output=True)
+    say("\n  ▶️  Started. Everything shows in ONE window, \"Anka\": the room, his eyes and what is happening.")
+    say("     (The text log runs in a Terminal window that is minimised in the Dock, if you want to read it.)")
+    say("     When Anka is asleep, the window and the simulator close by themselves. This menu stays here.")
+    pause()
+
+
 def start_3d():
     say("\n🦆 Anka in Pollen's 3D simulator (MuJoCo)\n")
     ok, words = check_3d()
@@ -333,27 +381,30 @@ def start_3d():
         say(f"  ❌ {words}")
         pause()
         return
-    say("  1) Start the simulator and Anka (a normal test day)")
-    say("  2) Start the simulator and the 17-minute day that tests everything")
-    say("  3) Only start the simulator")
-    say("  4) Start Anka in a simulator that is already running")
-    say("  5) Open Anka's eyes (camera and depth sensor window)")
+    say("  1) A normal test day                      (everything in one window)")
+    say("  2) The 17-minute day that tests everything (everything in one window)")
+    say("  3) The 17-minute day, with Pollen's 3D window too (slower)")
+    say("  4) Only start the simulator")
+    say("  5) Start Anka in a simulator that is already running")
+    say("  6) Open Anka's eyes (camera and depth sensor window)")
     choice = ask("\n  Choose (Enter = back): ")
     if not choice:
         return
-    if choice in ("1", "2", "4") and not ready_for_anka():
+    if choice in ("1", "2", "3", "5") and not ready_for_anka():
         pause()
         return
     if choice == "1":
-        run(["bash", "Start everything.command"])
+        run_simulation(["Start everything.command"])
     elif choice == "2":
-        run(["bash", "Start everything.command", "--scenario", "all"])
+        run_simulation(["Start everything.command", "--scenario", "all"])
     elif choice == "3":
-        run(["bash", "Start Anka sim.command"])
+        run_simulation(["Start everything.command", "--show-3d", "--scenario", "all"])
     elif choice == "4":
+        run(["bash", "Start Anka sim.command"])
+    elif choice == "5":
         run([PY, "run_anka.py", "--simulate", "--mujoco"])
         pause()
-    elif choice == "5":
+    elif choice == "6":
         if IS_MAC:
             subprocess.Popen(["open", "-a", "Terminal", str(HERE / "tools" / "Anka eyes.command")])
             say("  Opened in a new window.")
@@ -377,9 +428,25 @@ def teach_face():
     pause()
 
 
+def linux_shortcut():
+    """Linux: puts "Anka" in the apps menu (a .desktop file), so the menu can be started with a click."""
+    apps = Path.home() / ".local" / "share" / "applications"
+    entry = apps / "anka-menu.desktop"
+    if entry.exists() or not yes("\n  Add Anka to your apps menu, so you can start this menu with a click?"):
+        return
+    apps.mkdir(parents=True, exist_ok=True)
+    entry.write_text("[Desktop Entry]\nType=Application\nName=Anka\nComment=Anka's start menu\n"
+                     f"Exec=bash \"{HERE / 'Anka menu (linux).sh'}\"\nPath={HERE}\nTerminal=true\n"
+                     "Categories=Science;Robotics;\n")
+    os.chmod(entry, 0o755)
+    say(f"  ✅ added: look for 'Anka' in your apps menu ({entry})")
+
+
 def check_all():
     say("\n🔎 Checking what Anka needs\n")
     run_checks(offer_fixes=True)
+    if IS_LINUX:
+        linux_shortcut()
     pause()
 
 # ---------------------------------------------------------------------------------------------------- the real duck

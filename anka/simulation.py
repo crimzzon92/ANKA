@@ -1,4 +1,5 @@
 """The test days: a made-up past, the fake camera and the script that plays 'you'."""
+import collections
 import os
 import re
 import sys
@@ -190,9 +191,21 @@ def show_room(t, wait):
             img = _who_moves(img)
             if SIM_SOUND:
                 img = _sound_button(img)
-            cv2.imshow(f"{NAME}'s room", img)
+            title = f"{NAME}'s room"
+            if _viewer_on():                           # the one window is its own program: just hand the picture over
+                _hand_over(img)
+                time.sleep(max(0.0, 0.25 - (time.time() - now)))
+                continue
+            if _one_window_on():                       # the 3D simulator: room, eyes and log in ONE window (2026-11-11)
+                img, title = _one_window(img), NAME
+            cv2.imshow(title, img)
+            if not _button.get("placed"):              # the start menu tells where the window goes (2026-11-11)
+                _button["placed"] = True
+                pos = os.environ.get("ANKA_ROOM_POS", "")
+                if "," in pos:
+                    cv2.moveWindow(title, *[int(float(v)) for v in pos.split(",")[:2]])
             if SIM_SOUND and not _button["hooked"]:
-                cv2.setMouseCallback(f"{NAME}'s room", _click)
+                cv2.setMouseCallback(title, _click)
                 _button["hooked"] = True
             key = cv2.waitKey(1) & 0xFF
             if SIM_SOUND and key in (ord("m"), ord("M")):
@@ -200,10 +213,71 @@ def show_room(t, wait):
         except Exception as error:   # no screen (e.g. a test on a server) – the test goes on without the window
             print(f"🗺️  (can't show the room window: {error})")
             _room_window[0] = False
-        time.sleep(max(0.0, 1 / 30 - (time.time() - now)))
+        fps = 8 if _one_window_on() else 30          # the one window is heavier: 8 pictures a second is plenty, and it
+        time.sleep(max(0.0, 1 / fps - (time.time() - now)))   # leaves time for the walking commands (20 a second)
     rest = end - time.time()
     if rest > 0:
         time.sleep(rest)
+
+
+# ---------------------------------------------------------------- the one window (2026-11-11)
+# In the 3D simulator everything is shown in ONE window (see ankasim/window.py). Normally that window is its own program
+# (ankasim/eyes.py --one-window, started by "Start everything.command" with ANKA_VIEWER=1): then this program only hands
+# over the room picture and the log a few times a second and draws nothing itself - so drawing never slows his brain or
+# his walking commands down. Without that program (ANKA_VIEWER unset) it draws the one window itself, more slowly.
+# ANKA_ONE_WINDOW=0 turns the one window off (the room window and the separate eyes window work as before).
+RECENT = collections.deque(maxlen=80)          # the last lines of the log (filled by Tee)
+_one = {"eyes": None, "eyes_t": 0.0, "scale": 1.0, "handed": 0.0, "log_n": None}
+
+
+def _one_window_on():
+    return hasattr(body, "link") and os.environ.get("ANKA_ONE_WINDOW", "1") != "0"
+
+
+def _viewer_on():
+    return _one_window_on() and os.environ.get("ANKA_VIEWER") == "1"
+
+
+def _hand_over(room):
+    """Gives the window program the room picture, the mute button's place and the log; takes its mute clicks."""
+    import json
+    from ankasim import window as W
+    now = time.time()
+    if now - _one["handed"] < 0.25:
+        return
+    _one["handed"] = now
+    try:
+        ok, jpg = cv2.imencode(".jpg", room, [cv2.IMWRITE_JPEG_QUALITY, 85])
+        if ok:
+            W.write_atomic(W.LIVE_ROOM, jpg.tobytes())
+        W.write_atomic(W.LIVE_INFO, json.dumps({"rect": list(_button["rect"]), "t": now}).encode())
+        key = (len(RECENT), RECENT[-1] if RECENT else "")
+        if key != _one["log_n"]:
+            _one["log_n"] = key
+            W.write_atomic(W.LIVE_LOG, "\n".join(list(RECENT)[-60:]).encode("utf-8"))
+        if os.path.exists(W.LIVE_CMD):
+            with open(W.LIVE_CMD) as f:
+                cmd = f.read()
+            os.remove(W.LIVE_CMD)
+            if "mute" in cmd and SIM_SOUND:
+                set_sound(not S.sound_on)
+    except Exception:
+        pass
+
+
+def _one_window(room):
+    """Draws the one window in this program (when the window program isn't running)."""
+    from ankasim import window as W
+    now = time.time()
+    if now - _one["eyes_t"] > 0.5:
+        _one["eyes_t"] = now
+        try:
+            from ankasim import eyes as _eyes
+            _one["eyes"] = _eyes.compose(body.link)
+        except Exception:
+            pass
+    whole, _one["scale"] = W.layout(room, _one["eyes"], list(RECENT))
+    return whole
 
 
 _button = {"hooked": False, "rect": (0, 0, 0, 0)}
@@ -247,6 +321,8 @@ def _sound_button(img):
 
 
 def _click(event, x, y, flags, param):
+    if _one_window_on():                               # the one window is scaled to fit the screen
+        x, y = x / _one["scale"], y / _one["scale"]
     x1, y1, x2, y2 = _button["rect"]
     if event == cv2.EVENT_LBUTTONDOWN and x1 <= x <= x2 and y1 <= y <= y2:
         set_sound(not S.sound_on)
@@ -256,11 +332,17 @@ class Tee:
     """Writes to the screen and a file at the same time (for the simulation log)."""
     def __init__(self, *streams):
         self.streams = streams
+        self._part = ""
 
     def write(self, x):
         for s in self.streams:
             s.write(x)
             s.flush()
+        self._part += x                                # the last lines, for the one window
+        while "\n" in self._part:
+            line, self._part = self._part.split("\n", 1)
+            if line.strip():
+                RECENT.append(line)
 
     def flush(self):
         for s in self.streams:

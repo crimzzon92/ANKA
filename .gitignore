@@ -40,3 +40,7 @@ __pycache__/
 
 # where your real duck is on your network (written by the menu)
 /duck_address.txt
+
+# the one window hands pictures and the log over in these files while a run is going
+ankasim/live_*
+ankasim/preview/
