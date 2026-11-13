@@ -371,6 +371,15 @@ class Tee:
             line, self._part = self._part.split("\n", 1)
             if line.strip():
                 RECENT.append(line)
+        # while he is still waking up (no room picture yet), show his first lines in the window too (2026-11-13)
+        if (not _handover_thread["started"] and os.environ.get("ANKA_VIEWER") == "1"
+                and os.environ.get("ANKA_ONE_WINDOW", "1") != "0" and time.time() - _one.get("early", 0.0) > 0.3):
+            _one["early"] = time.time()
+            try:
+                from ankasim import window as W
+                W.write_atomic(W.LIVE_LOG, "\n".join(list(RECENT)[-60:]).encode("utf-8"))
+            except Exception:
+                pass
 
     def flush(self):
         for s in self.streams:

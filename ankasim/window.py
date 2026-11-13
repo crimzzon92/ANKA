@@ -8,6 +8,7 @@ it alone knows, through small files next to this one, a few times a second:
     live_room.json  where the mute button is in that picture
     live_log.txt    the last lines of the log
     live_cmd.txt    written by the window when you click the mute button (or press M); Anka's program reads it
+    live_status.txt what "Start everything" is doing while it starts (the window shows it until Anka is awake)
 This file has the drawing that both programs share.
 """
 import os
@@ -24,6 +25,7 @@ LIVE_ROOM = os.path.join(HERE, "live_room.jpg")
 LIVE_INFO = os.path.join(HERE, "live_room.json")
 LIVE_LOG = os.path.join(HERE, "live_log.txt")
 LIVE_CMD = os.path.join(HERE, "live_cmd.txt")
+LIVE_STATUS = os.path.join(HERE, "live_status.txt")   # "seconds|what is happening" lines, written while starting
 
 SYMBOLS = [("💭", "thinks:"), ("🦆", "says:"), ("❤️", "feels:"), ("🫀", "body:"), ("🦶", "move:"), ("😮", "surprised:"),
            ("🧑", ""), ("🎬", "script:"), ("🦉", "wise brain:"), ("🔎", "checked:"), ("📔", "diary:"), ("🎯", "goal:"),
@@ -118,9 +120,43 @@ def screen():
     return _SCREEN[0]
 
 
-def waiting_room(w=1240, h=620):
+def read_status():
+    """The start steps from live_status.txt: [(seconds since the epoch, text), ...]."""
+    steps = []
+    try:
+        with open(LIVE_STATUS, encoding="utf-8") as f:
+            for line in f:
+                t, _, text = line.strip().partition("|")
+                if text:
+                    steps.append((float(t), text))
+    except (OSError, ValueError):
+        pass
+    return steps
+
+
+def waiting_room(w=936, h=460, steps=None, now=None):
+    """Shown until the first room picture arrives (2026-11-13: it took a minute before anything happened and it
+    looked broken) - what is starting, step by step, and how long it has taken so far."""
+    import time as _time
+    now = now or _time.time()
     img = np.full((h, w, 3), 245, np.uint8)
-    cv2.putText(img, "waiting for Anka to wake up...", (40, h // 2), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (120, 120, 120), 2, cv2.LINE_AA)
+    dark, grey, green = (60, 60, 60), (130, 130, 130), (60, 150, 60)
+    cv2.putText(img, "Anka is waking up" + "." * (int(now * 2) % 4), (40, 70), cv2.FONT_HERSHEY_SIMPLEX, 1.3, dark, 2,
+                cv2.LINE_AA)
+    steps = steps if steps is not None else read_status()
+    if steps:
+        secs = int(now - steps[0][0])
+        cv2.putText(img, f"{secs // 60}:{secs % 60:02d}", (w - 130, 70), cv2.FONT_HERSHEY_SIMPLEX, 1.1, grey, 2,
+                    cv2.LINE_AA)
+    y = 130
+    for i, (t, text) in enumerate(steps[-8:]):
+        last = i == len(steps[-8:]) - 1
+        mark, colour = ("...", dark) if last else ("done", green)
+        cv2.putText(img, mark, (40, y), cv2.FONT_HERSHEY_SIMPLEX, 0.65, colour, 2 if last else 1, cv2.LINE_AA)
+        cv2.putText(img, text, (110, y), cv2.FONT_HERSHEY_SIMPLEX, 0.65, colour, 2 if last else 1, cv2.LINE_AA)
+        y += 36
+    cv2.putText(img, "This takes about a minute. Everything starts by itself - nothing is wrong.", (40, h - 30),
+                cv2.FONT_HERSHEY_SIMPLEX, 0.6, grey, 1, cv2.LINE_AA)
     return img
 
 

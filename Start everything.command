@@ -35,45 +35,60 @@ if ! command -v gst-launch-1.0 >/dev/null 2>&1; then
     echo "⚠️  GStreamer is missing (the camera needs it): brew install gstreamer libnice-gstreamer"
 fi
 
-echo "🏠 1/3  Building Anka's room ($ROBOT robot model)..."
-"$PYTHON" ankasim/make_scene.py --rl "$RL" --robot "$ROBOT" || { read -r -p "Press Enter..."; exit 1; }
-
-if [ $VIEWER -eq 1 ]; then echo "🦆 1/3  Starting the simulator with its 3D window (the first start is slow)..."
-else echo "🦆 1/3  Starting the simulator without its 3D window (faster - Anka's own window shows everything)..."; fi
-export DUCK_SIM_VIEWER=$VIEWER
-"$POLLEN/scripts/duck-sim" down >/dev/null 2>&1
-export DUCK_SIM_SCENE="$(pwd)/ankasim/scene/anka_room.xml"
-export DUCK_SIM_CAMERAS=a
-"$POLLEN/scripts/duck-sim"
-
-echo "⏳ 2/3  Waiting for the simulator to be ready..."
-for i in $(seq 1 90); do [ -S "$SOCK" ] && break; sleep 2; done
-if [ ! -S "$SOCK" ]; then echo "❌ The simulator did not come up (no $SOCK). Look at its window."; read -r -p "Press Enter..."; exit 1; fi
-sleep 4
-
-echo "🦿 2/3  Loading the walking policy..."
-OK=0
-for i in 1 2 3 4 5 6 7 8; do
-    if "$POLLEN/scripts/duck-sim" ctl policy load walk "$POLICY"; then OK=1; break; fi
-    echo "   (not ready yet, trying again...)"; sleep 3
-done
-if [ $OK -ne 1 ]; then echo "❌ Could not load the walking policy ($POLICY)."; read -r -p "Press Enter..."; exit 1; fi
-sleep 3
-"$POLLEN/scripts/duck-sim" realtime 2>/dev/null | head -1
-
-if [ $EYES -eq 1 ]; then
-    echo "👀 Opening Anka's eyes (his camera, with boxes on what he finds)..."
-    "$PYTHON" ankasim/eyes.py >/dev/null 2>&1 &         # its own window, no extra Terminal window
-    EYES_PID=$!
-elif [ "${ANKA_ONE_WINDOW:-1}" != 0 ]; then
+# 2026-11-13: Anka's window opens FIRST and shows each step, so it doesn't look as if nothing is happening
+STATUS="ankasim/live_status.txt"
+status() { echo "$(date +%s)|$1" >> "$STATUS"; }
+: > "$STATUS"
+status "Starting"
+if [ $EYES -eq 0 ] && [ "${ANKA_ONE_WINDOW:-1}" != 0 ]; then
     echo "🪟 Opening Anka's window (the room, his eyes and what is happening - all in one)..."
     "$PYTHON" ankasim/eyes.py --one-window >/dev/null 2>&1 &   # its own program, so it never slows his brain down
     EYES_PID=$!
     export ANKA_VIEWER=1
 fi
 
+status "Building his room"
+echo "🏠 1/3  Building Anka's room ($ROBOT robot model)..."
+"$PYTHON" ankasim/make_scene.py --rl "$RL" --robot "$ROBOT" || { read -r -p "Press Enter..."; exit 1; }
+
+if [ $VIEWER -eq 1 ]; then echo "🦆 1/3  Starting the simulator with its 3D window (the first start is slow)..."
+else echo "🦆 1/3  Starting the simulator without its 3D window (faster - Anka's own window shows everything)..."; fi
+export DUCK_SIM_VIEWER=$VIEWER
+status "Starting the simulator"
+"$POLLEN/scripts/duck-sim" down >/dev/null 2>&1
+export DUCK_SIM_SCENE="$(pwd)/ankasim/scene/anka_room.xml"
+export DUCK_SIM_CAMERAS=a
+"$POLLEN/scripts/duck-sim"
+
+status "Waiting for the simulator to be ready"
+echo "⏳ 2/3  Waiting for the simulator to be ready..."
+for i in $(seq 1 360); do [ -S "$SOCK" ] && break; sleep 0.5; done
+if [ ! -S "$SOCK" ]; then status "The simulator did not start - see the Terminal window"; echo "❌ The simulator did not come up (no $SOCK). Look at its window."; read -r -p "Press Enter..."; exit 1; fi
+sleep 1
+
+status "Teaching his legs to walk (the walking policy)"
+echo "🦿 2/3  Loading the walking policy..."
+OK=0
+for i in $(seq 1 30); do
+    if "$POLLEN/scripts/duck-sim" ctl policy load walk "$POLICY" 2>/dev/null; then OK=1; break; fi
+    sleep 1
+done
+if [ $OK -ne 1 ]; then status "Could not load the walking policy - see the Terminal window"; echo "❌ Could not load the walking policy ($POLICY)."; read -r -p "Press Enter..."; exit 1; fi
+sleep 1
+"$POLLEN/scripts/duck-sim" realtime 2>/dev/null | head -1
+
+if [ $EYES -eq 1 ]; then
+    echo "👀 Opening Anka's eyes (his camera, with boxes on what he finds)..."
+    "$PYTHON" ankasim/eyes.py >/dev/null 2>&1 &         # its own window, no extra Terminal window
+    EYES_PID=$!
+fi
+
+status "Waking Anka up: his memory, his voice and his brain"
 echo "🧠 3/3  Starting Anka..."
-if ! curl -s http://localhost:11434/api/tags >/dev/null 2>&1; then open -a Ollama; sleep 8; fi
+if ! curl -s http://localhost:11434/api/tags >/dev/null 2>&1; then
+    open -a Ollama                                      # (his reserve brain - wait for it, but not longer than needed)
+    for i in $(seq 1 16); do curl -s http://localhost:11434/api/tags >/dev/null 2>&1 && break; sleep 0.5; done
+fi
 "$PYTHON" run_anka.py --simulate --mujoco "${EXTRA[@]}"
 echo
 if [ $AUTO -eq 1 ]; then
