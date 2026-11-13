@@ -1,8 +1,8 @@
 # tools/ – what everything here is for
 
-You don't need any of these to run Anka. The main launchers are in the top folder (`Start Anka.command`,
+You don't need any of these to run Anka. The main launchers are one folder up, in `app` (`Start Anka.command`,
 `Anka in sim.command`, `Start everything.command`). These are for the 3D simulator, for measuring him, for
-repeating the experiments in the [journal](../docs/JOURNAL.md), and for finding faults.
+repeating the experiments in the [journal](../../docs/JOURNAL.md), and for finding faults.
 
 The `.command` files are double-click launchers for macOS. On Linux, run them with `bash "<file>.command"`.
 They all use the Python in `~/anka-env`.
@@ -13,7 +13,7 @@ Start Pollen's simulator first with `Start Anka sim.command` (in the top folder)
 
 | File | What it does |
 |---|---|
-| `Anka in sim (everything).command` | The 17-minute test day that tests everything (`--scenario all`). The [example day](../examples/mujoco-day/) is one of these. |
+| `Anka in sim (everything).command` | The 17-minute test day that tests everything (`--scenario all`). The [example day](../../examples/mujoco-day/) is one of these. |
 | `Anka in sim (still body).command` | The same as `Anka in sim.command`, but with the living body switched off (`--no-living`), to compare. |
 | `Anka eyes.command` | A window with what the simulated duck senses: camera, depth grid, IMU. You can drive him by hand with the keys. |
 | `Update Pollen (0.18.9).command` | Moves your copy of Pollen's `microduck` to the release Anka is tested with, and remembers where you were. |
@@ -31,7 +31,7 @@ Start Pollen's simulator first with `Start Anka sim.command` (in the top folder)
 ## Repeating the experiments
 
 Each suite runs a set of test days in the 2D simulator with the real cloud brain, then scores them. They cost money:
-roughly $0.10 per run. The numbers they produced are in [STATUS](../STATUS.md) and the [journal](../docs/JOURNAL.md).
+roughly $0.10 per run. The numbers they produced are in [STATUS](../../STATUS.md) and the [journal](../../docs/JOURNAL.md).
 
 | File | Experiment |
 |---|---|

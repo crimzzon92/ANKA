@@ -11,4 +11,4 @@ if [ -z "$PY" ]; then
     else echo "❌ Python 3 isn't installed. Get it from https://www.python.org/downloads/ and try again."; read -r -p "Press Enter..."; exit 1
     fi
 fi
-"$PY" anka_menu.py
+"$PY" app/anka_menu.py

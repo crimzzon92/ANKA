@@ -8,5 +8,5 @@ for p in "$HOME/anka-env/bin/python"; do
 done
 [ -z "$PY" ] && PY="$(command -v python3)"
 if [ -z "$PY" ]; then echo "❌ Python 3 isn't installed (sudo apt install python3 python3-venv)."; read -r -p "Press Enter..."; exit 1; fi
-"$PY" anka_menu.py
+"$PY" app/anka_menu.py
 read -r -p "Press Enter to close..." 2>/dev/null

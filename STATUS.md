@@ -60,7 +60,7 @@ This page is the current state. The history, including the experiments that fail
 - **The kick works:** he walks up to the ball, takes the last few centimetres without seeing it (the camera can't see that close) and kicks. First real kick: the ball rolled 1.2 m.
 
 ### Using him
-- **A start menu** (`Anka menu (mac).command`, `Anka menu (linux).sh`, `Anka menu (win).bat`, all starting `anka_menu.py`; built 2026-11-11): starts every mode, checks what is installed and offers to fix it (environment, packages, Ollama and its memory model, his voice, the Gemini key), and finds and tests a real Microduck on your wifi. Tested on macOS; Linux and Windows untested.
+- **A start menu** (`Anka menu (mac).command`, `Anka menu (linux).sh`, `Anka menu (win).bat`, all starting `app/anka_menu.py`; built 2026-11-11). The main folder only has these three and the text files; everything else is in `app` (2026-11-13). The menu clears the screen between steps.: starts every mode, checks what is installed and offers to fix it (environment, packages, Ollama and its memory model, his voice, the Gemini key), and finds and tests a real Microduck on your wifi. Tested on macOS; Linux and Windows untested.
 
 ---
 

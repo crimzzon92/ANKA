@@ -266,7 +266,7 @@ has tried them yet; if you do, please open an issue and say how it went. Details
 ```
 
 Start it with **`Anka menu (mac).command`** (macOS, double-click), **`Anka menu (linux).sh`** (Linux; the menu can also add
-Anka to your apps menu) or **`Anka menu (win).bat`** (Windows, double-click). `python3 anka_menu.py` works everywhere. The first time, it offers to install everything for you: the Python packages, his voice,
+Anka to your apps menu) or **`Anka menu (win).bat`** (Windows, double-click). `python3 app/anka_menu.py` works everywhere. The first time, it offers to install everything for you: the Python packages, his voice,
 Ollama's memory model and your Gemini key (you still install [Ollama](https://ollama.com) and, for 3D, Pollen's software
 yourself). Option 5 checks what is there and fixes what is missing. Option 6 finds your Microduck on your wifi and tests
 the connection (camera, console, SSH); starting Anka in the real body comes when the duck has arrived.
@@ -276,6 +276,9 @@ the connection (camera, console, SSH); starting Anka in the real body comes when
 **macOS and Linux:**
 
 ```bash
+# 0. Everything below runs in the app folder
+cd app
+
 # 1. Python packages, in the environment the launchers use
 python3 -m venv ~/anka-env
 ~/anka-env/bin/pip install -r requirements.txt
@@ -299,6 +302,9 @@ On Linux, also install a sound player if you don't have one, for example `sudo a
 **Windows** (PowerShell, untested):
 
 ```powershell
+# 0. Everything below runs in the app folder
+cd app
+
 # 1. Python packages
 py -m venv $HOME\anka-env
 & $HOME\anka-env\Scripts\pip install -r requirements.txt
@@ -320,10 +326,12 @@ Set-Content cloud_key.txt "YOUR-KEY"
 
 ## Which file starts what
 
-On a Mac you double-click the `.command` files. Elsewhere, run the command in the right-hand column with the Python
-from step 1 of the quick start.
+The main folder only has the three start menus and the text files (README, STATUS, LICENSE, NOTICE) - everything
+else is in the **`app`** folder, and all file names below are inside it. On a Mac you double-click the `.command`
+files. Elsewhere, run the command in the right-hand column from the `app` folder, with the Python from step 1 of the
+quick start.
 
-**Easiest:** the start menu, `Anka menu (mac).command`, `Anka menu (linux).sh` or `Anka menu (win).bat` (or `python3 anka_menu.py`). It starts everything below.
+**Easiest:** the start menu, `Anka menu (mac).command`, `Anka menu (linux).sh` or `Anka menu (win).bat` (or `python3 app/anka_menu.py`). It starts everything below.
 
 **Or start one thing directly:**
 
@@ -350,14 +358,14 @@ button. Pollen's own 3D window is off by default because it slows the simulator 
 The first time, run `tools/Update Pollen (0.18.9).command` once. It puts your copy of Pollen's software on the version
 Anka is tested with.
 
-**Other launchers in the top folder:**
+**Other launchers in the `app` folder:**
 
 | File | What it does |
 |---|---|
 | `Learn a face.command` | Teaches Anka someone's face (asks for the name). Anka must be asleep, because it uses the camera. |
 | `Camera floor test.command` | Tests depth from your real webcam with the laptop standing on the floor (no cloud, costs nothing). Made for the real duck later. |
 
-**The other files and folders:**
+**The other files and folders** (in `app`, except `docs/`, `examples/` and the text files):
 
 | | What it is |
 |---|---|
@@ -367,14 +375,14 @@ Anka is tested with.
 | `requirements.txt` · `download_models.sh` | What to install (quick start steps 1 and 3). |
 | `anka/` | His mind: thinking, feelings, memory, nights, voice, ears, eyes, and the 2D body. |
 | `ankasim/` | His body in Pollen's MuJoCo simulator: the link to the duck's software, the living body, his 3D map. |
-| `tools/` | Test days, measuring, experiments and fault-finding. Every file is explained in [tools/README.md](tools/README.md). |
+| `tools/` | Test days, measuring, experiments and fault-finding. Every file is explained in [app/tools/README.md](app/tools/README.md). |
 | `docs/` | The [guide](docs/GUIDE.md), the [journal](docs/JOURNAL.md) and images. |
 | `examples/` | One recorded day in the 3D simulator. |
 | `memory/` | Created when he first runs: his memory. Never part of the repository. |
 | `test_logs/` | Created by test days: logs, maps and thought traces. Never part of the repository. |
 | `STATUS.md` · `LICENSE` · `NOTICE` | What works now · the license · who to credit. |
 
-**Anka starts with an empty memory**: this repository contains none. He learns everything from you. His memory is kept in `memory/real/` and `memory/simulation/`, and it is never part of the repository. The [guide](docs/GUIDE.md) has all the details.
+**Anka starts with an empty memory**: this repository contains none. He learns everything from you. His memory is kept in `app/memory/real/` and `app/memory/simulation/`, and it is never part of the repository. The [guide](docs/GUIDE.md) has all the details.
 
 ## Privacy: what leaves your computer
 

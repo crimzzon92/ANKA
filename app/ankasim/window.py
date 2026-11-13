@@ -56,22 +56,86 @@ def plain(line):
 _log_cache = {"key": None, "img": None}
 
 
+# 2026-11-13: easier to see what is what - a coloured tag in front of each line, what he SAYS and THINKS (and what you
+# say) bright, the rest (body, moves, what he sees, the script...) dim, and a little space between the entries.
+#            label         tag        tag colour (BGR)   text colour        important
+KINDS = {"says:":       ("SAYS",    (60, 200, 255),   (150, 235, 255),  True),
+         "thinks:":     ("THINKS",  (235, 170, 90),   (245, 215, 170),  True),
+         "you:":        ("YOU",     (230, 230, 230),  (255, 255, 255),  True),
+         "feels:":      ("FEELS",   (190, 120, 255),  (200, 170, 240),  False),
+         "surprised:":  ("SURPRISE", (80, 150, 255),  (170, 200, 255),  True),
+         "wise brain:": ("WISE",    (200, 200, 120),  (210, 210, 170),  False),
+         "goal:":       ("GOAL",    (120, 210, 120),  (180, 220, 180),  False),
+         "goal done:":  ("GOAL",    (120, 210, 120),  (180, 220, 180),  False),
+         "idea:":       ("IDEA",    (120, 210, 120),  (180, 220, 180),  False)}
+DIM_TAGS = {"body:": "body", "move:": "move", "sees:": "sees", "script:": "script", "mindful:": "mind",
+            "diary:": "diary", "sound:": "sound", "map:": "map", "checked:": "check", "kept a picture:": "picture",
+            "gave up:": "goal", "night:": "night", "new about me:": "me", "lesson:": "lesson"}
+DIM = (125, 125, 125)
+FONT = cv2.FONT_HERSHEY_SIMPLEX
+
+
+def _entry(raw):
+    """(tag, tag colour, text, text colour, important) for one log line, or None to leave it out."""
+    line = raw.strip()
+    if line.startswith("\U0001f9d1"):                  # the person talking to him ("You: ...")
+        text, label = plain(line)
+        text = re.sub(r"^(You|you):\s*", "", text)
+        text = re.sub(r"\s*\(sounded: [^)]*\)\s*$", "", text)
+        return ("YOU", KINDS["you:"][1], text, KINDS["you:"][2], True)
+    text, label = plain(line)
+    if label:
+        text = text[len(label):].strip()
+    text = re.sub(r"\s*\d+(\.\d+)?s\s*$", "", text)          # the thinking time at the end
+    text = re.sub(r"^\(thinking\)\s*", "", text)
+    text = text.replace("decided to stay quiet", "(quiet)")
+    m = re.fullmatch(r"\((?:Anka|body):\s*(.*)\)", text)   # "(Anka: look around -> ...)" -> "look around -> ..."
+    if m:
+        text = m.group(1)
+    if not text:
+        return None
+    if label == "script:" and re.search(r"\]\s+you say", text):
+        return None                                     # the same words come again as "YOU"
+    if label in KINDS:
+        tag, tc, xc, imp = KINDS[label]
+        return (tag, tc, text, xc, imp)
+    return (DIM_TAGS.get(label, ""), DIM, text, DIM, False)
+
+
 def log_panel(lines, w, h):
-    """The last log lines, coloured by kind and word-wrapped (redrawn only when something changed)."""
+    """The last log lines: a coloured tag in front, the important ones bright, word-wrapped (redrawn only when
+    something changed)."""
     key = (w, h, len(lines), lines[-1] if lines else "")
     if _log_cache["key"] == key:
         return _log_cache["img"]
     img = np.full((h, w, 3), BG, np.uint8)
-    cv2.putText(img, "what is happening (the log)", (12, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (150, 150, 150), 1, cv2.LINE_AA)
-    step, cols, rows = 17, max(20, int(w / 7.6)), []
+    cv2.putText(img, "what is happening", (12, 20), FONT, 0.45, (150, 150, 150), 1, cv2.LINE_AA)
+    tag_w, x0, step = 70, 12, 18
+    cols = max(20, int((w - tag_w - x0 - 8) / 7.3))
+    entries = []                                        # (rows, tag, tag colour, text colour, important)
     for raw in list(lines)[-40:]:
-        text, label = plain(raw)
-        if text:
-            colour = COLOURS.get(label, (210, 210, 210))
-            rows += [(part, colour) for part in textwrap.wrap(text, cols, subsequent_indent="   ")]
-    rows = rows[-max(1, (h - 34) // step):]
-    for i, (t, c) in enumerate(rows):
-        cv2.putText(img, t, (12, 40 + i * step), cv2.FONT_HERSHEY_SIMPLEX, 0.42, c, 1, cv2.LINE_AA)
+        e = _entry(raw)
+        if e:
+            tag, tc, text, xc, imp = e
+            entries.append((textwrap.wrap(text, cols) or [""], tag, tc, xc, imp))
+    # fit from the newest backwards
+    y_room, keep = h - 30, []
+    for e in reversed(entries):
+        need = len(e[0]) * step + 6
+        if need > y_room and keep:
+            break
+        keep.append(e)
+        y_room -= need
+    y = 40
+    for rows, tag, tc, xc, imp in reversed(keep):
+        if imp:                                         # a soft band behind what he says and thinks
+            cv2.rectangle(img, (4, y - 14), (w - 4, y + (len(rows) - 1) * step + 6), (40, 40, 40), -1)
+            cv2.rectangle(img, (4, y - 14), (7, y + (len(rows) - 1) * step + 6), tc, -1)
+        if tag:
+            cv2.putText(img, tag, (x0, y), FONT, 0.42, tc, 2 if imp else 1, cv2.LINE_AA)
+        for i, row in enumerate(rows):
+            cv2.putText(img, row, (x0 + tag_w, y + i * step), FONT, 0.45 if imp else 0.42, xc, 1, cv2.LINE_AA)
+        y += len(rows) * step + 6
     _log_cache.update(key=key, img=img)
     return img
 

@@ -21,11 +21,11 @@ room_memory*.json
 models/
 
 # ---- generated while running ----
-/test_logs/
-/simulation_log*.txt
-/room_map.png
-/room_3d.html
-/camera_floor_test.png
+/app/test_logs/
+/app/simulation_log*.txt
+/app/room_map.png
+/app/room_3d.html
+/app/camera_floor_test.png
 # built by make_scene.py (contains paths of this computer)
 ankasim/scene/
 ankasim/seen_now.json
@@ -39,7 +39,7 @@ __pycache__/
 .DS_Store
 
 # where your real duck is on your network (written by the menu)
-/duck_address.txt
+/app/duck_address.txt
 
 # the one window hands pictures and the log over in these files while a run is going
 ankasim/live_*

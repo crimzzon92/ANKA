@@ -3,6 +3,10 @@
 This guide explains how to set Anka up, how to run him in each of his modes, how his mind works inside, and how to
 measure and tune him. For what works and what doesn't yet, see [STATUS.md](../STATUS.md).
 
+**Where the files are:** the main folder only has the three start menus (`Anka menu (…)`) and the text files.
+Everything else is in the `app` folder, so every file name and command in this guide is inside `app/` (run commands
+from there: `cd app`).
+
 ---
 
 ## 1. What you need
@@ -80,7 +84,7 @@ His memory lives in two folders. Both are created automatically, and both are in
 
 **The start menu** starts all of these, checks what is installed and fixes what is missing, and connects to a real
 Microduck: `Anka menu (mac).command` (macOS), `Anka menu (linux).sh` (Linux) or `Anka menu (win).bat` (Windows), or
-`python3 anka_menu.py` anywhere. Its option 6 remembers
+`python3 app/anka_menu.py` anywhere. Its option 6 remembers
 your duck's address in `duck_address.txt` and tests it the way Pollen's console does: the address, the console on port
 8080 (it saves his camera picture to `test_logs/duck_camera.png`), port 8443 and SSH.
 

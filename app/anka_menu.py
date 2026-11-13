@@ -2,8 +2,9 @@
 """Anka's start menu: one place to start everything, check that it is installed, and connect to a real Microduck.
 
     macOS:    double-click "Anka menu (mac).command"
-    Linux:    run "Anka menu (linux).sh" (or: python3 anka_menu.py) - the menu can also add Anka to your apps menu
-    Windows:  double-click "Anka menu (win).bat"   (or: py anka_menu.py)
+    Linux:    run "Anka menu (linux).sh" (or: python3 app/anka_menu.py) - the menu can also add Anka to your apps menu
+    Windows:  double-click "Anka menu (win).bat"   (or: py app\\anka_menu.py)
+The three "Anka menu" files are in the main folder; everything else of Anka's is in the app folder (2026-11-13).
 
 It only uses Python's own library, so it works before anything else is installed - and it can install the rest.
 It changes nothing in how Anka thinks: it starts the same programs as the other launchers.
@@ -56,6 +57,14 @@ PACKAGES = ["numpy", "cv2", "onnxruntime", "kokoro_onnx", "sounddevice"]   # wha
 
 def say(text=""):
     print(text, flush=True)
+
+
+def clear():
+    """Wipes the screen, so each menu starts clean (2026-11-13)."""
+    if os.name == "nt":
+        os.system("cls")
+    else:
+        print("\033[2J\033[3J\033[H", end="", flush=True)
 
 
 def ask(question, default=""):
@@ -388,6 +397,8 @@ def start_3d():
     say("  5) Start Anka in a simulator that is already running")
     say("  6) Open Anka's eyes (camera and depth sensor window)")
     choice = ask("\n  Choose (Enter = back): ")
+    if choice:
+        clear()
     if not choice:
         return
     if choice in ("1", "2", "3", "5") and not ready_for_anka():
@@ -436,7 +447,7 @@ def linux_shortcut():
         return
     apps.mkdir(parents=True, exist_ok=True)
     entry.write_text("[Desktop Entry]\nType=Application\nName=Anka\nComment=Anka's start menu\n"
-                     f"Exec=bash \"{HERE / 'Anka menu (linux).sh'}\"\nPath={HERE}\nTerminal=true\n"
+                     f"Exec=bash \"{HERE.parent / 'Anka menu (linux).sh'}\"\nPath={HERE.parent}\nTerminal=true\n"
                      "Categories=Science;Robotics;\n")
     os.chmod(entry, 0o755)
     say(f"  ✅ added: look for 'Anka' in your apps menu ({entry})")
@@ -524,6 +535,8 @@ def connect_duck():
     say("  2) Test the connection")
     say("  3) Start Anka with the real body")
     choice = ask("\n  Choose (Enter = back): ")
+    if choice:
+        clear()
     if choice == "1":
         host = find_duck()
         if host and yes("\n  Test the connection now?"):
@@ -568,19 +581,25 @@ def first_start():
 
 def main():
     first_start()
+    note = ""
     while True:
-        say("\n" + "=" * 52)
+        clear()
+        say("=" * 52)
         say("  🦆  ANKA – Microduck AI Brain")
         say("=" * 52 + "\n")
         for key, title, note, _ in MENU:
             say(f"  {key}) {title:<36}{('(' + note + ')') if note else ''}")
         say("  q) Quit\n")
+        if note:
+            say(note + "\n")
+            note = ""
         choice = ask("Choose: ").lower()
         if choice in ("q", "quit", "exit"):
             say("Bye! 🦆")
             return
         for key, _, _, action in MENU:
             if choice == key:
+                clear()
                 try:
                     action()
                 except KeyboardInterrupt:
@@ -588,7 +607,7 @@ def main():
                 break
         else:
             if choice:
-                say("Choose one of the numbers, or q to quit.")
+                note = "Choose one of the numbers, or q to quit."
 
 
 if __name__ == "__main__":
