@@ -27,8 +27,8 @@ models/
 /app/room_3d.html
 /app/camera_floor_test.png
 # built by make_scene.py (contains paths of this computer)
-ankasim/scene/
-ankasim/seen_now.json
+app/ankasim/scene/
+app/ankasim/seen_now.json
 backups/
 archive/
 _backup/
@@ -42,5 +42,5 @@ __pycache__/
 /app/duck_address.txt
 
 # the one window hands pictures and the log over in these files while a run is going
-ankasim/live_*
-ankasim/preview/
+app/ankasim/live_*
+app/ankasim/preview/
